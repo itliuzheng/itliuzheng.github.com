@@ -3,7 +3,11 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <h2>Ecosystem</h2>
-    <p v-on:click="goLogin">login</p>
+    <el-switch
+      v-model="value2"
+      active-color="#13ce66"
+      inactive-color="#ff4949">
+    </el-switch>
   </div>
 </template>
 
@@ -12,13 +16,11 @@
     name: 'HelloWorld',
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: 'Welcome to Your Vue.js App',
+        value2:true
       }
     },
     methods:{
-      goLogin: function () {
-        alert('登录');
-      }
     }
   }
 </script>
