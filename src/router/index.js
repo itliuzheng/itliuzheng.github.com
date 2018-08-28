@@ -9,17 +9,18 @@ Vue.use(Router)
 
 export default new Router({
   mode:'history',
+  base: '/dist/',
   routes: [
     {
-      path: '/dist/',
+      path: '/',
       name: 'login',
       component: login
     },{
-      path:'/HelloWorld',
+      path:'/HelloWorld/',
       name:'HelloWorld',
       component:HelloWorld
     },{
-      path:'/fail',
+      path:'/fail/',
       name:'fail',
       component:fail
     }
