@@ -22,7 +22,8 @@ export default new Router({
       path:'/fail',
       name:'fail',
       component:fail
-    },{
+    }
+    ,{
       path:'*',
       name:'undefinedfail',
       component:undefinedfail
