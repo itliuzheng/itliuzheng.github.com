@@ -11,7 +11,7 @@ console.log(process.env.NODE_ENV);
 console.log(process.env.NODE_ENV == 'development');
 export default new Router({
   mode:'history',
-  base: process.env.NODE_ENV == 'development'?'/':'/base/',
+  base: process.env.NODE_ENV == 'development'?'/':'/dist/',
   // routes: [
   //   {
   //     path: '/',
