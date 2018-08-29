@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 // import login from '@/components/login/login'
@@ -10,25 +10,7 @@ Vue.use(Router)
 export default new Router({
   mode:'history',
   base: process.env.NODE_ENV == 'development'?'/':'/dist/',
-  // routes: [
-  //   {
-  //     path: '/',
-  //     name: 'login',
-  //     component: login
-  //   },{
-  //     path:'/HelloWorld/',
-  //     name:'HelloWorld',
-  //     component:HelloWorld
-  //   },{
-  //     path:'/fail/',
-  //     name:'fail',
-  //     component:fail
-  //   },{
-  //     path:'*',
-  //     name:'undefinedfail',
-  //     component:undefinedfail
-  //   }
-  // ]
+
   routes: [
     {
       path: '/',

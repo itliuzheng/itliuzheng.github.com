@@ -3,7 +3,8 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+;
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -15,12 +16,17 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    'vue':'Vue',
+    'element-ui':'ElementUi'
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+      : config.dev.assetsPublicPath,
+    libraryTarget:'umd'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -78,5 +84,9 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  //性能优化视图
+  plugins:[
+    new BundleAnalyzerPlugin()
+  ]
 }
