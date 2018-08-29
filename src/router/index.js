@@ -1,32 +1,51 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import login from '@/components/login/login'
-import fail from '@/components/login/fail'
-import undefinedfail from '@/components/error/undefinedfail'
+// import HelloWorld from '@/components/HelloWorld'
+// import login from '@/components/login/login'
+// import fail from '@/components/login/fail'
+// import undefinedfail from '@/components/error/undefinedfail'
 
 Vue.use(Router)
 
 export default new Router({
   mode:'history',
   base: '/dist/',
+  // routes: [
+  //   {
+  //     path: '/',
+  //     name: 'login',
+  //     component: login
+  //   },{
+  //     path:'/HelloWorld/',
+  //     name:'HelloWorld',
+  //     component:HelloWorld
+  //   },{
+  //     path:'/fail/',
+  //     name:'fail',
+  //     component:fail
+  //   },{
+  //     path:'*',
+  //     name:'undefinedfail',
+  //     component:undefinedfail
+  //   }
+  // ]
   routes: [
     {
       path: '/',
       name: 'login',
-      component: login
+      component: resolve => require(['@/components/login/login'],resolve)
     },{
       path:'/HelloWorld/',
       name:'HelloWorld',
-      component:HelloWorld
+      component: resolve => require(['@/components/HelloWorld'],resolve)
     },{
       path:'/fail/',
       name:'fail',
-      component:fail
+      component: resolve => require(['@/components/login/fail'],resolve)
     },{
       path:'*',
       name:'undefinedfail',
-      component:undefinedfail
+      component:  resolve => require(['@/components/error/undefinedfail'],resolve)
     }
   ]
 })

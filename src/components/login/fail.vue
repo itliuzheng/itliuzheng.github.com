@@ -1,5 +1,7 @@
 <template>
   <div class="fail">
+
+    <h1>liuzheng</h1>
     <h2>{{message}}</h2>
   </div>
 </template>
@@ -45,4 +47,8 @@
     }
   }
 </script>
-<style scoped></style>
+<style scoped>
+  h1{
+    color: saddlebrown;
+  }
+</style>

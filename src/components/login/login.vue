@@ -1,5 +1,7 @@
 <template>
   <div class="login">
+
+    <h1>liuzheng</h1>
     {{message}}<br>
     <input  type="text" v-model="username" placeholder="用户名"><br>
     <input  type="password" v-model="password" placeholder="密码"><br>
@@ -64,4 +66,11 @@
     }
   }
 </script>
-<style scoped></style>
+<style scoped>
+  h1{
+    color: pink;
+  }
+  input{
+    margin-bottom: 10px;
+  }
+</style>
