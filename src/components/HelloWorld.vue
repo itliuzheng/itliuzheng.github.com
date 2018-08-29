@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
-    <h2>Ecosystem</h2>
+    <h2 v-on:click="clickUserName">Ecosystem</h2>
     <el-switch
       v-model="value2"
       active-color="#13ce66"
@@ -21,6 +21,9 @@
       }
     },
     methods:{
+      clickUserName(){
+        console.log(sessionStorage.username);
+      }
     }
   }
 </script>

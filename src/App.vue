@@ -1,12 +1,30 @@
 <template>
   <div id="app">
-    <router-view/>
+    <input type="text" v-model="username" id="username">
+    <keep-alive>
+     <router-view @userSignIn="userSignIn"></router-view>
+    </keep-alive>
+    <!--<router-view/>-->
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data(){
+    return{
+      username:sessionStorage.username
+    }
+  },
+  methods:{
+  //  子-》父
+    userSignIn(username){
+      console.log(username);
+      sessionStorage.username = username;
+      this.username = sessionStorage.username;
+
+    }
+  }
 }
 </script>
 

@@ -29,13 +29,26 @@
         console.log(this);
         console.log(_this.username+'===='+_this.password);
 
+
         if(_this.password == '111111'){
+          let token = Math.random();
+          sessionStorage.setItem('username',_this.username);
+          sessionStorage.setItem('userToken',token);
+
+          _this.$state.dispatch('setUser',_this.username);
+          _this.$state.dispatch('setToken',token);
+
+          console.log('islogin===',_this.$state.isLogin);
             _this.$router.push({
-              path:'/HelloWorld',
-              query:{
-                user:_this.username
-              }
+              path:'/HelloWorld'
+              // query:{
+              //   user:_this.username
+              // }
             })
+
+
+          _this.$emit('userSignIn', _this.username);
+
         }else{
             _this.$router.push({
               path:'/fail'
