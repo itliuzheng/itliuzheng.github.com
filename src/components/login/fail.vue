@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+  import '@/assets/css/login/fail.css';
   export default {
     name:'fail',
     data(){
@@ -48,7 +49,4 @@
   }
 </script>
 <style scoped>
-  h1{
-    color: saddlebrown;
-  }
 </style>

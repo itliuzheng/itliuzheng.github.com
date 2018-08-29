@@ -9,6 +9,8 @@
   </div>
 </template>
 <script>
+  import '@/assets/css/login/login.css';
+
   export default {
     name:'login',
     data(){
@@ -66,10 +68,8 @@
     }
   }
 </script>
-<style scoped>
-  h1{
-    color: pink;
-  }
+<style scoped lang="scss">
+  /*@import '@/assets/css/login/login.css'*/
   input{
     margin-bottom: 10px;
   }
