@@ -10,6 +10,7 @@
 </template>
 <script>
   import '@/assets/css/login/login.css';
+  import store from '@/store'
 
   export default {
     name:'login',
@@ -17,13 +18,92 @@
       return {
         message:'欢迎进入登录页面',
         username:'',
-        password:''
+        password:'',
+        isLogin:store.getters.isLogin
       }
     },
     http:{
       headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}
     },
+
+   beforeCreate: function () {
+            console.log('beforeCreate 创建前状态===============》');
+           console.log("color:red" , "el     : " + this.$el); //undefined
+           console.log("color:red","data   : " + this.$data); //undefined
+           console.log("color:red","message: " + this.message);
+           console.log("color:red","message: " , this.$store)
+
+      let username = sessionStorage.username;
+      let token = sessionStorage.userToken;
+
+      this.$store.dispatch('setUser',username);
+      this.$store.dispatch('setToken',token);
+
+      this.$router.push({
+        path:'/HelloWorld'
+      })
+    },
+    created: function () {
+        console.log('created 创建完毕状态===============》');
+        console.log("color:red","el     : " + this.$el); //undefined
+           console.log("color:red","data   : " + this.$data); //已被初始化
+           console.log("color:red","message: " + this.message); //已被初始化
+    },
+    beforeMount: function () {
+        console.log('beforeMount 挂载前状态===============》');
+        console.log("color:red","el     : " + (this.$el)); //已被初始化
+        console.log(this.$el);
+           console.log("color:red","data   : " + this.$data); //已被初始化
+           console.log("color:red","message: " + this.message); //已被初始化
+    },
+    mounted: function () {
+        console.log('mounted 挂载结束状态===============》');
+        console.log("color:red","el     : " + this.$el); //已被初始化
+        console.log(this.$el);
+         console.log("color:red","data   : " + this.$data); //已被初始化
+         console.log("color:red","message: " + this.message); //已被初始化
+      if(window.history && window.history.pushState){
+        history.pushState(null,null,document.URL);
+        window.addEventListener('popstate',this.goBack,false);
+      }
+    },
+    beforeUpdate: function () {
+      console.log('beforeUpdate 更新前状态===============》');
+      console.log("color:red","el     : " + this.$el);
+      console.log(this.$el);
+      console.log("color:red","data   : " + this.$data);
+      console.log("color:red","message: " + this.message);
+
+    },
+    updated: function () {
+        console.log('updated 更新完成状态===============》');
+        console.log("color:red","el     : " + this.$el);
+        console.log(this.$el);
+           console.log("color:red","data   : " + this.$data);
+           console.log("color:red","message: " + this.message);
+    },
+    beforeDestroy: function () {
+        console.log('beforeDestroy 销毁前状态===============》');
+        console.log("color:red","el     : " + this.$el);
+        console.log(this.$el);
+           console.log("color:red","data   : " + this.$data);
+           console.log("color:red","message: " + this.message);
+    },
+    destroyed: function () {
+      console.log('destroyed 销毁完成状态===============》');
+      console.log("color:red","el     : " + this.$el);
+      console.log(this.$el);
+       console.log("color:red","data   : " + this.$data);
+       console.log("color:red","message: " + this.message);
+      window.removeEventListener('popstate',this.goBack,false);
+    },
     methods:{
+      goBack(){
+        console.log(this.$store.getters.isLogin);
+        if(this.$store.getters.isLogin){
+          this.$router.replace({path:'/HelloWorld'})
+        }
+      },
       login(){
         var _this = this;
         console.log(this);
@@ -35,10 +115,12 @@
           sessionStorage.setItem('username',_this.username);
           sessionStorage.setItem('userToken',token);
 
-          _this.$state.dispatch('setUser',_this.username);
-          _this.$state.dispatch('setToken',token);
+          console.log( '$store===',_this.$store);
+          console.log( '$store===',_this.$store.state);
+          _this.$store.dispatch('setUser',_this.username);
+          _this.$store.dispatch('setToken',token);
 
-          console.log('islogin===',_this.$state.isLogin);
+          console.log('islogin===',_this.$store.state.isLogin);
             _this.$router.push({
               path:'/HelloWorld'
               // query:{
@@ -79,6 +161,7 @@
         // })
       }
     }
+
   }
 </script>
 <style scoped lang="scss">
