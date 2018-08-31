@@ -17,7 +17,7 @@
   import store from '@/store'
   import ComponentB from '@/components/component/componentB.vue'
 
-  console.log(ComponentB);
+  // console.log(ComponentB);
   // var componentB = {
   //   props:{
   //     count:{

@@ -3,9 +3,9 @@
 // import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 // import Vue from 'vue'
-// import upperFirst from 'lodash/supperFirst'
+import {upperFirst,camelCase} from 'lodash'
+// import upperFirst from 'lodash/upperFirst'
 // import camelCase from 'lodash/camelCase'
-
 import App from './App'
 import router from './router'
 import store from './store'
@@ -13,7 +13,31 @@ import axios from 'axios'
 // import VueResource from 'vue-resource'
 // import ElementUI from 'element-ui'
 
-// const requireComponent = require.context()
+
+const requireComponent = require.context(
+  './components/component',
+  false,
+  /Base[A-Z]\w+\.(vue|js)$/
+)
+
+requireComponent.keys().forEach(fileName => {
+  const componentConfig = requireComponent(fileName);
+
+  const componentName = upperFirst(
+    camelCase(
+      // fileName.replace(/^\.\/(.*)\.\w+$/,'$1')
+      fileName.replace(/^\.\/_/,'')
+        .replace(/\.\w+$/,'')
+    )
+  );
+  console.log(componentName);
+  Vue.component(
+    componentName,
+    componentConfig.default || componentConfig
+  )
+})
+
+
 
 
 // Vue.use(ElementUI);

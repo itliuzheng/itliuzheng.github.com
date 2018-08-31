@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <BaseInput type="checkout"></BaseInput>
     <input type="text" v-model="username" id="username">
     <keep-alive>
      <router-view @userSignIn="userSignIn"></router-view>
