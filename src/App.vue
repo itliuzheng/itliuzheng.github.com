@@ -13,7 +13,7 @@ export default {
   name: 'App',
   data(){
     return{
-      username:sessionStorage.username
+      username:sessionStorage.username == 'null'? '':sessionStorage.username
     }
   },
   methods:{

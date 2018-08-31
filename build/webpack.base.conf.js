@@ -87,7 +87,7 @@ module.exports = {
     child_process: 'empty'
   },
   //性能优化视图
-  plugins:[
-    new BundleAnalyzerPlugin()
-  ]
+  // plugins:[
+  //   new BundleAnalyzerPlugin()
+  // ]
 }

@@ -3,6 +3,9 @@
 
     <h1>liuzheng</h1>
     <h2>{{message}}</h2>
+
+    <component-a></component-a>
+    <component-b></component-b>
   </div>
 </template>
 <script>

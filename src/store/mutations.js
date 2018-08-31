@@ -1,6 +1,5 @@
 export const userStatus = (state,user)=>{
-  console.log(state);
-  console.log(user);
+  console.log('userStatus==',user)
   if(user){
     state.currentUser = user;
     state.isLogin = true;
@@ -13,6 +12,5 @@ export const userStatus = (state,user)=>{
   }
 }
 export const tokenStatus = (state,token)=>{
-  console.log(token);
   sessionStorage.setItem('userToken',token);
 }
