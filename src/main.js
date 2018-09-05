@@ -9,7 +9,9 @@ import {upperFirst,camelCase} from 'lodash'
 import App from './App'
 import router from './router'
 import store from './store'
+import axiosbase from './axios'
 import axios from 'axios'
+import Router from "vue-router";
 // import VueResource from 'vue-resource'
 // import ElementUI from 'element-ui'
 
@@ -30,7 +32,6 @@ requireComponent.keys().forEach(fileName => {
         .replace(/\.\w+$/,'')
     )
   );
-  console.log(componentName);
   Vue.component(
     componentName,
     componentConfig.default || componentConfig
@@ -38,12 +39,48 @@ requireComponent.keys().forEach(fileName => {
 })
 
 
+router.beforeEach((to,from,next) =>{
+  let length = to.meta.meta? to.meta.meta.lenth: 0;
+  //路由发生变化修改页面meta
+  if(length){
+    for(let i = 0;i<length;i++){
+      let head = document.getElementsByTagName('head');
+      let meta = document.createElement('meta');
+      meta.name = to.meta.meta[i].name;
+      meta.content = to.meta.meta[i].content;
+      head[0].appendChild(meta);
+    }
+  }
+
+  //路由发生变化修改页面title
+  if(to.meta.title){
+    document.title = to.meta.title;
+  }
+
+  //判断该路由是否需要登录权限
+
+  if(to.matched.some(record => record.meta.requireAuth)){
+    let token = localStorage.getItem('userToken') == 'null'?null:localStorage.getItem('userToken');
+    if(token){
+      next();
+    }else{
+      next({
+        path:'/',
+        query:{redirect:to.fullPath}   //将跳转的路由path作为参数，登录成功后跳转到该路由
+      })
+    }
+  }else{
+    next();
+  }
+
+});
 
 
 // Vue.use(ElementUI);
 Vue.use(router);
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
+
 
 // const store = new Vuex.Store({
 //   state:{
@@ -69,7 +106,7 @@ new Vue({
   //        console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined
   //        console.log("%c%s", "color:red","data   : " + this.$data); //undefined
   //        console.log("%c%s", "color:red","message: " + this.message);
-  //        console.log("%c%s", "color:red","message: " , this.$store)
+  //        console.log("%c%s", "color:red","message: " , this.$store);
   // },
   // created: function () {
   //     console.group('created 创建完毕状态===============》');

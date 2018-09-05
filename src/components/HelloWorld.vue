@@ -1,5 +1,8 @@
 <template>
   <div>
+    <form v-on:submit.prevent="logon">
+      <button>登出</button>
+    </form>
     <div class="hello">
       <h1>{{ msg }}</h1>
       <h2>Essential Links</h2>
@@ -32,7 +35,7 @@
           v-for="(todo,index) in todos"
           :key="todo.id"
           :title="todo.title"
-          v-on:remove="todos.splice(index,1)"
+          v-on:removes="todos.splice(index,1)"
         ></li>
       </ul>
     </div>
@@ -45,7 +48,7 @@
     template:'\
       <li>\
         {{title}}\
-        <button v-on:click="$emit(\'remove\')">Remove</button>\
+        <button v-on:click="$emit(\'removes\')">Remove</button>\
         <button @:click="$emit(remove)">Remove</button>\
       </li>   \
      ',
@@ -77,7 +80,7 @@
     },
     methods:{
       clickUserName(){
-        console.log(sessionStorage.username);
+        console.log(localStorage.getItem('username'));
       },
       addNewTodo(){
         this.todos.push({
@@ -85,6 +88,12 @@
           title:this.newTodoText
         });
         this.newTodoText = ''
+      },
+      logon(){
+        this.$store.dispatch('setUser',null);
+        this.$store.dispatch('setToken',null);
+
+        this.$router.push({path:'/'})
       }
     }
   }

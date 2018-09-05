@@ -4,13 +4,13 @@ export const userStatus = (state,user)=>{
     state.currentUser = user;
     state.isLogin = true;
   }else if(user == null){
-    sessionStorage.setItem('username',null);
-    sessionStorage.setItem('userToken','');
+    localStorage.setItem('username',null);
+    localStorage.setItem('userToken',null);
     state.currentUser = null;
     state.isLogin = false;
     state.token = '';
   }
 }
 export const tokenStatus = (state,token)=>{
-  sessionStorage.setItem('userToken',token);
+  localStorage.setItem('userToken',token);
 }

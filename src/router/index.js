@@ -7,6 +7,8 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+
+
 export default new Router({
   mode:'history',
   base: process.env.NODE_ENV == 'development'?'/':'/dist/',
@@ -15,16 +17,35 @@ export default new Router({
     {
       path: '/',
       name: 'login',
-      component: resolve => require(['@/components/login/login'],resolve)
+      component: resolve => require(['@/components/login/login'],resolve),
+      meta:{
+        title:'首页',
+        meta:[
+          {
+            name:'keywords',
+            content:'vue-dome'
+          },
+          {
+            name:'description',
+            content:'vue-dome-description'
+          }
+        ]
+      }
     },{
       path:'/HelloWorld/',
       name:'HelloWorld',
-      component: resolve => require(['@/components/HelloWorld'],resolve)
-    },{
+      component: resolve => require(['@/components/HelloWorld'],resolve),
+      meta:{
+        title:'已登录',
+        requireAuth:true
+      }
+    },
+    {
       path:'/fail/',
       name:'fail',
       component: resolve => require(['@/components/login/fail'],resolve)
-    },{
+    },
+    {
       path:'*',
       name:'undefinedfail',
       component:  resolve => require(['@/components/error/undefinedfail'],resolve)

@@ -6,6 +6,7 @@
     <form v-on:submit.prevent="login()">
       <input  type="text" v-model="username" placeholder="用户名"><br>
       <input  type="password" v-model="password" placeholder="密码"><br>
+      <p v-show="form.is_show">{{form.msg}}</p>
       <button>登录</button>
     </form>
     <component-a count="123"></component-a>
@@ -16,6 +17,9 @@
   import '@/assets/css/login/login.css';
   import store from '@/store'
   import ComponentB from '@/components/component/componentB.vue'
+  import tool from '@/components/component/tool'
+
+  Vue.prototype.$tool = tool;
 
   // console.log(ComponentB);
   // var componentB = {
@@ -43,6 +47,7 @@
   //   },
   //   template:'<button v-on:click="count++">You Click Me {{count}} times</button>'
   // });
+
   export default {
     name:'login',
     components:{
@@ -53,13 +58,13 @@
         message:'欢迎进入登录页面',
         username:'',
         password:'',
-        isLogin:store.getters.isLogin
+        isLogin:store.getters.isLogin,
+        form:{
+          msg:'',
+          is_show:false
+        }
       }
     },
-    http:{
-      headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}
-    },
-
    beforeCreate: function () {
            //  console.log('beforeCreate 创建前状态===============》');
            // console.log("color:red" , "el     : " + this.$el); //undefined
@@ -67,32 +72,11 @@
            // console.log("color:red","message: " + this.message);
            // console.log("color:red","message: " , this.$store)
 
-     //判断用户名是否违法
-     function isName(name){
-       if(typeof name == 'string'){
-         switch(name){
-           case 'null':
-             name = null;
-             return name;
-             break;
-           case 'undefined':
-             name = null;
-             return name;
-             break;
-           case '':
-             name = null;
-             return name;
-             break;
-           default:
-             break;
-         }
-       }
-       return name
-     }
 
-      let username = isName(sessionStorage.username);
-      let token = sessionStorage.userToken;
 
+      // let username = isName(localStorage.username);
+      let username = localStorage.getItem('username');
+      let token = localStorage.getItem('userToken');
 
       if(username){
         this.$store.dispatch('setUser',username);
@@ -100,7 +84,7 @@
 
         this.$router.push({path:'/HelloWorld'})
       }else{
-        sessionStorage.userToken = '';
+        localStorage.setItem('userToken',null);
       }
 
     },
@@ -161,7 +145,7 @@
     },
     methods:{
       goBack(){
-        console.log(this.$store.getters.isLogin);
+        console.log('isLogin====',this.$store.getters.isLogin);
         if(this.$store.getters.isLogin){
           this.$router.replace({path:'/HelloWorld'})
         }
@@ -172,55 +156,51 @@
         console.log(_this.username+'===='+_this.password);
 
 
-        if(_this.password == '111111'){
-          let token = Math.random();
-          sessionStorage.setItem('username',_this.username);
-          sessionStorage.setItem('userToken',token);
+        if(!_this.$tool.password(_this.password)){
+          _this.form.is_show = true;
+          _this.form.msg = '密码错误';
+          return false;
+        }
 
-          console.log( '$store===',_this.$store);
-          console.log( '$store===',_this.$store.state);
-          _this.$store.dispatch('setUser',_this.username);
-          _this.$store.dispatch('setToken',token);
+        console.log(_this.form.is_show);
+        _this.form.is_show = false;
 
-          console.log('islogin===',_this.$store.state.isLogin);
-            _this.$router.push({
-              path:'/HelloWorld'
-              // query:{
-              //   user:_this.username
-              // }
-            })
+        _this.$http.post('http://119.147.171.111/user/login',{
+        // _this.$http.post('http://192.168.11.116:8105/user/login',{
+          loginName:_this.username,
+          password:_this.password
+        },
+          {emulateJSON:true}
+          ).then(function (res) {
+            console.log(res);
+            console.log(res.headers);
+          var code = res.data.respCode;
+          if(code == '00'){
+            let token = res.headers.authorization;
+            localStorage.setItem('username',_this.username);
+            localStorage.setItem('userToken',token);
 
+            console.log( '$store===',_this.$store);
+            console.log( '$store===',_this.$store.state);
+            _this.$store.dispatch('setUser',_this.username);
+            _this.$store.dispatch('setToken',token);
 
-          _this.$emit('userSignIn', _this.username);
-
-        }else{
+            console.log('islogin===',_this.$store.state.isLogin);
+              _this.$router.push({
+                path:'/HelloWorld'
+                // query:{
+                //   user:_this.username
+                // }
+              });
+            _this.$emit('userSignIn', _this.username);
+          }else{
             _this.$router.push({
               path:'/fail'
             })
-        }
-
-        // _this.$http.post('/persion/login',{
-        //   username:_this.username,
-        //   password:_this.password
-        // },
-        //   {emulateJSON:true}
-        //   ).then(function (res) {
-        //   var errorcode = res.data.code;
-        //   if(errorcode == '200'){
-        //     _this.$router.push({
-        //       path:'/HelloWorld',
-        //       query:{
-        //         user:res.data.data
-        //       }
-        //     })
-        //   }else{
-        //     _this.$router.push({
-        //       path:'/fail'
-        //     })
-        //   }
-        // }).catch(function (error) {
-        //   console.log(error);
-        // })
+          }
+        }).catch(function (error) {
+          console.log(error);
+        })
       }
     }
 

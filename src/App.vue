@@ -14,15 +14,15 @@ export default {
   name: 'App',
   data(){
     return{
-      username:sessionStorage.username == 'null'? '':sessionStorage.username
+      username:localStorage.username == 'null'? '':localStorage.username
     }
   },
   methods:{
   //  子-》父
     userSignIn(username){
       console.log(username);
-      sessionStorage.username = username;
-      this.username = sessionStorage.username;
+      localStorage.username = username;
+      this.username = localStorage.username;
 
     }
   }
