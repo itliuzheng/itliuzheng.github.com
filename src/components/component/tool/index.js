@@ -34,19 +34,19 @@ const ERRORS = {
 export default{
   validatePhoneNum(value) {
     return {
-      boolean:REGS.PHONE_REG.test(value),
+      boolean:REGS.PHONE_REG.test(value.trim()),
       msg:ERRORS.INVALID_PHONE_NUMBER
     }
   },
   validateCaptcha(value){
     return {
-      boolean:REGS.CAPTCHA_REG.test(value),
+      boolean:REGS.CAPTCHA_REG.test(value.trim()),
       msg:ERRORS.INVALID_CAPTCHA
     }
   },
   validatePassword(value){
     let msg = '';
-    if(value == ''){
+    if(value.trim() == ''){
       msg = ERRORS.PASS_NOT_NULL;
       return {
         boolean:false,
@@ -80,31 +80,31 @@ export default{
   },
   validateSms(val){
     return {
-      boolean:val == ''?false:true,
+      boolean:val.trim() == ''?false:true,
       msg:ERRORS.SMS_CAN_NOT_BE_NULL
     }
   },
   validateRealName(name){
     return {
-      boolean:name == ''?false:true,
+      boolean:name.trim() == ''?false:true,
       msg:ERRORS.NAME_CAN_NOT_BE_NULL
     }
   },
   validateIdCard(card){
     return {
-      boolean:REGS.ID_CARD_REG.test(card),
+      boolean:REGS.ID_CARD_REG.test(card.trim()),
       msg:ERRORS.ID_CARD_INVALID
     }
   },
   validateSmsCode(code){
     return {
-      boolean:REGS.SMS_CODE_REG.test(code),
+      boolean:REGS.SMS_CODE_REG.test(code.trim()),
       msg:ERRORS.INVALID_SMS_CODE
     }
   },
   validateBankAccount(bank){
     return {
-      boolean:REGS.BANK_ACCOUNT_REG.test(bank),
+      boolean:REGS.BANK_ACCOUNT_REG.test(bank.trim()),
       msg:ERRORS.BANK_ACCOUNT
     }
   }

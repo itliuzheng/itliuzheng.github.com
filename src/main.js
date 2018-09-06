@@ -38,23 +38,10 @@ requireComponent.keys().forEach(fileName => {
     componentConfig.default || componentConfig
   )
 });
-  //
-  //
-  // Vue.component(
-  //   'BaseAdd',
-  //   {
-  //     props:{
-  //       count:{
-  //         default:0
-  //       }
-  //     },
-  //     template:'<button v-on:click="count++">You Click Me {{count}} timessdfsdfsdf</button>'
-  //   }
-  // );
-
 
 router.beforeEach((to,from,next) =>{
-  let length = to.meta.meta? to.meta.meta.lenth: 0;
+  let length = to.meta.meta? to.meta.meta.length: 0;
+
   //路由发生变化修改页面meta
   if(length){
     for(let i = 0;i<length;i++){
@@ -74,8 +61,8 @@ router.beforeEach((to,from,next) =>{
   //判断该路由是否需要登录权限
 
   if(to.matched.some(record => record.meta.requireAuth)){
-    let token = localStorage.getItem('userToken') == 'null'?null:localStorage.getItem('userToken');
-    if(token){
+    let user_info = JSON.parse(localStorage.getItem('user_info'))||{};
+    if(user_info.username){
       next();
     }else{
       next({
@@ -83,6 +70,7 @@ router.beforeEach((to,from,next) =>{
         query:{redirect:to.fullPath}   //将跳转的路由path作为参数，登录成功后跳转到该路由
       })
     }
+
   }else{
     next();
   }

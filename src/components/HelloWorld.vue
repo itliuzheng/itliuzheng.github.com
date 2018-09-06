@@ -44,6 +44,14 @@
     <base-add count="123"></base-add>
     <component-b count="123"></component-b>
     <base-b count="123"></base-b>
+    <base-input
+      type="text"
+      v-model="username"
+      class="username-input"
+      placeholder="Enter your username"
+      label="用户名"
+      v-on:input="input"
+    ></base-input>
   </div>
 
 </template>
@@ -56,7 +64,6 @@
       <li>\
         {{title}}\
         <button v-on:click="$emit(\'removes\')">Remove</button>\
-        <button @:click="$emit(remove)">Remove</button>\
       </li>   \
      ',
     props:['title']
@@ -70,6 +77,7 @@
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',
+        username:'',
         value2:true,
         newTodoText:'',
         todos:[
@@ -101,10 +109,13 @@
         this.newTodoText = ''
       },
       logon(){
-        this.$store.dispatch('setUser',null);
-        this.$store.dispatch('setToken',null);
-
+        this.$store.dispatch('setUserInfo',null,null);
         this.$router.push({path:'/'})
+      },
+      input(value){
+        console.log(value);
+        console.log(event);
+        return this.username = value
       }
     }
   }
@@ -113,20 +124,25 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   h1{
-    color: blue;
+      color: blue;
+    }
+  h1, h2 {
+    font-weight: normal;
   }
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 10px 0 0;
-  li{
-    display: block;
-    margin-bottom: 10px;
+  ul {
+    list-style-type: none;
+    padding: 10px 0 0;
+    li{
+      display: block;
+      margin-bottom: 10px;
+    }
   }
-}
-a {
-  color: #42b983;
-}
+  a {
+    color: #42b983;
+  }
+  .username-input{
+    /deep/ input{
+      height: 20px;
+    }
+  }
 </style>

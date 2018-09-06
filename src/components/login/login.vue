@@ -75,17 +75,12 @@
 
 
       // let username = isName(localStorage.username);
-      let username = localStorage.getItem('username');
-      let token = localStorage.getItem('userToken');
-
-      if(username){
-        this.$store.dispatch('setUser',username);
-        this.$store.dispatch('setToken',token);
-
+      let user_info = JSON.parse(localStorage.getItem('user_info'));
+      if(user_info){
+        this.$store.dispatch('setUserInfo',user_info);
         this.$router.push({path:'/HelloWorld'})
-      }else{
-        localStorage.setItem('userToken',null);
       }
+
 
     },
     created: function () {
@@ -192,13 +187,16 @@
           var code = res.data.respCode;
           if(code == '00'){
             let token = res.headers.authorization;
-            localStorage.setItem('username',_this.username);
-            localStorage.setItem('userToken',token);
+            // localStorage.setItem('username',_this.username);
+            // localStorage.setItem('userToken',token);
+            let user_info = {
+              username:_this.username,
+              token:token
+            }
+            localStorage.setItem('user_info',JSON.stringify(user_info));
 
-            console.log( '$store===',_this.$store);
-            console.log( '$store===',_this.$store.state);
-            _this.$store.dispatch('setUser',_this.username);
-            _this.$store.dispatch('setToken',token);
+            _this.$store.dispatch('setUserInfo',_this.username,token);
+            // _this.$store.dispatch('setToken',token);
 
             console.log('islogin===',_this.$store.state.isLogin);
               _this.$router.push({

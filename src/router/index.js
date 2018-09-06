@@ -37,7 +37,17 @@ export default new Router({
       component: resolve => require(['@/components/HelloWorld'],resolve),
       meta:{
         title:'已登录',
-        requireAuth:true
+        requireAuth:true,
+        meta:[
+          {
+            name:'keywords',
+            content:'已登录'
+          },
+          {
+            name:'description',
+            content:'已登录'
+          }
+        ]
       }
     },
     {

@@ -3,6 +3,7 @@
     <input type="text" v-model="username" id="username">
     <keep-alive>
      <router-view @userSignIn="userSignIn"></router-view>
+     <!--<router-view ></router-view>-->
     </keep-alive>
     <!--<router-view/>-->
 
@@ -14,15 +15,17 @@ export default {
   name: 'App',
   data(){
     return{
-      username:localStorage.username == 'null'? '':localStorage.username
+      user_info:JSON.parse(localStorage.getItem('user_info')),
+      username:this.user_info?this.user_info.username:null
     }
   },
   methods:{
   //  子-》父
-    userSignIn(username){
-      console.log(username);
-      localStorage.username = username;
-      this.username = localStorage.username;
+    userSignIn(user_info){
+      console.log(user_info);
+      // user_info = JSON.stringify(user_info);
+      // localStorage.setItem('user_info',user_info);
+      // this.username = localStorage.user_info.username;
 
     }
   }
