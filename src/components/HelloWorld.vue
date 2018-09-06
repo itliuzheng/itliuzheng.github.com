@@ -1,8 +1,10 @@
 <template>
   <div>
     <form v-on:submit.prevent="logon">
+      <label for="new-todo">ADD a Todo</label>
       <button>登出</button>
     </form>
+    <base-add></base-add>
     <div class="hello">
       <h1>{{ msg }}</h1>
       <h2>Essential Links</h2>
@@ -21,7 +23,7 @@
     </div>
     <div id="todo-list-example">
       <form v-on:submit.prevent="addNewTodo">
-        <label for="new-todo">ADD a Todo</label>
+        <BaseInput placeholder="asdfasdf"></BaseInput>
         <input type="text"
                 id="new-todo"
                v-model="newTodoText"
@@ -39,11 +41,16 @@
         ></li>
       </ul>
     </div>
+    <base-add count="123"></base-add>
+    <component-b count="123"></component-b>
+    <base-b count="123"></base-b>
   </div>
 
 </template>
 
 <script>
+  import ComponentB from '@/components/component/componentB.vue'
+
   Vue.component('todo-item',{
     template:'\
       <li>\
@@ -54,8 +61,12 @@
      ',
     props:['title']
   });
+
   export default {
     name: 'HelloWorld',
+    components:{
+      ComponentB
+    },
     data () {
       return {
         msg: 'Welcome to Your Vue.js App',

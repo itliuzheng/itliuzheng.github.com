@@ -1,42 +1,56 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+
 // import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 // import Vue from 'vue'
-import {upperFirst,camelCase} from 'lodash'
-// import upperFirst from 'lodash/upperFirst'
-// import camelCase from 'lodash/camelCase'
+
 import App from './App'
 import router from './router'
 import store from './store'
 import axiosbase from './axios'
 import axios from 'axios'
-import Router from "vue-router";
+import upperFirst from 'lodash/upperFirst'
+import camelCase from 'lodash/camelCase'
+
+// import Router from "vue-router";
 // import VueResource from 'vue-resource'
 // import ElementUI from 'element-ui'
 
-
 const requireComponent = require.context(
-  './components/component',
+  './components/component/base',
   false,
-  /Base[A-Z]\w+\.(vue|js)$/
-)
+  /base-\w+\.(vue|js)$/
+);
 
+//通用全局组件化
 requireComponent.keys().forEach(fileName => {
   const componentConfig = requireComponent(fileName);
-
   const componentName = upperFirst(
     camelCase(
-      // fileName.replace(/^\.\/(.*)\.\w+$/,'$1')
       fileName.replace(/^\.\/_/,'')
         .replace(/\.\w+$/,'')
     )
   );
+
   Vue.component(
     componentName,
     componentConfig.default || componentConfig
   )
-})
+});
+  //
+  //
+  // Vue.component(
+  //   'BaseAdd',
+  //   {
+  //     props:{
+  //       count:{
+  //         default:0
+  //       }
+  //     },
+  //     template:'<button v-on:click="count++">You Click Me {{count}} timessdfsdfsdf</button>'
+  //   }
+  // );
 
 
 router.beforeEach((to,from,next) =>{

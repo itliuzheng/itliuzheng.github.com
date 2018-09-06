@@ -150,20 +150,35 @@
           this.$router.replace({path:'/HelloWorld'})
         }
       },
-      login(){
+      validate(){
         var _this = this;
         console.log(this);
         console.log(_this.username+'===='+_this.password);
 
+        let _name = _this.$tool.validateRealName(_this.username);
+        let _password = _this.$tool.validatePassword(_this.password);
 
-        if(!_this.$tool.password(_this.password)){
+        if(!_name.boolean){
           _this.form.is_show = true;
-          _this.form.msg = '密码错误';
+          _this.form.msg = _name.msg;
           return false;
         }
 
-        console.log(_this.form.is_show);
+        if(!_password.boolean){
+          _this.form.is_show = true;
+          _this.form.msg = _password.msg;
+          return false;
+        }
+
         _this.form.is_show = false;
+        return true;
+      },
+      login(){
+        var _this = this;
+
+        if(!_this.validate()){
+          return false;
+        }
 
         _this.$http.post('http://119.147.171.111/user/login',{
         // _this.$http.post('http://192.168.11.116:8105/user/login',{
