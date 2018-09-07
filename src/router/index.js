@@ -56,6 +56,26 @@ export default new Router({
       component: resolve => require(['@/components/login/fail'],resolve)
     },
     {
+      path:'/stock',
+      name:'stock',
+      meta:{
+        title:'交易图'
+      },
+      component:  resolve => require(['@/components/stock/stock'],resolve),
+      children:[
+        {
+          path:'/stock/index',
+          name:'index',
+          component: resolve => require(['@/components/stock/stock_index'],resolve)
+        },
+        {
+          path:'/stock/dome',
+          name:'dome',
+          component: resolve => require(['@/components/stock/stock_dome'],resolve)
+        }
+      ]
+    },
+    {
       path:'*',
       name:'undefinedfail',
       component:  resolve => require(['@/components/error/undefinedfail'],resolve)

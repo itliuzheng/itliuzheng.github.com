@@ -19,7 +19,8 @@ module.exports = {
   },
   externals: {
     'vue':'Vue',
-    'element-ui':'ElementUi'
+    'element-ui':'ElementUi',
+    'clchart':'ClChart',
   },
   output: {
     path: config.build.assetsRoot,
@@ -33,7 +34,8 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
+      // 'ClChart':resolve('./node_modules/clchart/dist/clchart.js'),
     }
   },
   module: {
