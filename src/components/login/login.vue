@@ -4,7 +4,7 @@
     <h1>liuzheng</h1>
     {{message}}<br>
     <form v-on:submit.prevent="login()">
-      <input  type="text" v-model="username" placeholder="用户名"><br>
+      <input  type="text" v-model="username" placeholder="用户名" ><br>
       <input  type="password" v-model="password" placeholder="密码"><br>
       <p v-show="form.is_show">{{form.msg}}</p>
       <button>登录</button>
@@ -66,13 +66,11 @@
       }
     },
    beforeCreate: function () {
-           //  console.log('beforeCreate 创建前状态===============》');
-           // console.log("color:red" , "el     : " + this.$el); //undefined
-           // console.log("color:red","data   : " + this.$data); //undefined
-           // console.log("color:red","message: " + this.message);
-           // console.log("color:red","message: " , this.$store)
-
-
+            console.log('beforeCreate 创建前状态===============》');
+           console.log("color:red" , "el     : " + this.$el); //undefined
+           console.log("color:red","data   : " + this.$data); //undefined
+           console.log("color:red","message: " + this.message);
+           console.log("color:red","message: " , this.$store)
 
       // let username = isName(localStorage.username);
       let user_info = JSON.parse(localStorage.getItem('user_info'));
@@ -84,25 +82,25 @@
 
     },
     created: function () {
-        // console.log('created 创建完毕状态===============》');
-        // console.log("color:red","el     : " + this.$el); //undefined
-        //    console.log("color:red","data   : " + this.$data); //已被初始化
-        //    console.log("color:red","message: " + this.message); //已被初始化
+        console.log('created 创建完毕状态===============》');
+        console.log("color:red","el     : " + this.$el); //undefined
+           console.log("color:red","data   : " + this.$data); //已被初始化
+           console.log("color:red","message: " + this.message); //已被初始化
 
     },
     beforeMount: function () {
-        // console.log('beforeMount 挂载前状态===============》');
-        // console.log("color:red","el     : " + (this.$el)); //已被初始化
-        // console.log(this.$el);
-        //    console.log("color:red","data   : " + this.$data); //已被初始化
-        //    console.log("color:red","message: " + this.message); //已被初始化
+        console.log('beforeMount 挂载前状态===============》');
+        console.log("color:red","el     : " + (this.$el)); //已被初始化
+        console.log(this.$el);
+           console.log("color:red","data   : " + this.$data); //已被初始化
+           console.log("color:red","message: " + this.message); //已被初始化
     },
     mounted: function () {
-        // console.log('mounted 挂载结束状态===============》');
-        // console.log("color:red","el     : " + this.$el); //已被初始化
-        // console.log(this.$el);
-        //  console.log("color:red","data   : " + this.$data); //已被初始化
-        //  console.log("color:red","message: " + this.message); //已被初始化
+        console.log('mounted 挂载结束状态===============》');
+        console.log("color:red","el     : " + this.$el); //已被初始化
+        console.log(this.$el);
+         console.log("color:red","data   : " + this.$data); //已被初始化
+         console.log("color:red","message: " + this.message); //已被初始化
       if(window.history && window.history.pushState){
         history.pushState(null,null,document.URL);
         window.addEventListener('popstate',this.goBack,false);
@@ -205,7 +203,7 @@
                 //   user:_this.username
                 // }
               });
-            _this.$emit('userSignIn', _this.username);
+            _this.$emit('userSignIn', user_info);
           }else{
             _this.$router.push({
               path:'/fail'

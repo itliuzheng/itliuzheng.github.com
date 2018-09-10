@@ -3,6 +3,7 @@
 
 // import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
+
 // import Vue from 'vue'
 
 import App from './App'
@@ -96,7 +97,7 @@ Vue.config.productionTip = false;
 // })
 
 /* eslint-disable no-new */
-new Vue({
+var app = new Vue({
   el: '#app',
   router,
   store,

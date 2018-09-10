@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-  import '@/assets/css/login/fail.css';
+  // import '@/assets/css/login/fail.css';
   export default {
     name:'fail',
     data(){

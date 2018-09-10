@@ -32,7 +32,7 @@ export default new Router({
         ]
       }
     },{
-      path:'/HelloWorld/',
+      path:'/HelloWorld',
       name:'HelloWorld',
       component: resolve => require(['@/components/HelloWorld'],resolve),
       meta:{
@@ -51,7 +51,7 @@ export default new Router({
       }
     },
     {
-      path:'/fail/',
+      path:'/fail',
       name:'fail',
       component: resolve => require(['@/components/login/fail'],resolve)
     },
@@ -59,6 +59,25 @@ export default new Router({
       path:'*',
       name:'undefinedfail',
       component:  resolve => require(['@/components/error/undefinedfail'],resolve)
+    },
+    {
+      path:'/test/:id',
+      name:'test',
+      component: resolve => require(['@/components/test/test.vue'],resolve),
+      children:[
+        {
+          path:'if',
+          component: resolve => require(['@/components/test/test-if.vue'],resolve),
+        },
+        {
+          path:'for',
+          component: resolve => require(['@/components/test/test-for.vue'],resolve),
+        },
+        {
+          path:'1px-border',
+          component: resolve => require(['@/components/test/test-1px-border.vue'],resolve),
+        }
+      ]
     }
   ]
 })

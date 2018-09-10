@@ -99,7 +99,7 @@
     },
     methods:{
       clickUserName(){
-        console.log(localStorage.getItem('username'));
+        console.log(localStorage.getItem('user_info'));
       },
       addNewTodo(){
         this.todos.push({
@@ -110,6 +110,7 @@
       },
       logon(){
         this.$store.dispatch('setUserInfo',null,null);
+        this.$emit('userSignIn',null);
         this.$router.push({path:'/'})
       },
       input(value){
@@ -119,6 +120,7 @@
       }
     }
   }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
