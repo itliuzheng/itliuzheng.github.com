@@ -3,6 +3,7 @@
 
 // import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
+import '@/assets/css/pc_base.css'
 
 // import Vue from 'vue'
 

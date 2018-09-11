@@ -59,7 +59,7 @@
     margin-top: 10px;
   }
   .box{
-    width: 188px;
+    width: 188PX;
     margin: 0 auto;
   }
 
