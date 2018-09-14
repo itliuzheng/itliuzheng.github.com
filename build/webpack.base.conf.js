@@ -3,8 +3,9 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+// let ExtractTextPlugin  = require("extract-text-webpack-plugin")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-;
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -17,10 +18,10 @@ module.exports = {
     // app: './src/main.js'
     app: ["babel-polyfill","./src/main.js"]
   },
-  externals: {
-    'vue':'Vue',
-    'element-ui':'ElementUi'
-  },
+  // externals: {
+  //   'vue':'Vue',
+  //   'element-ui':'ElementUi'
+  // },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -45,11 +46,23 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        loader: 'babel-loader?cacheDirectory',
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/webpack-dev-server/client')
+        ]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.svg$/,
+        loader:'svg-sprite-loader',
+        include: [resolve('src/icon')],
+        options: {
+          symbolId:'icon-[name]'
+        }
+      },
+      {
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -88,6 +101,7 @@ module.exports = {
   },
   //性能优化视图
   // plugins:[
-  //   new BundleAnalyzerPlugin()
+  //   // new BundleAnalyzerPlugin()
+  //   new ExtractTextPlugin("./static/css/style.css")
   // ]
 }

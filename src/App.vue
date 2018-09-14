@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <input type="text" v-model="username" id="username">
     <!--<keep-alive>-->
      <router-view @userSignIn="userSignIn"></router-view>
      <!--<router-view ></router-view>-->
@@ -39,10 +38,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
-  h1{
-    color: red;
-  }
 </style>
