@@ -2,7 +2,7 @@
   <div :class="classObj" class="app-wrapper">
     <!--<div class="drawer-bg" @click="handleClickOutside"/>-->
     <div class="drawer-bg"/>
-    <!--<sidebar class="sidebar-container"/>-->
+    <sidebar class="sidebar-container"/>
     <div class="main-container">
       <navbar></navbar>
       <!--<tags-view/>-->
@@ -11,25 +11,26 @@
   </div>
 </template>
 <script>
-  import { Navbar } from './components'
+  import { Navbar,Sidebar } from './components'
 
   export default {
     name:'layout',
     components:{
-      Navbar
+      Navbar,
+      Sidebar
     },
     mizins:[],
     computed:{
       sidebar() {
-        return false
+        return this.$store.state.app.sidebar
       },
       device() {
-        return 'desktop'
+        return this.$store.state.app.device
       },
-      classObj(){
+      classObj() {
         return {
-          hideSidebar: !this.sidebar,
-          openSidebar: this.sidebar,
+          hideSidebar: !this.sidebar.opened,
+          openSidebar: this.sidebar.opened,
           withoutAnimation: this.sidebar.withoutAnimation,
           mobile: this.device === 'mobile'
         }
