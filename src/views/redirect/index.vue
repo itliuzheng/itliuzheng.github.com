@@ -3,7 +3,7 @@
     beforeCreate(){
       const path = this.$route.params.path;
       console.log(path);
-      this.$route.replace(`/${path}`)
+      this.$router.replace(`/${path}`)
     },
     render:function (h) {
       console.log('----render---');

@@ -85,7 +85,6 @@ export default{
     }
   },
   validateRealName(name){
-    console.log(name.trim());
     return {
       boolean:name.trim() == ''?false:true,
       msg:ERRORS.NAME_CAN_NOT_BE_NULL

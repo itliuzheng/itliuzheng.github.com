@@ -6,18 +6,19 @@
     <div class="main-container">
       <navbar></navbar>
       <!--<tags-view/>-->
-      <!--<app-main/>-->
+      <back-main></back-main>
     </div>
   </div>
 </template>
 <script>
-  import { Navbar,Sidebar } from './components'
+  import { Navbar,Sidebar,BackMain } from './components'
 
   export default {
     name:'layout',
     components:{
       Navbar,
-      Sidebar
+      Sidebar,
+      BackMain,
     },
     mizins:[],
     computed:{

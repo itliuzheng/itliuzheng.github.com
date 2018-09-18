@@ -45,6 +45,11 @@
           width="240">
         </el-table-column>
         <el-table-column
+          prop="year"
+          label="申请年限"
+          width="80">
+        </el-table-column>
+        <el-table-column
           prop="date"
           label="申请时间"
           width="100px">
@@ -60,20 +65,14 @@
           width="150px">
         </el-table-column>
         <el-table-column
-          prop="state"
-          label="状态"
-          width="120px">
-        </el-table-column>
-        <el-table-column
-          prop="people"
-          label="审核人员"
+          prop="id_people"
+          label="审核员ID"
           width="80px">
         </el-table-column>
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.operating == '审核'"  @click="handleClick(scope.row)" type="text" size="small">{{scope.row.operating}}</el-button>
-            <el-button v-else  @click="lookClick(scope.row)" type="text" size="small">{{scope.row.operating}}</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -91,34 +90,14 @@
           review:'1',
           date:'',
         },
-        tableData: [
-          {
-            company:'中网中网中网中网中网中网',
-            date: '2016-05-02',
-            name: '王小虎',
-            state:'待审核',
-            id_number: '110101199206301212',
-            people:'陶笛',
-            operating:'审核'
-        },
-          {
+        tableData: [{
           company:'中网中网中网中网中网中网',
+          year:'1',
           date: '2016-05-02',
           name: '王小虎',
-          state:'待下户',
           id_number: '110101199206301212',
-          people:'陶笛', operating:'查看'
-
-        },
-          {
-          company:'中网中网中网中网中网中网',
-          date: '2016-05-02',
-          name: '王小虎',
-          state:'待录入人行报告',
-          id_number: '110101199206301212',
-          people:'陶笛', operating:'审核'
-        },
-        ]
+          id_people:''
+        }]
       }
     },
     methods:{
@@ -126,11 +105,7 @@
         console.log('查询');
       },
       handleClick(row){
-        console.log('审核');
-        this.$router.push({path:'/review/detail'})
-      },
-      lookClick(row){
-        console.log('lookClick');
+        console.log(row);
       }
     }
   }

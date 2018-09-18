@@ -86,7 +86,8 @@ export const constantRouterMap = [
     path: '',
     component: Layout,
     name: 'Dashboard',
-    meta: { title: '首页', icon: 'dashboard', noCache: true }
+    redirect: '/business_management/data_entry',
+    meta: { title: '首页', noCache: true }
     // redirect: 'dashboard',
     // children: [
     //   {
@@ -104,13 +105,31 @@ export const constantRouterMap = [
     children: [
       {
         path: '/redirect/:path*',
-        component: () => import('@/views/redirect/index')
+        // component: () => import('@/views/redirect/index')
+        component: resolve => require(['@/views/redirect/index'],resolve)
       }
-    ]
+    ],
+    meta: { title: '后台管理-登录' }
   },
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    // component: () => import('@/views/login/index'),
+    component: resolve => require(['@/views/login/index'],resolve),
+    hidden: true
+  },
+  {
+    component: Layout,
+    path: '/review',
+    redirect: '/review/detail',
+    children: [
+      {
+        path: 'detail',
+        // component: () => import('@/views/redirect/index')
+        component: resolve => require(['@/views/review_detail/detail'],resolve),
+        name: 'detail',
+        meta: { title: '审核详情', icon: 'detail', noCache: true }
+      }
+    ],
     hidden: true
   },
   // {
@@ -132,7 +151,8 @@ export const constantRouterMap = [
     children: [
       {
         path: 'data_entry',
-        component: () => import('@/views/business_management/data_entry'),
+        // component: () => import('@/views/business_management/data_entry'),
+        component: resolve => require(['@/views/business_management/data_entry'],resolve),
         name: 'data_entry',
         meta: { title: '资料录入', icon: 'business_management', noCache: true }
       },
@@ -143,7 +163,70 @@ export const constantRouterMap = [
         meta: { title: '申请管理', icon: 'business_management', noCache: true }
       }
     ]
-  }
+  },
+  {
+    path: '/approval_management',
+    component: Layout,
+    redirect: '/approval_management/approval_list',
+    alwaysShow: true, // will always show the root menu
+    meta: {
+      title: '审批管理',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'approval_list',
+        component: () => import('@/views/approval_management/approval_list'),
+        name: 'approval_list',
+        meta: {
+          title: '待审核列表',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'household_list',
+        component: () => import('@/views/approval_management/household_list'),
+        name: 'household_list',
+        meta: {
+          title: '待下户列表',
+          roles: ['admin']
+          // if do not set roles, means: this page does not require approval_management
+        }
+      },
+      {
+        path: 'household_review',
+        component: () => import('@/views/approval_management/household_review'),
+        name: 'household_review',
+        hidden:true,
+        meta: {
+          title:'录入申线下调研表',
+          roles: ['admin']
+          // if do not set roles, means: this page does not require approval_management
+        }
+      }
+    ]
+  },
+  {
+    path: '/customer_management',
+    component: Layout,
+    redirect: '/customer_management/list',
+    alwaysShow: true, // will always show the root menu
+    meta: {
+      title: '客户管理',
+      roles: ['admin'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/customer_management/list'),
+        name: 'list',
+        meta: {
+          title: '客户列表',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
+    ]
+  },
 ]
 
 export default new Router({
@@ -159,7 +242,7 @@ export const asyncRouterMap = [
     redirect: '/approval_management/approval_list',
     alwaysShow: true, // will always show the root menu
     meta: {
-      title: 'pending_list',
+      title: '审批管理',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -178,7 +261,8 @@ export const asyncRouterMap = [
         component: () => import('@/views/approval_management/household_list'),
         name: 'household_list',
         meta: {
-          title: '待下户列表'
+          title: '待下户列表',
+          roles: ['admin']
           // if do not set roles, means: this page does not require approval_management
         }
       }

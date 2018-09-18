@@ -11,3 +11,15 @@ export function loginByUsername(username,password) {
     data
   })
 }
+
+export function getUserInfo(token) {
+  return {
+    roles: ['admin'],
+    name: 'zhang san'
+  }
+  // return request({
+  //   url: '/user/info',
+  //   method: 'get',
+  //   params: { token }
+  // })
+}

@@ -96,7 +96,7 @@
             this.loading = true;
             this.$store.dispatch('LoginByUsername',this.loginForm).then(()=>{
               this.loading = false;
-              this.$route.push({path:this.redirect||'/'})
+              this.$router.push({path:this.redirect||'/'});
             }).catch(()=>{
               this.loading = false;
             })
