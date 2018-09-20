@@ -58,10 +58,8 @@
     },
     methods:{
       toggleSideBar(){
-        console.log('toggleSidBar');
         },
       logout(){
-        console.log('logOut');
       }
     }
   }

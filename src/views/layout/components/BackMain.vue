@@ -13,7 +13,6 @@
     name: 'BackMain',
     computed: {
       key() {
-        console.log('key',this.$route.fullPath);
         return this.$route.fullPath
       }
     }

@@ -12,14 +12,9 @@ export function loginByUsername(username,password) {
   })
 }
 
-export function getUserInfo(token) {
-  return {
-    roles: ['admin'],
-    name: 'zhang san'
-  }
-  // return request({
-  //   url: '/user/info',
-  //   method: 'get',
-  //   params: { token }
-  // })
+export function getUserInfo() {
+  return ajax({
+    url: '/sysuser/resources/1/',
+    method: 'get',
+  })
 }

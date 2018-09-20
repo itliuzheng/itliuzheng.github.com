@@ -37,24 +37,25 @@ const user = {
         reject(error)
       })
     },
-    // 获取用户信息
+    // 获取用户所拥有的菜单
     GetUserInfo({ commit, state }) {
-
       return new Promise((resolve, reject) => {
-        getUserInfo(state.token).then(response => {
-          if (!response.data) { // 由于mockjs 不支持自定义状态码只能这样hack
+        getUserInfo().then(response => {
+
+          if (response.data.code != 1) { // 由于mockjs 不支持自定义状态码只能这样hack
             reject('error')
           }
           const data = response.data
-
-          if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-            commit('SET_ROLES', data.roles)
+          console.log('GetUserInfo==',data);
+          //
+          if (data.data && data.data.length > 0) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', data.data)
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
-
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
+          //
+          // commit('SET_NAME', data.name)
+          // commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)
