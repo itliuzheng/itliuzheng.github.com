@@ -4,22 +4,6 @@
   <!--<div class="attachment-preview" >-->
     <el-collapse class="preview" v-model="activeNames" >
       <el-collapse-item title="身份证" name="1">
-        <!--<el-upload-->
-          <!--v-if="uploadType == 'upload'"-->
-          <!--class="upload-demo"-->
-          <!--action="/loan/loan-application-attachment/upload"-->
-          <!--:on-preview="handlePreview"-->
-          <!--:on-remove="handleRemove"-->
-          <!--:before-remove="beforeRemove"-->
-          <!--multiple-->
-          <!--:limit="2"-->
-          <!--:on-exceed="handleExceed"-->
-          <!--:file-list="fileList">-->
-          <!--<el-button size="small" type="primary">附件上传</el-button>-->
-        <!--</el-upload>-->
-
-
-          <!--action="/loan/loan-application-attachment/upload"-->
         <el-upload
           class="upload-demo"
           name="idCardUrl"
@@ -32,7 +16,6 @@
           <el-button size="small" type="primary">点击上传</el-button>
           <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
-        <!--<div><img src="" alt=""></div>-->
       </el-collapse-item>
       <el-collapse-item title="婚姻证明" name="2">
 
