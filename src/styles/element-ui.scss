@@ -80,3 +80,19 @@
     display: block
   }
 }
+.el-table__empty-text{
+  text-align: center;
+}
+
+
+.el-date-table{
+  th{
+    text-align: center;
+  }
+  td{
+    border-color: transparent;
+    span{
+      text-align: center;
+    }
+  }
+}

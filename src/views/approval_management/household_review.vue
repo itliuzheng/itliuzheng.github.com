@@ -12,22 +12,11 @@
             <p><span>公司名称：</span>天津港位物流有限公司</p>
           </div>
           <p><span>状态：</span>待审核</p>
-        </div>    </div>
+        </div>
+    </div>
     <div class="content">
       <div class="header clearfix">
         <!--<div class="tab">资料录入</div>-->
-        <el-upload
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="2"
-          :on-exceed="handleExceed"
-          :file-list="fileList">
-          <el-button size="small" type="primary">附件上传</el-button>
-        </el-upload>
       </div>
       <div class="entry-box">
         <el-form ref="business" :model="business" label-width="250px" :inline="true">
@@ -121,7 +110,7 @@
           </el-form-item>
 
           <div class="buttons">
-            <el-button class="blue el-button el-button--primary" @click="onSubmit">提交审核</el-button>
+            <!--<el-button class="blue el-button el-button&#45;&#45;primary" @click="onSubmit">提交审核</el-button>-->
           </div>
         </el-form>
       </div>
@@ -133,9 +122,6 @@
   export default {
     data(){
       return {
-        business:{
-          name:''
-        }
       }
     },
     methods:{

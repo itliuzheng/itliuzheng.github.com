@@ -17,4 +17,5 @@ export function getUserInfo() {
     url: '/sysuser/resources/1/',
     method: 'get',
   })
+
 }

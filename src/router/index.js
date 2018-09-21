@@ -18,16 +18,17 @@ export const constantRouterMap = [
     component: Layout,
     name: 'Dashboard',
     redirect: '/business_management_entry/data_entry',
-    meta: { title: '首页', noCache: true }
+    // redirect: '/dashboard',
+    meta: { title: '首页', noCache: true },
     // redirect: 'dashboard',
-    // children: [
-    //   {
-    //     path: 'dashboard',
-    //     component: () => import('@/views/dashboard/index'),
-    //     name: 'Dashboard',
-    //     meta: { title: '首页', icon: 'dashboard', noCache: true }
-    //   }
-    // ]
+    hidden:true,
+    children: [
+      {
+        path: 'dashboard',
+        component: resolve => require(['@/views/dashboard/index'],resolve),
+        name: 'Dashboard'
+      }
+    ]
   },
   {
     path: '/redirect',
@@ -48,24 +49,25 @@ export const constantRouterMap = [
     component: resolve => require(['@/views/login/index'],resolve),
     hidden: true
   },
-  {
-    //业务管理
-    path: '/business_management_entry',
-    component: Layout,
-    redirect: '/business_management_entry/data_entry',
-    meta: { title: '业务管理', noCache: true },
-    hidden: true,
-    children: [
-      {
-        path: 'data_entry',
-        // component: () => import('@/views/business_management/data_entry'),
-        component: resolve => require(['@/views/business_management/data_entry'],resolve),
-        name: 'data_entry',
-        meta: { title: '资料录入', noCache: true }
-      }
-    ]
-  },
-  { path: '*', redirect: '/', hidden: true }
+  // {
+  //   //业务管理
+  //   path: '/business_management_entry',
+  //   component: Layout,
+  //   redirect: '/business_management_entry/data_entry',
+  //   meta: { title: '业务管理', noCache: true },
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: 'data_entry',
+  //       // component: () => import('@/views/business_management/data_entry'),
+  //       component: resolve => require(['@/views/business_management/data_entry'],resolve),
+  //       name: 'data_entry',
+  //       meta: { title: '资料录入', noCache: true }
+  //     }
+  //   ]
+  // },
+  // { path: '*', redirect: '/', hidden: true }
+
   // {
   //   path: '/404',
   //   component: () => import('@/views/errorPage/404'),
@@ -104,7 +106,7 @@ export const asyncRouterMap = [
     //业务管理
     path: '/business_management',
     component: Layout,
-    redirect: '/business_management/data_entry',
+    // redirect: '/business_management/data_entry',
     meta: {
       title: '业务管理',
       noCache: true ,
@@ -116,8 +118,20 @@ export const asyncRouterMap = [
         // component: () => import('@/views/business_management/data_entry'),
         component: resolve => require(['@/views/business_management/data_entry'],resolve),
         name: 'data_entry',
-        meta: { title: '资料录入', noCache: true,
-          roles:'/business_management/data_entry'}
+        meta: {
+          title: '资料录入', noCache: true,
+          roles:'/business_management/data_entry'
+        },
+      },
+      {
+        path: 'data_entry/:id(\\d+)',
+        // component: () => import('@/views/business_management/data_entry'),
+        component: resolve => require(['@/views/business_management/data_entry'],resolve),
+        name: 'data_entry_id',
+        meta: {
+          title: '资料查看', noCache: true,
+          roles:'/business_management/data_entry'
+        },
       },
       {
         path: 'application_management',

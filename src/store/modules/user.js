@@ -1,6 +1,9 @@
 import {getToken,setToken,removeToken} from "@/utils/token";
 import {loginByUsername,getUserInfo} from "@/api/login"
 import {parseStrEmpty} from "@/utils";
+import { MessageBox } from 'element-ui';
+import router from '@/router';
+
 
 const user = {
   state:{
@@ -40,24 +43,28 @@ const user = {
     // 获取用户所拥有的菜单
     GetUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
+
         getUserInfo().then(response => {
 
-          if (response.data.code != 1) { // 由于mockjs 不支持自定义状态码只能这样hack
+          if (response.data.code != 1) {
             reject('error')
           }
           const data = response.data
-          console.log('GetUserInfo==',data);
           //
           if (data.data && data.data.length > 0) { // 验证返回的roles是否是一个非空数组
             commit('SET_ROLES', data.data)
           } else {
-            reject('getInfo: roles must be a non-null array !')
+            reject('getUserInfo: roles must be a non-null array !')
           }
-          //
-          // commit('SET_NAME', data.name)
-          // commit('SET_AVATAR', data.avatar)
+
           resolve(response)
         }).catch(error => {
+          // MessageBox.alert('网络异常，请稍后重试', '连接超时', {
+          //   confirmButtonText: '确定',
+          //   callback: action => {
+          //     router.go(0);
+          //   }
+          // });
           reject(error)
         })
       })
