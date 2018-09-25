@@ -1,4 +1,5 @@
 import {asyncRouterMap,constantRouterMap} from "@/router";
+import {arrToTree} from "@/utils/tree";
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -41,6 +42,7 @@ const permission = {
   },
   mutations:{
     SET_ROUTERS:(state,routers)=>{
+
       state.addRouters = routers;
       state.routers = constantRouterMap.concat(routers)
     }
@@ -48,7 +50,7 @@ const permission = {
   actions:{
     GenerateRoutes({commit},data){
       return new Promise(resolve => {
-        const roles = data.roles;
+        const roles = arrToTree(data.roles);
         let accessedRouters;
         accessedRouters = filterAsynscRouter(asyncRouterMap,roles)
 
@@ -57,6 +59,8 @@ const permission = {
         // }else{
         //   accessedRouters = filterAsynscRouter(asyncRouterMap,roles)
         // }
+
+
 
         commit('SET_ROUTERS',accessedRouters);
         resolve()

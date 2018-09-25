@@ -3,7 +3,7 @@ import {loginByUsername,getUserInfo} from "@/api/login"
 import {parseStrEmpty} from "@/utils";
 import { MessageBox } from 'element-ui';
 import router from '@/router';
-
+import { Message } from 'element-ui'
 
 const user = {
   state:{
@@ -28,16 +28,22 @@ const user = {
       // const username = userInfo.username.trim();
       return new Promise((resolve,reject)=>{
         loginByUsername(userInfo.username,userInfo.password).then(res => {
-          // const data = res.data;
-          const token = res.headers.authorization;
-          commit('SET_TOKEN',token);
-          commit('SET_NAME',userInfo.username);
-          setToken(token);
-          localStorage.setItem('user_name',userInfo.username);
-          resolve();
+          const data = res.data;
+          if(data.code == 1){
+            const token = res.headers.authorization;
+            commit('SET_TOKEN',token);
+            commit('SET_NAME',userInfo.username);
+            setToken(token);
+            localStorage.setItem('user_name',userInfo.username);
+            resolve();
+          }else{
+            Message.error(data.msg || 'please login again')
+            reject(data);
+          }
+        }).catch(error=>{
+          // Message.error(error || error.message)
+          reject()
         })
-      }).catch(error=>{
-        reject(error)
       })
     },
     // 获取用户所拥有的菜单
@@ -59,12 +65,12 @@ const user = {
 
           resolve(response)
         }).catch(error => {
-          // MessageBox.alert('网络异常，请稍后重试', '连接超时', {
-          //   confirmButtonText: '确定',
-          //   callback: action => {
-          //     router.go(0);
-          //   }
-          // });
+          MessageBox.alert('网络异常，请稍后重试', '连接超时', {
+            confirmButtonText: '确定',
+            callback: action => {
+              router.go(0);
+            }
+          });
           reject(error)
         })
       })

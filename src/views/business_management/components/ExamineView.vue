@@ -4,116 +4,129 @@
     <div class="top-main">
         <div class="information">
           <div class="p_inline">
-            <p><span>申请提交时间：</span>2018/12/6</p>
-            <p><span>申请金额：</span>201,800.00</p>
+            <p><span>申请提交时间：</span>{{business.companyRegisterDate}}</p>
+            <p><span>申请金额：</span>{{business.loanAmount}}</p>
           </div>
-          <p><span>保理业务期限：</span>12个月</p>
+          <p><span>保理业务期限：</span>{{business.factoringBusinessDeadline}}个月</p>
           <div class="p_inline">
-            <p><span>所属城市：</span>北京市  北京  东城区</p>
-            <p><span>公司名称：</span>天津港位物流有限公司</p>
+            <p><span>所属城市：</span>{{business.companyProvinceCode}}{{business.companyCityCode}}{{business.companyAreaCode}}</p>
           </div>
-          <p><span>状态：</span>待审核</p>
         </div>
     </div>
     <div class="entry-box">
-      <el-form ref="business" :model="business" label-width="250px" :inline="true">
-        <!--<div class="form-title">资料录入</div>-->
-        <el-form-item label="公司名称" class="is-required" prop="companyName">
-          <el-input v-model="business.companyName"></el-input>
-        </el-form-item>
-        <el-form-item label="注册日期" class="is-required" prop="companyRegisterDate">
-          <el-date-picker   type="date" v-model="business.companyRegisterDate" value-format="yyyy-MM-dd"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="实际经营年限" class="is-required"  prop="companyOperateYear">
-          <el-input v-model="business.companyOperateYear"></el-input>
-        </el-form-item>
-        <el-form-item label="实际经营地址" class="is-required" prop="companyOperateAddress">
-          <el-input v-model="business.companyOperateAddress"></el-input>
-        </el-form-item>
-        <div class="form-title">申请人信息</div>
-        <el-form-item label="申请人姓名" class="is-required" prop="proposerName">
-          <el-input v-model="business.proposerName"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人职务" class="is-required" prop="proposerPosition">
-          <el-input v-model="business.proposerPosition"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人身份证号" class="is-required" prop="proposerIdno">
-          <el-input v-model="business.proposerIdno"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人手机" class="is-required" prop="proposerMobile">
-          <el-input v-model="business.proposerMobile"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人固定居住地址" class="is-required" prop="proposerAddress">
-          <el-input v-model="business.proposerAddress"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人婚姻状态" class="is-required" prop="proposerIsMarried">
-          <el-select v-model="business.proposerIsMarried" placeholder="请选择">
-            <el-option label="未婚" value="0"></el-option>
-            <el-option label="已婚" value="1"></el-option>
-          </el-select>
-        </el-form-item>
-        <div class="form-title">配偶信息</div>
-        <el-form-item label="申请人配偶姓名">
-          <el-input v-model="business.proposerSpouseName"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人配偶身份证号">
-          <el-input v-model="business.proposerSpouseIdno"></el-input>
-        </el-form-item>
-        <el-form-item label="申请人配偶手机">
-          <el-input v-model="business.proposerSpouseMobile"></el-input>
-        </el-form-item>
-        <div class="form-title">法人信息</div>
-        <el-form-item label="法人姓名" class="is-required" prop="companyLegalPerson">
-          <el-input v-model="business.companyLegalPerson"></el-input>
-        </el-form-item>
-        <el-form-item label="法人身份证号" class="is-required" prop="companyLegalPersonIdno">
-          <el-input v-model="business.companyLegalPersonIdno"></el-input>
-        </el-form-item>
-        <el-form-item label="法人手机" class="is-required" prop="companyLegalPersonMobile">
-          <el-input v-model="business.companyLegalPersonMobile"></el-input>
-        </el-form-item>
-        <el-form-item label="法人与实际控制人关系" class="is-required" prop="legalPersonActualControllerRelation">
-          <el-input v-model="business.legalPersonActualControllerRelation"></el-input>
-        </el-form-item>
+      <table border="1px">
+        <tr>
+          <td>公司名称</td>
+          <td>{{business.companyName}}</td>
+          <td>注册日期</td>
+          <td>{{business.companyRegisterDate}}</td>
+        </tr>
+        <tr>
+          <td>实际经营年限</td>
+          <td>{{business.companyOperateYear}}</td>
+          <td>实际经营地址</td>
+          <td>{{business.companyOperateAddress}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>申请人姓名</td>
+          <td>{{business.proposerName}}</td>
+          <td>申请人职务</td>
+          <td>{{business.proposerPosition}}</td>
+        </tr>
+        <tr>
+          <td>申请人身份证号</td>
+          <td>{{business.proposerIdno}}</td>
+          <td>申请人手机</td>
+          <td>{{business.proposerMobile}}</td>
+        </tr>
+        <tr>
+          <td>申请人固定居住地址</td>
+          <td>{{business.proposerAddress}}</td>
+          <td>申请人婚姻状态</td>
+          <td v-if="business.proposerIsMarried == 1">已婚</td>
+          <td v-else>未婚</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>申请人配偶姓名</td>
+          <td>{{business.proposerSpouseName}}</td>
+          <td>申请人配偶身份证号</td>
+          <td>{{business.proposerSpouseIdno}}</td>
+        </tr>
+        <tr>
+          <td>申请人配偶手机</td>
+          <td>{{business.proposerSpouseMobile}}</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>法人姓名</td>
+          <td>{{business.companyLegalPerson}}</td>
+          <td>法人身份证号</td>
+          <td>{{business.companyLegalPersonIdno}}</td>
+        </tr>
+        <tr>
+          <td>法人手机</td>
+          <td>{{business.companyLegalPersonMobile}}</td>
+          <td>法人与实际控制人关系</td>
+          <td>{{business.legalPersonActualControllerRelation}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>正式员工数</td>
+          <td>{{business.companyOfficalStaffCount}}</td>
+          <td>自有车辆数量</td>
+          <td>{{business.companyCarCount}}</td>
+        </tr>
+        <tr>
+          <td>挂靠车辆数量</td>
+          <td>{{business.companyParkedCarCount}}</td>
+          <td>月均支出（加油费、高速公路费、员工工资等）</td>
+          <td>{{business.companyMonthDisburse}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>企业资产总额（房、车、土地、设备）</td>
+          <td>{{business.companyTotalAssets}}</td>
+          <td>企业负债总额（信用卡、贷款、民间借贷）</td>
+          <td>{{business.companyTotalLiabilities}}</td>
+        </tr>
+        <tr>
+          <td>对外担保金额</td>
+          <td>{{business.companyExternalGuaranteeAmount}}</td>
+          <td>每月应还款额</td>
+          <td>{{business.companyMonthPaymentAmount}}</td>
+        </tr>
 
-        <div class="form-title">企业信息</div>
-        <el-form-item label="正式员工数" class="is-required" prop="companyOfficalStaffCount">
-          <el-input v-model="business.companyOfficalStaffCount"></el-input>
-        </el-form-item>
-        <el-form-item label="自有车辆数量" class="is-required"  prop="companyCarCount">
-          <el-input v-model="business.companyCarCount"></el-input>
-        </el-form-item>
-        <el-form-item label="挂靠车辆数量" class="is-required"  prop="companyParkedCarCount">
-          <el-input v-model="business.companyParkedCarCount"></el-input>
-        </el-form-item>
-        <el-form-item label="月均支出（加油费、高速公路费、员工工资等）" class="is-required"  prop="companyMonthDisburse">
-          <el-input v-model="business.companyMonthDisburse"></el-input>
-        </el-form-item>
-        <div class="form-title">资产信息</div>
-        <el-form-item label="企业资产总额（房、车、土地、设备）" class="is-required" prop="companyTotalAssets">
-          <el-input v-model="business.companyTotalAssets"></el-input>
-        </el-form-item>
-        <el-form-item label="企业负债总额（信用卡、贷款、民间借贷）" class="is-required" prop="companyTotalLiabilities">
-          <el-input v-model="business.companyTotalLiabilities"></el-input>
-        </el-form-item>
-        <el-form-item label="对外担保金额" class="is-required" prop="companyExternalGuaranteeAmount">
-          <el-input v-model="business.companyExternalGuaranteeAmount"></el-input>
-        </el-form-item>
-        <el-form-item label="每月应还款额" class="is-required" prop="companyMonthPaymentAmount">
-          <el-input v-model="business.companyMonthPaymentAmount"></el-input>
-        </el-form-item>
-        <el-form-item label="去年销售收入总额" class="is-required"  prop="grossSalesLastYear">
-          <el-input v-model="business.grossSalesLastYear"></el-input>
-        </el-form-item>
-        <el-form-item label="本年已实现销售收入总额" class="is-required"  prop="grossSalesThisYear">
-          <el-input v-model="business.grossSalesThisYear"></el-input>
-        </el-form-item>
+      </table>
 
-        <div class="buttons">
-          <el-button class="blue el-button el-button--primary" @click="onSubmit">确认提交</el-button>
-          <el-button>取消</el-button>
-        </div>
-      </el-form>
     </div>
   </div>
 </template>
@@ -121,7 +134,7 @@
   import ajax from '@/utils/ajax'
 
   export default {
-
+    props:['id'],
     data(){
       return {
         business:{
@@ -155,25 +168,22 @@
         },
       }
     },
+    beforeMount:function(){
+      this.getAjac(this.id);
+    },
      methods:{
-      getAjac:function () {
-
+      getAjac:function (id) {
+        var _this = this;
          new Promise((resolve,reject) => {
           ajax({
-            url:'/loan/loan-application/add',
-            method:'post',
-            data
+            url:`/loan/loan-application/${id}`,
+            method:'get',
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
 
-              _this.id = data.data.id;
-              _this.$message({
-                type: 'success',
-                message: '添加成功，请前往附件管理添加附件'
-              });
+              _this.business = data.data;
 
-              _this.activeName = 'attachment';
 
             }
 
@@ -269,29 +279,28 @@
       }
     }
   }
-    .container{
+  .container{
       width: 1000px;
       margin: 0 auto;
     }
-  .table{
-    font-size: 14px;
-    text-align: center;
+
+
+  .entry-box{
+    width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 50px;
     margin-top: 20px;
     table{
-      width: 100%;
+      border: 1px solid #ccc;
       td{
-        width: 250px;
+        border-color: #ccc;
+        width: 25%;
         text-align: center;
-        height: 40px;
-        line-height: 40px;
-        font-weight: 500;
+        line-height: 1;
+        padding: 10px;
       }
     }
   }
-  .buttons{
-    text-align: center;
-  }
-  .entry-box{
-    margin-top: 22px;
-  }
+
+
 </style>

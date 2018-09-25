@@ -35,6 +35,7 @@
           type="password"
           auto-complete="on"></el-input>
       </el-form-item>
+      <p class="error" v-if="error">用户名或密码错误</p>
       <el-button class="login-button" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{lang.logIn}}</el-button>
     </el-form>
   </div>
@@ -77,7 +78,8 @@
           logIn:'登录'
         },
         loading:false,
-        redirect:null
+        redirect:null,
+        error:null
       }
     },
     watch:{
@@ -91,15 +93,21 @@
     },
     methods:{
       handleLogin(){
+        var _this = this;
         this.$refs.loginForm.validate(valid => {
+
+          _this.error = false;
           if(valid){
-            this.loading = true;
-            this.$store.dispatch('LoginByUsername',this.loginForm).then(()=>{
-              this.loading = false;
-              this.$router.push({path:this.redirect||'/'});
-            }).catch(()=>{
-              this.loading = false;
+            _this.loading = true;
+
+            _this.$store.dispatch('LoginByUsername',_this.loginForm).then(()=>{
+              _this.loading = false;
+              _this.$router.push({path:_this.redirect||'/'});
+            }).catch((error)=>{
+              _this.loading = false;
+              _this.error = true;
             })
+
           }else{
             console.log('error submit!');
             return false;
@@ -200,5 +208,13 @@ $light_gray:#eee;
         font-size: 20px;
       }
     }
+    .error{
+      text-align: center;
+      color: #f56c6c;
+      font-size: 12px;
+      line-height: 1;
+      height: 12px;
+    }
   }
+
 </style>

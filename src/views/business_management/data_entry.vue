@@ -3,7 +3,7 @@
     <div class="content entry-content">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane :label="firstName" name="first">
-          <examine-view v-if="id"></examine-view>
+          <examine-view v-if="id" :id="id"></examine-view>
           <entry-view v-else v-on:childByValue="childByValue"></entry-view>
         </el-tab-pane>
           <el-tab-pane label="附件管理" name="attachment" >
@@ -30,7 +30,7 @@
     },
     beforeMount:function(){
       let id = this.$route.params.id;
-      console.log(id);
+
       if(id){
         this.id = id;
         this.firstName = '资料查看';

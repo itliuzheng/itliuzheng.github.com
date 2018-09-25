@@ -17,7 +17,7 @@ export const constantRouterMap = [
     path: '',
     component: Layout,
     name: 'Dashboard',
-    redirect: '/business_management_entry/data_entry',
+    redirect: '/business_management/data_entry',
     // redirect: '/dashboard',
     meta: { title: '首页', noCache: true },
     // redirect: 'dashboard',
@@ -90,10 +90,10 @@ export const asyncRouterMap = [
   {
     component: Layout,
     path: '/review',
-    redirect: '/review/detail',
+    // redirect: '/review/detail',
     children: [
       {
-        path: 'detail',
+        path: 'detail/:id(\\d+)',
         // component: () => import('@/views/redirect/index')
         component: resolve => require(['@/views/review_detail/detail'],resolve),
         name: 'detail',
@@ -128,6 +128,7 @@ export const asyncRouterMap = [
         // component: () => import('@/views/business_management/data_entry'),
         component: resolve => require(['@/views/business_management/data_entry'],resolve),
         name: 'data_entry_id',
+        hidden:true,
         meta: {
           title: '资料查看', noCache: true,
           roles:'/business_management/data_entry'
@@ -174,7 +175,7 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: 'household_review',
+        path: 'household_review/:id(\\d+)',
         component: () => import('@/views/approval_management/household_review'),
         name: 'household_review',
         hidden:true,

@@ -5,3 +5,4 @@ export { default as EnterpriseRiskInformation } from './tab/EnterpriseRiskInform
 export { default as PersonalQualification } from './tab/PersonalQualification'
 export { default as PersonalRiskInformation } from './tab/PersonalRiskInformation'
 export { default as AttachmentPreview } from './tab/AttachmentPreview'
+export { default as AttachmentPreviewId } from './tab/AttachmentPreviewId'

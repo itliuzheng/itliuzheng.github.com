@@ -85,6 +85,7 @@
           id_number: '110101199206301212',
           id_people:'',
           state:'待下户',
+          id:14
         }]
       }
     },
@@ -93,8 +94,8 @@
         console.log('查询');
       },
       handleClick(row){
-        console.log(row);
-        this.$router.push({path:'/approval_management/household_review'})
+        let id = row.id;
+        this.$router.push({path:`/approval_management/household_review/${id}`})
       }
     }
   }

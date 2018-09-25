@@ -127,7 +127,9 @@
       },
       handleClick(row){
         console.log('审核');
-        this.$router.push({path:'/review/detail'})
+        var id = row.id;
+        this.$router.push({path:`/review/detail/14`})
+        // this.$router.push({path:`/review/detail/${id}`})
       },
       lookClick(row){
         console.log('lookClick');

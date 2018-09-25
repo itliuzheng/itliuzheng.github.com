@@ -104,17 +104,9 @@
           review:'1',
           date:'',
         },
-        // tableData: [{
-        //   company:'中网中网中网中网中网中网',
-        //   year:'1',
-        //   date: '2016-05-02',
-        //   name: '王小虎',
-        //   id_number: '110101199206301212',
-        //   id_people:''
-        // }],
         page:{
           current:1,
-          pageSize:1,
+          pageSize:10,
           pages:1,
           total:100,
           records:[],
@@ -122,22 +114,6 @@
       }
     },
     beforeMount:function(){
-       // new Promise((resolve,reject) => {
-       //  ajax({
-       //    url:`/loan/loan-application/page`,
-       //    method:'get'
-       //  }).then(function (res) {
-       //    let data = res.data;
-       //    if(data.code == 1){
-       //      if(data.data){
-       //        _this.page = data.data;
-       //      }
-       //    }
-       //
-       //  }).catch(error => {
-       //    reject(error)
-       //  })
-       // })
       this.ajaxPage(1);
     },
     methods:{
@@ -165,8 +141,9 @@
         console.log('查询');
       },
       handleClick(row){
-        console.log(row);
+        console.log('row',row);
         let id = row.id;
+        this.$router.push({path:`data_entry/${id}`})
 
       },
       handleCurrentChange(val) {

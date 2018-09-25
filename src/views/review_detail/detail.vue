@@ -16,53 +16,56 @@
             <p><span>公司名称：</span>天津港位物流有限公司</p>
           </div>
           <p><span>状态：</span>待审核</p>
-          <div class="result">
-            <p>审批结果</p>
-            <p>不通过</p>
-          </div>
+          <!--<div class="result">-->
+            <!--<p>审批结果</p>-->
+            <!--<p></p>-->
+          <!--</div>-->
         </div>
         <div class="review_result">
-          <el-form ref="review" :model="review">
-            <template :inline="true">
-              <span class="review_label">审核结果</span>
-              <el-select v-model="review.result" placeholder="请选择">
-                <el-option
-                  v-for="list in review.list"
-                  :key="list.value"
-                  :label="list.name"
-                  :value="list.value"
-                ></el-option>
-              </el-select>
-              <template v-if="review.result == '0'">
-                <span class="review_label">不通过原因</span>
-                <el-select v-model="review.reason" placeholder="请选择">
+          <el-form ref="review" :model="review" :rules="reviewRules" label-width="100px">
+            <template>
+              <el-form-item class="inline-block" prop="result" label="审核结果">
+                <!--<span class="review_label">审核结果</span>-->
+                <el-select v-model="review.result" placeholder="请选择" >
                   <el-option
-                    v-for="list in review.reason_list"
+                    v-for="list in review.list"
                     :key="list.value"
                     :label="list.name"
                     :value="list.value"
                   ></el-option>
                 </el-select>
+              </el-form-item>
+
+              <template v-if="review.result == '0'">
+                <el-form-item class="inline-block"  prop="reason" label="不通过原因">
+                  <!--<span class="review_label">不通过原因</span>-->
+                  <el-select v-model="review.reason" placeholder="请选择">
+                    <el-option
+                      v-for="list in review.reason_list"
+                      :key="list.value"
+                      :label="list.name"
+                      :value="list.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
               </template>
-              <el-button class="el-button el-button--success">确认审批结果</el-button>
+              <el-button class="el-button el-button--success" @click="reviewResult">确认审批结果</el-button>
             </template>
-            <div class="input-box">
-              <span class="review_label">审批额度</span>
-              <el-input class="review-input"></el-input>
-            </div>
-            <div class="input-box">
-              <span class="review_label">审核备注</span>
-              <el-input class="review-input max-width"></el-input>
-            </div>
+            <el-form-item class="input-box" prop="amount" label="审批额度">
+              <el-input  class="review-input" v-model="review.amount" ></el-input>
+            </el-form-item>
+            <el-form-item class="input-box" prop="remark" label="审核备注">
+              <el-input class="review-input max-width" v-model="review.remark" ></el-input>
+            </el-form-item>
           </el-form>
         </div>
         <el-tabs class="info_tab" v-model="review_info" type="card" @tab-click="infoClick">
-          <el-tab-pane label="申请信息" name="1"><application-information></application-information></el-tab-pane>
-          <el-tab-pane label="企业资质" name="2"><qualification></qualification></el-tab-pane>
-          <el-tab-pane label="企业风险信息" name="3"><enterprise-risk-information></enterprise-risk-information></el-tab-pane>
-          <el-tab-pane label="个人资质" name="4"><personal-qualification></personal-qualification></el-tab-pane>
-          <el-tab-pane label="个人风险信息" name="5"><personal-risk-information></personal-risk-information></el-tab-pane>
-          <el-tab-pane label="附件预览" name="6"><attachment-preview></attachment-preview></el-tab-pane>
+          <el-tab-pane label="申请信息" name="1"><application-information :id="id"></application-information></el-tab-pane>
+          <el-tab-pane label="企业资质" name="2"><qualification :id="id"></qualification></el-tab-pane>
+          <el-tab-pane label="企业风险信息" name="3"><enterprise-risk-information :id="id"></enterprise-risk-information></el-tab-pane>
+          <el-tab-pane label="个人资质" name="4"><personal-qualification :id="id"></personal-qualification></el-tab-pane>
+          <el-tab-pane label="个人风险信息" name="5"><personal-risk-information :id="id"></personal-risk-information></el-tab-pane>
+          <el-tab-pane label="附件预览" name="6"><attachment-preview-id :uploadId="id"></attachment-preview-id></el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="审核历史记录" name="second"><history></history></el-tab-pane>
@@ -70,7 +73,12 @@
   </div>
 </template>
 <script>
-  import { History , ApplicationInformation , Qualification , EnterpriseRiskInformation , PersonalQualification , PersonalRiskInformation , AttachmentPreview} from './components'
+  import { History , ApplicationInformation ,
+    Qualification , EnterpriseRiskInformation ,
+    PersonalQualification , PersonalRiskInformation ,
+    AttachmentPreviewId} from './components'
+  import ajax from '@/utils/ajax'
+  import { Message } from 'element-ui'
 
   export default {
     components:{
@@ -80,10 +88,28 @@
       EnterpriseRiskInformation,
       PersonalQualification,
       PersonalRiskInformation,
-      AttachmentPreview
+      AttachmentPreviewId
+    },
+    beforeMount:function(){
+      this.id = this.$route.params.id;
     },
     data(){
+      let validatorAmount = function (rule, value, callback) {
+
+        let reg = /^\d+$/g;
+
+        if(reg.test(value)){
+          if(value === '0'){
+            callback(new Error('审核金额不能为0'))
+          }else{
+            callback();
+          }
+        }else{
+          callback(new Error('请输入审核金额'));
+        }
+      }
       return {
+        id:'',
         activeName: 'first',
         review:{
           result:'',
@@ -115,17 +141,63 @@
               value:'2',
               name:'负债过多'
             },
-          ]
+          ],
+          amount:'',
+          remark:'',
         },
-        review_info:'1'
+        reviewRules:{
+          result:[
+            { required: true, message: '请选择审核结果', trigger: 'change' }
+          ],
+          amount:[
+            { required: true, validator:validatorAmount , trigger: 'blur' },
+          ],
+          remark:[
+            { required: true, message: '请填写备注', trigger: 'blur' }
+          ],
+        },
+        review_info:'1',
       }
     },
     methods:{
       handleClick(tab, event) {
-        console.log(tab, event);
       },
       infoClick(tab, event){
+      },
+      reviewResult(){
+        var _this = this;
+        let data = {
+          id:this.$route.params.id,
+          status:this.review.result,
+          approvalAmount:this.review.amount,
+          remark:this.review.remark,
+          reason:this.review.reason,
+        }
 
+        this.$refs.review.validate((valid)=>{
+          console.log(valid);
+          if(valid){
+            _this.reviewAjax(data)
+          }
+        })
+      },
+      reviewAjax(data){
+        var _this = this;
+        new Promise((resolve,reject) => {
+          ajax({
+            url:`/loan/loan-application/approval`,
+            method:'post',
+            data,
+          }).then(function (res) {
+            let data = res.data;
+            if(data.code == 1){
+
+            }
+
+          }).catch(error => {
+            reject(error)
+          })
+        })
       }
     }
   }
@@ -167,6 +239,10 @@
     padding: 20px;
   }
 
+  .inline-block{
+    display: inline-block;
+    margin-bottom: 0;
+  }
   .pane{
     .btn{
       display: block;
@@ -186,6 +262,7 @@
     width: 1000px;
     margin: 20px auto 0;
     border: 1px solid #ccc;
+    padding-bottom: 20px;
     p{
       width: 49%;
       margin-top: 20px;
@@ -218,15 +295,13 @@
         margin:0 50px 0 0;
         padding-left: 20px;
         font-size: 14px;
+        vertical-align: top;
       }
     }
   }
   .review_result{
     width: 800px;
     margin: 20px auto 0;
-    .review_label{
-      margin-right: 20px;
-    }
     .input-box{
       margin-top: 20px;
       .max-width{

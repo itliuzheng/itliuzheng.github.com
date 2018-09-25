@@ -5,102 +5,123 @@
     <!--<div class="attachment-preview" >-->
       <el-collapse class="preview" v-model="activeNames" >
         <el-collapse-item title="身份证" name="1">
-          <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            name="idCardUrl"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="fileData.idCardUrl" :src="fileData.idCardUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">身份证正面</i>
-          </el-upload>
+          <div class="upload-inline">
+            <el-upload
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              name="idCardUrl"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+              >
+              <el-button size="small" type="primary">身份证正面上传</el-button>
+            </el-upload>
 
-          <el-upload
-            name="idCardBackUrl"
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+            <img  v-if="fileData.idCardUrl" :src="fileData.idCardUrl" class="avatar">
+          </div>
+
+          <div class="upload-inline">
+            <el-upload
+              name="idCardBackUrl"
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+                <el-button size="small" type="primary">身份证反面上传</el-button>
+            </el-upload>
             <img v-if="fileData.idCardBackUrl" :src="fileData.idCardBackUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">身份证反面</i>
-          </el-upload>
-
+          </div>
           <!--<div class="img-box"><img width="100%" :src="fileData.idCardUrl" alt=""></div>-->
           <!--<div class="img-box"><img width="100%" :src="fileData.idCardBackUrl" alt=""></div>-->
         </el-collapse-item>
         <el-collapse-item title="婚姻证明" name="2">
-
-          <el-upload
-            name="marriageCertificateUrl"
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+          <div class="upload-inline">
+            <el-upload
+              name="marriageCertificateUrl"
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+                multiple
+                :limit="1"
+            >
+                <el-button size="small" type="primary">上传</el-button>
+            </el-upload>
             <img v-if="fileData.marriageCertificateUrl" :src="fileData.marriageCertificateUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">婚姻证明</i>
-          </el-upload>
+          </div>
         </el-collapse-item>
         <el-collapse-item title="营业执照" name="3">
-
-          <el-upload
-            name="businessLicenseUrl"
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+          <div class="upload-inline">
+            <el-upload
+              name="businessLicenseUrl"
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+                <el-button size="small" type="primary">上传</el-button>
+            </el-upload>
             <img v-if="fileData.businessLicenseUrl" :src="fileData.businessLicenseUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">营业执照</i>
-          </el-upload>
+          </div>
 
         </el-collapse-item>
         <el-collapse-item title="实际控制人证明 " name="4">
-          <el-upload
-            name="actualControllerCertifyUrl"
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+          <div class="upload-inline">
+            <el-upload
+              name="actualControllerCertifyUrl"
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+                <el-button size="small" type="primary">上传</el-button>
+            </el-upload>
             <img v-if="fileData.actualControllerCertifyUrl" :src="fileData.actualControllerCertifyUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">实际控制人证明</i>
-          </el-upload>
+          </div>
 
         </el-collapse-item>
         <el-collapse-item title="固定居住地证明 " name="5">
-          <el-upload
-            name="residencePermitUrl"
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+          <div class="upload-inline">
+            <el-upload
+              name="residencePermitUrl"
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+                <el-button size="small" type="primary">上传</el-button>
+            </el-upload>
             <img v-if="fileData.residencePermitUrl" :src="fileData.residencePermitUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">固定居住地证明</i>
-          </el-upload>
+          </div>
 
         </el-collapse-item>
         <el-collapse-item title="道路运输许可证 " name="6">
-          <el-upload
-            name="transportLicenseUrl"
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            :http-request="uploadHttp"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+          <div class="upload-inline">
+            <el-upload
+              name="transportLicenseUrl"
+              class="avatar-uploader"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :show-file-list="false"
+              :http-request="uploadHttp"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+                <el-button size="small" type="primary">上传</el-button>
+            </el-upload>
             <img v-if="fileData.transportLicenseUrl" :src="fileData.transportLicenseUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon">道路运输许可证</i>
-          </el-upload>
+          </div>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -180,23 +201,18 @@
         // this.fileData[]= URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg' || 'image/png';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      },
-
-      handlePreview(file) {
-        console.log('file==',file);
+        // const isJPG = file.type === 'image/jpeg' || 'image/png';
+        // const isLt2M = file.size / 1024 / 1024 < 2;
+        //
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        // if (!isLt2M) {
+        //   this.$message.error('上传头像图片大小不能超过 2MB!');
+        // }
+        // return isJPG && isLt2M;
       },
       uploadHttp(data){
-        console.log(data);
         let id = this.uploadId || 1;
         let name = data.filename;
         var _this = this;
@@ -215,6 +231,7 @@
                   type: 'success',
                   message: '添加附件成功'
                 });
+                _this.fileData[name] = data.data;
               }
             }).catch(error => {
               reject(error)
@@ -237,35 +254,38 @@
     top: 0;
     margin-top: 10px;
   }
-  .avatar-uploader{
-    display: inline-block;
-  }
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 12px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
+
+  /*.avatar-uploader{*/
+    /*display: inline-block;*/
+  /*}*/
+  /*.avatar-uploader .el-upload {*/
+    /*border: 1px dashed #d9d9d9;*/
+    /*border-radius: 6px;*/
+    /*cursor: pointer;*/
+    /*position: relative;*/
+    /*overflow: hidden;*/
+  /*}*/
+  /*.avatar-uploader .el-upload:hover {*/
+    /*border-color: #409EFF;*/
+  /*}*/
+  /*.avatar-uploader-icon {*/
+    /*font-size: 12px;*/
+    /*color: #8c939d;*/
+    /*width: 178px;*/
+    /*height: 178px;*/
+    /*line-height: 178px;*/
+    /*text-align: center;*/
+  /*}*/
   .avatar {
-    width: 178px;
-    height: 178px;
     display: block;
+    width: 100%;
   }
 </style>
 
 <style scoped>
+  .upload-inline{
+    margin-bottom: 20px;
+  }
   .attachment-preview{
     margin: 20px 0 100px;
   }

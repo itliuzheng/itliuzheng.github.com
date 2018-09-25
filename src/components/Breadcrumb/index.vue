@@ -30,8 +30,6 @@ export default {
     generateTitle,
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
-      console.log(this.$route);
-      console.log(matched);
       const first = matched[0]
       if (first && first.name.trim().toLocaleLowerCase() !== 'Dashboard'.toLocaleLowerCase()) {
         matched = [{ path: '/', meta: { title: '首页' }}].concat(matched)
