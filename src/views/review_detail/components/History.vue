@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table
-    :data="tableData"
+    :data="page.records"
     border
     width="100%">
       <el-table-column prop="p1" label="处理人"></el-table-column>
@@ -15,10 +15,17 @@
   </div>
 </template>
 <script>
+  import ajax from '@/utils/ajax'
+
   export default {
+    props:['id'],
+    beforeMount:function(){
+      this.getAjax(1);
+
+    },
     data(){
       return {
-        tableData:[{
+        page:[{
           p1:'',
           p2:'',
           p3:'',
@@ -28,6 +35,24 @@
         }]
       }
 
-    }
+    },
+    methods:{
+      getAjax(page){
+        var _this = this;
+         new Promise((resolve,reject) => {
+          ajax({
+            url:`/loan/loan-application-history/page?page=${page}&pageSize=10`,
+            method:'get'
+          }).then(function (res) {
+            let data = res.data;
+            if(data.code == 1){
+              _this.page = data.data;
+            }
+          }).catch(error => {
+            reject(error)
+          })
+         })
+      }
+    },
   }
 </script>

@@ -47,7 +47,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    Message.error(error || 'please login again')
+    Message.error('please login again')
     Promise.reject(error)
   }
 )
@@ -72,7 +72,7 @@ service.interceptors.response.use(
   },
   error => {
     Message({
-      msesage:'网络异常，请稍后重新尝试',
+      message:'网络异常，请稍后重新尝试',
       type:'error',
       duration:5000
     })

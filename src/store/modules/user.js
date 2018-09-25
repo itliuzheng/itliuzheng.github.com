@@ -37,7 +37,7 @@ const user = {
             localStorage.setItem('user_name',userInfo.username);
             resolve();
           }else{
-            Message.error(data.msg || 'please login again')
+            // Message.error('please login again')
             reject(data);
           }
         }).catch(error=>{

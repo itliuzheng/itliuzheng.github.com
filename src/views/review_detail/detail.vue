@@ -68,7 +68,7 @@
           <el-tab-pane label="附件预览" name="6"><attachment-preview-id :uploadId="id"></attachment-preview-id></el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="审核历史记录" name="second"><history></history></el-tab-pane>
+      <el-tab-pane label="审核历史记录" name="second"><history :id="id"></history></el-tab-pane>
     </el-tabs>
   </div>
 </template>
