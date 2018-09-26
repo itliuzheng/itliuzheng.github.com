@@ -3,29 +3,32 @@
     <div class="top-main">
       <el-form :inline="true" ref="management" :model="management" label-position="top">
         <el-form-item label="申请人姓名:">
-          <el-input v-model="management.name"></el-input>
+          <el-input v-model="management.proposerName"></el-input>
         </el-form-item>
         <el-form-item label="申请公司名称:">
-          <el-input v-model="management.company"></el-input>
+          <el-input v-model="management.companyName"></el-input>
         </el-form-item>
         <el-form-item label="申请人身份证号:">
-          <el-input v-model="management.id_number"></el-input>
+          <el-input v-model="management.proposerIdno"></el-input>
         </el-form-item>
         <el-form-item label="资料审核状态:">
-          <el-select v-model="management.review" >
+          <el-select v-model="management.applyStatus" >
+            <!--1-初始状态，2-通过，3-不通过，4-下户中，5-已下户-->
+            <el-option label="全部" value=""></el-option>
             <el-option label="待审核" value="1"></el-option>
-            <el-option label="待下户" value="3"></el-option>
-            <el-option label="已下户" value="6"></el-option>
-            <el-option label="待录入人行报告" value="9"></el-option>
-            <el-option label="已录入人行报告" value="12"></el-option>
+            <el-option label="通过" value="2"></el-option>
+            <el-option label="不通过" value="3"></el-option>
+            <el-option label="下户中" value="4"></el-option>
+            <el-option label="已下户" value="5"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="申请日期:">
           <!--<el-input v-model="management.date"></el-input>-->
 
           <el-date-picker
-            v-model="management.date"
+            v-model="management.sectionDate"
             type="date"
+            value-format="yyyy-MM-dd"
             placeholder="">
           </el-date-picker>
         </el-form-item>
@@ -34,105 +37,149 @@
         </div>
       </el-form>
     </div>
-    <div class="content">
+    <div class="content list-dome">
       <el-table
-        :data="tableData"
+        :data="page.records"
         border
         style="width: 100%;">
         <el-table-column
-          prop="company"
+          prop="companyName"
           label="申请公司名称"
-          width="240">
+          width="200">
         </el-table-column>
         <el-table-column
-          prop="date"
+          prop="createDate"
           label="申请时间"
           width="100px">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="proposerName"
           label="申请人姓名"
           width="100px">
         </el-table-column>
         <el-table-column
-          prop="id_number"
+          prop="proposerIdno"
           label="申请人身份证号"
-          width="150px">
+          width="180px">
         </el-table-column>
         <el-table-column
-          prop="state"
+          prop="applyStatus"
           label="状态"
           width="120px">
-        </el-table-column>
-        <el-table-column
-          prop="people"
-          label="审核人员"
-          width="80px">
+          <template slot-scope="scope">
+            <el-button v-if="scope.row.applyStatus == 1" class="black" type="text" size="small">待审核</el-button>
+            <el-button v-else-if="scope.row.applyStatus == 2" class="black" type="text" size="small">通过</el-button>
+            <el-button v-else-if="scope.row.applyStatus == 3" class="black" type="text" size="small">不通过</el-button>
+            <el-button v-else-if="scope.row.applyStatus == 4" class="black" type="text" size="small">下户中</el-button>
+            <el-button v-else-if="scope.row.applyStatus == 5" class="black" type="text" size="small">已下户</el-button>
+          </template>
         </el-table-column>
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.operating == '审核'"  @click="handleClick(scope.row)" type="text" size="small">{{scope.row.operating}}</el-button>
-            <el-button v-else  @click="lookClick(scope.row)" type="text" size="small">{{scope.row.operating}}</el-button>
+            <el-button  @click="handleClick(scope.row)" type="text" size="small">审核</el-button>
+            <el-button  @click="lookClick(scope.row)" type="text" size="small">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
+    <div class="page" v-if="page.total != 0">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="page.current"
+        :page-size="page.pageSize"
+        layout="total, prev,pager, next, jumper"
+        :total="page.total">
+      </el-pagination>
+    </div>
   </div>
 </template>
 <script>
+  import ajax from '@/utils/ajax'
+  import {jsonToUrl} from "@/utils";
+
   export default {
     data(){
       return {
         management:{
-          name:'',
-          company:'',
-          id_number:'',
-          review:'1',
-          date:'',
+          proposerName:'',
+          companyName:'',
+          proposerIdno:'',
+          sectionDate:'',
+          applyStatus:''
         },
-        tableData: [
-          {
-            company:'中网中网中网中网中网中网',
-            date: '2016-05-02',
-            name: '王小虎',
-            state:'待审核',
-            id_number: '110101199206301212',
-            people:'陶笛',
-            operating:'审核'
+        page:{
+          "current": "", //long //当前",
+          "pageSize":"",// "int //页大小",
+          "pages": "",//"long //总页数",
+          "total":"",// "long //总数据量",
+          "records": [
+            {
+              "loanId":"",// "int //loan表id",
+              "taskId":"",// "string //工作流程id",
+              "companyName": "",//"string //申请人公司名称",
+              "createDate": {},
+              "proposerName":"",// "string //申请人姓名",
+              "proposerIdno":"",// "string //申请人身份证",
+              "applyStatus":"",// "int //审批状态：1-初始状态/待审核，2-通过，3-不通过，4-待下户，5-已下户"
+            }
+          ]
         },
-          {
-          company:'中网中网中网中网中网中网',
-          date: '2016-05-02',
-          name: '王小虎',
-          state:'待下户',
-          id_number: '110101199206301212',
-          people:'陶笛', operating:'查看'
-
-        },
-          {
-          company:'中网中网中网中网中网中网',
-          date: '2016-05-02',
-          name: '王小虎',
-          state:'待录入人行报告',
-          id_number: '110101199206301212',
-          people:'陶笛', operating:'审核'
-        },
-        ]
       }
     },
+    deactivated(){
+      this.$destroy(true)
+    },
+    beforeMount:function(){
+      this.ajaxPage(1);
+    },
     methods:{
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.ajaxPage(val);
+      },
       inquire(){
         console.log('查询');
+        if(!this.management.date){
+          this.management.date = '';
+        }
+        let url = jsonToUrl(this.management);
+
+        this.ajaxPage(1,url);
       },
       handleClick(row){
-        console.log('审核');
-        var id = row.id;
-        this.$router.push({path:`/review/detail/14`})
-        // this.$router.push({path:`/review/detail/${id}`})
+        var id = row.loanId;
+        let taskId = row.taskId;
+        this.$router.push({path:`/review/detail/${id}/${taskId}`})
       },
       lookClick(row){
-        console.log('lookClick');
+        let id = row.loanId;
+        let taskId = row.taskId;
+        this.$router.push({path:`/review/detail/${id}/${taskId}`})
+      },
+      ajaxPage(page,code){
+        let url = `/approval/task?page=${page}&pageSize=10`;
+        if(code){
+          url = `/approval/task?page=${page}&pageSize=10&${code}`
+        }
+
+        let _this = this;
+        new Promise((resolve,reject)=>{
+          ajax({
+            url:url,
+            method:'get'
+          }).then(function(res){
+            var data = res.data;
+            if(data.code == 1){
+              _this.page = data.data;
+              resolve()
+            }else{
+              reject();
+            }
+          }).catch(error => {
+              reject();
+          })
+        })
       }
     }
   }
@@ -144,6 +191,13 @@
         text-align: center;
         font-size: 12px;
       }
+    }
+  }
+  .page{
+    padding-bottom: 30px;
+    .el-pagination{
+      margin-top: 30px;
+      text-align: center;
     }
   }
 </style>
@@ -164,5 +218,11 @@
   }
   .inquire{
 
+  }
+
+  .list-dome{
+    .black{
+      color: #606266;
+    }
   }
 </style>

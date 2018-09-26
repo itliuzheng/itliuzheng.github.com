@@ -418,11 +418,17 @@
               if (valid) {
                 _this.getAjax(data);
               }else{
-                console.log('error submit!!');
+                _this.$message({
+                  type: 'error',
+                  message: '数据不能为空'
+                });
               }
             });
           }else{
-            console.log('error 1111!!');
+              _this.$message({
+                type: 'error',
+                message: '数据不能为空'
+              });
           }
 
         });

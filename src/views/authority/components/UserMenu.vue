@@ -5,25 +5,21 @@
       border
       style="width: 100%">
       <el-table-column
-        prop="name"
-        label="name">
+        prop="loginName"
+        label="登录名">
       </el-table-column>
       <el-table-column
-        prop="description"
-        label="description">
+        prop="realName"
+        label="姓名">
       </el-table-column>
       <el-table-column
         prop="id"
-        label="id">
-      </el-table-column>
-      <el-table-column
-        prop="state"
-        label="state">
+        label="编号">
       </el-table-column>
       <el-table-column
         label="操作">
         <template slot-scope="scope">
-          <el-button class="color-red" type="text" size="small" @click="editDialog(scope.row)">更改</el-button>
+          <el-button class="color-red" type="text" size="small" @click="openDialog(scope.row)">更改</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,6 +37,10 @@
       <!--<el-button class="el-button&#45;&#45;primary el-button" @click="dialogFormVisible = true">添加</el-button>-->
     </div>
 
+    <el-dialog title="权限设置" :visible.sync="dialogFormVisible" @close="clear">
+      <el-transfer v-model="rules" :data="form" @change="handleChange" :titles="transTitle"></el-transfer>
+    </el-dialog>
+
 
   </div>
 </template>
@@ -56,8 +56,33 @@
           pageSize:10,
           pages:1,
           total:100,
-          records:[],
+          records:[
+            {
+              "bankCardCode":"",
+              "bankCardName":"",
+              "bankCardNo":"",
+              "companyCode":"",
+              "companyName":"",
+              "createDate":null,
+              "delFlag":0,
+              "email":"",
+              "id":1,
+              "idCard":"",
+              "loginName":"admin",
+              "mobile":"",
+              "password":"123456",
+              "realName":"admin-r",
+              "remark":"",
+              "updateDate":null
+            },
+          ],
         },
+
+        dialogFormVisible: false,
+        current_id:'',
+        form: [],
+        rules: [],
+        transTitle:['全部角色','拥有角色']
       }
     },
     beforeMount:function(){
@@ -87,8 +112,95 @@
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
         // this.ajaxPage(val);
-      }
+      },
+      openDialog(row){
+        let _this = this;
+        this.current_id = row.id;
+        this.getRolesAll();
+        this.getRoles(this.current_id);
+        _this.dialogFormVisible = true ;
+      },
+      handleChange(value, direction, movedKeys){
+        this.sysuserAuthorize(value);
+      },
+      sysuserAuthorize(value){
+        let _this = this;
+        let rids = value.join(',');
 
+        new Promise((resolve,reject)=>{
+          ajax({
+            url:`/sysuser/authorize?uid=${_this.current_id}&rids=${rids}`,
+            method:'post',
+          })
+            .then(function(res){
+            var data = res.data;
+            if(data.code == 1){
+              _this.$message({
+                type: 'success',
+                message: '修改成功'
+              });
+              resolve()
+            }else{
+              _this.$message({
+                type: 'error',
+                message: '修改失败'
+              });
+              _this.dialogFormVisible = false;
+            }
+          }).catch(error => {
+              reject();
+          })
+        })
+      },
+      clear(){
+        this.form = [];
+        this.rules = [];
+      },
+      getRolesAll(){
+        let _this = this;
+        new Promise((resolve,reject)=>{
+          ajax({
+            url:`/role/all`,
+            method:'get'
+          }).then(function(res){
+            var data = res.data;
+            if(data.code == 1){
+              data.data.forEach((json,index)=>{
+                _this.form.push({
+                  label: json.name,
+                  key: json.id,
+                  disabled: json.state == 1?false:true
+                })
+              })
+
+              resolve()
+            }else{
+              reject();
+            }
+          }).catch(error => {
+              reject();
+          })
+        })
+      },
+      getRoles(id){
+        let _this = this;
+        new Promise((resolve,reject)=>{
+          ajax({
+            url:`/sysuser/roles?uid=${id}`,
+            method:'get',
+          }).then(function(res){
+            var data = res.data;
+            if(data.code == 1){
+              data.data.forEach((json,index)=>{
+                _this.rules.push(json.id)
+              })
+
+            }
+          }).catch(error => {
+              reject(error);
+          })
+        })
+      },
     },
   }
 </script>

@@ -3,31 +3,29 @@
     <div class="top-main">
       <el-form :inline="true" ref="management" :model="management" label-position="top">
         <el-form-item label="申请人姓名:">
-          <el-input v-model="management.name"></el-input>
+          <el-input v-model="management.proposerName"></el-input>
         </el-form-item>
         <el-form-item label="申请公司名称:">
-          <el-input v-model="management.company"></el-input>
+          <el-input v-model="management.companyName"></el-input>
         </el-form-item>
         <el-form-item label="申请人身份证号:">
-          <el-input v-model="management.id_number"></el-input>
+          <el-input v-model="management.idNo"></el-input>
         </el-form-item>
         <el-form-item label="资料审核状态:">
-          <el-select v-model="management.review" >
-            <el-option label="全部" value="1"></el-option>
-            <el-option label="待审核" value="11"></el-option>
-            <el-option label="下户中" value="6"></el-option>
-            <el-option label="下户完成" value="7"></el-option>
-            <el-option label="审核通过" value="9"></el-option>
-            <el-option label="审核不通过" value="12"></el-option>
+          <el-select v-model="management.status" >
+            <el-option label="全部" value=""></el-option>
+            <el-option label="待审核" value="1"></el-option>
+            <el-option label="下户" value="4"></el-option>
+            <el-option label="审核通过" value="2"></el-option>
+            <el-option label="审核不通过" value="3"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="申请日期:">
-          <!--<el-input v-model="management.date"></el-input>-->
-
           <el-date-picker
             class="picker-dome"
             v-model="management.date"
             type="date"
+            value-format="yyyy-MM-dd"
             placeholder="">
           </el-date-picker>
         </el-form-item>
@@ -78,7 +76,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="page">
+      <div class="page" v-if="page.total != 0">
         <el-pagination
           @current-change="handleCurrentChange"
           :current-page="page.current"
@@ -92,16 +90,16 @@
 </template>
 <script>
   import ajax from '@/utils/ajax'
+  import {jsonToUrl} from "@/utils";
 
   export default {
     data(){
       return {
         management:{
-          name:'',
-          company:'',
-          id_number:'',
-          state:'1',
-          review:'1',
+          proposerName:'',
+          companyName:'',
+          idNo:'',
+          status:'',
           date:'',
         },
         page:{
@@ -117,12 +115,15 @@
       this.ajaxPage(1);
     },
     methods:{
-      ajaxPage:function (page) {
-        console.log('ajaxPage');
+      ajaxPage:function (page,code) {
+        let url = `/loan/loan-application/page/?page=${page}&pageSize=10`;
+        if(code){
+          url = `/loan/loan-application/page/?page=${page}&pageSize=10&${code}`
+        }
         var _this = this;
         new Promise((resolve,reject) => {
           ajax({
-            url:`/loan/loan-application/page/?page=${page}&pageSize=10`,
+            url:url,
             method:'get'
           }).then(function (res) {
             let data = res.data;
@@ -138,10 +139,14 @@
          })
       },
       inquire(){
-        console.log('查询');
+        if(!this.management.date){
+          this.management.date = '';
+        }
+        let url = jsonToUrl(this.management);
+
+         this.ajaxPage(1,url);
       },
       handleClick(row){
-        console.log('row',row);
         let id = row.id;
         this.$router.push({path:`data_entry/${id}`})
 

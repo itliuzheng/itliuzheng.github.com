@@ -3,16 +3,17 @@
     <div class="top-main">
       <el-form :inline="true" ref="management" :model="management" label-position="top">
         <el-form-item label="申请人姓名:">
-          <el-input v-model="management.name"></el-input>
+          <el-input v-model="management.proposerName"></el-input>
         </el-form-item>
         <el-form-item label="申请公司名称:">
-          <el-input v-model="management.company"></el-input>
+          <el-input v-model="management.companyName"></el-input>
         </el-form-item>
 
         <el-form-item label="发起下户日期:">
           <el-date-picker
             v-model="management.date"
             type="date"
+            value-format="yyyy-MM-dd"
             placeholder="">
           </el-date-picker>
         </el-form-item>
@@ -23,38 +24,35 @@
     </div>
     <div class="content">
       <el-table
-        :data="tableData"
+        :data="page.records"
         border
         style="width: 100%;">
         <el-table-column
-          prop="date"
+          prop="createDate"
           label="下户提交时间"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="confirm_name"
-          label="下户确认人"
-          width="120">
-        </el-table-column>
-        <el-table-column
-          prop="company"
+          prop="companyName"
           label="申请单位名称"
           width="160px">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="proposerName"
           label="贷款申请人姓名"
           width="150px">
         </el-table-column>
         <el-table-column
-          prop="id_number"
+          prop="proposerIdno"
           label="申请人身份证号"
-          width="150px">
+          width="180px">
         </el-table-column>
         <el-table-column
-          prop="state"
           label="审批状态"
           width="80px">
+          <template slot-scope="scope">
+            <p>待下户</p>
+          </template>
         </el-table-column>
         <el-table-column
           label="操作">
@@ -64,38 +62,95 @@
         </el-table-column>
       </el-table>
     </div>
+
+      <div class="page" v-if="page.total != 0">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page="page.current"
+          :page-size="page.pageSize"
+          layout="total, prev,pager, next, jumper"
+          :total="page.total">
+        </el-pagination>
+      </div>
   </div>
 </template>
 <script>
+  import ajax from '@/utils/ajax'
+  import {jsonToUrl} from "@/utils";
+
   export default {
     data(){
       return {
         management:{
-          name:'',
-          company:'',
-          id_number:'',
-          review:'1',
+          proposerName:'',
+          companyName:'',
           date:'',
+          status:'4'
         },
-        tableData: [{
-          company:'网联运输',
-          confirm_name:'王武（信审）',
-          date: '2016-05-02',
-          name: '王小虎',
-          id_number: '110101199206301212',
-          id_people:'',
-          state:'待下户',
-          id:14
-        }]
+        page:{
+          "current":1,
+          "pageSize":10,
+          "pages":1,
+          "records":[
+            {
+              "companyName":"测试",
+              "createDate":"2018-09-26T14:07:56",
+              "id":17,
+              "proposerIdno":"340406199206303613",
+              "proposerName":"测试",
+              "proposerSpouseName":"测试",
+            },
+          ],
+          "total":2
+        }
       }
+    },
+    beforeMount:function(){
+
+      let url = jsonToUrl(this.management);
+
+      this.ajaxPage(1,url);
     },
     methods:{
       inquire(){
         console.log('查询');
+        if(!this.management.date){
+          this.management.date = '';
+        }
+        let url = jsonToUrl(this.management);
+
+        this.ajaxPage(1,url);
+      },
+      ajaxPage:function (page,code) {
+        let url = `/loan/loan-application/page/?page=${page}&pageSize=10`;
+        if(code){
+          url = `/loan/loan-application/page/?page=${page}&pageSize=10&${code}`
+        }
+        var _this = this;
+        new Promise((resolve,reject) => {
+          ajax({
+            url:url,
+            method:'get'
+          }).then(function (res) {
+            let data = res.data;
+            if(data.code == 1){
+              if(data.data){
+                _this.page = data.data;
+              }
+            }
+
+          }).catch(error => {
+            reject(error)
+          })
+         })
       },
       handleClick(row){
         let id = row.id;
         this.$router.push({path:`/approval_management/household_review/${id}`})
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.ajaxPage(val);
       }
     }
   }
@@ -109,6 +164,13 @@
       }
     }
   }
+  .page{
+      padding-bottom: 30px;
+      .el-pagination{
+        margin-top: 30px;
+        text-align: center;
+      }
+    }
 </style>
 <style lang="scss" scoped>
   $blue : #409EFF;

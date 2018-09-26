@@ -14,7 +14,7 @@ export function loginByUsername(username,password) {
 
 export function getUserInfo() {
   return ajax({
-    url: '/sysuser/resources/1/',
+    url: '/sysuser/resources',
     method: 'get',
   })
 

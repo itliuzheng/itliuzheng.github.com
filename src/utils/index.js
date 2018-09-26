@@ -5,3 +5,12 @@ export function parseStrEmpty(str) {
   return str;
 }
 
+export function jsonToUrl(json) {
+  let url = '';
+  for(let name in json){
+    url += name +'='+json[name]+'&'
+  }
+  url = url.substring(0,url.length-1);
+  return url;
+}
+

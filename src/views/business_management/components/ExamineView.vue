@@ -5,7 +5,7 @@
         <div class="information">
           <div class="p_inline">
             <p><span>申请提交时间：</span>{{business.companyRegisterDate}}</p>
-            <p><span>申请金额：</span>{{business.loanAmount}}</p>
+            <p><span>申请金额：</span>{{business.loanAmount}}元</p>
           </div>
           <p><span>保理业务期限：</span>{{business.factoringBusinessDeadline}}个月</p>
           <div class="p_inline">
@@ -296,7 +296,7 @@
         border-color: #ccc;
         width: 25%;
         text-align: center;
-        line-height: 1;
+        line-height: 1.4;
         padding: 10px;
       }
     }

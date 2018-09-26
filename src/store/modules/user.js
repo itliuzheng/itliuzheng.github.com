@@ -89,6 +89,24 @@ const user = {
     //   })
     // }
 
+    // 登出
+    LogOut({ commit, state }) {
+      return new Promise((resolve, reject) => {
+          commit('SET_TOKEN', '')
+          commit('SET_ROLES', [])
+          removeToken()
+          resolve()
+
+        // logout(state.token).then(() => {
+        //   commit('SET_TOKEN', '')
+        //   commit('SET_ROLES', [])
+        //   removeToken()
+        //   resolve()
+        // }).catch(error => {
+        //   reject(error)
+        // })
+      })
+    },
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {
