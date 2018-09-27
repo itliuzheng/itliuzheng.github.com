@@ -199,7 +199,7 @@
         _this.dialogEditFormId = id;
         new Promise((resolve,reject) => {
           ajax({
-            url:`/role/resources/${id}`,
+            url:`/resources/all?roleId=${id}`,
             method:'get'
           }).then(function (res) {
             let data = res.data;
@@ -248,7 +248,7 @@
                 message: data.msg
               });
               _this.dialogEditFormVisible = false;
-
+              _this.$router.go(0)
             }
 
           }).catch(error => {

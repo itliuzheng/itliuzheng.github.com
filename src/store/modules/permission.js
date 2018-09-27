@@ -8,7 +8,23 @@ import {arrToTree} from "@/utils/tree";
  */
 function hasPermission(roles,route) {
   if(route.meta && route.meta.roles){
-    return roles.some(role => route.meta.roles.indexOf(role.targetUrl) >= 0)
+    console.log('hasPermission.roles',roles);
+    // roles.some(role => {
+    //   console.log('hasPermission.route.meta.roles==',route.meta.roles);
+    //
+    //   console.log('hasPermission.some.role==',role);
+    //   console.log('hasPermission.some.targetUrl==',role.targetUrl);
+    //   return route.meta.roles.indexOf(role.targetUrl) >= 0;
+    // })
+    // return roles.some(role => route.meta.roles.indexOf(role.targetUrl) >= 0)
+    roles.forEach((role) =>{
+      console.log('hasPermission.route.meta.roles==',route.meta.roles);
+
+      console.log('hasPermission.some.role==',role);
+      console.log('hasPermission.some.targetUrl==',role.targetUrl);
+
+      return route.meta.roles == role.targetUrl
+    })
   }else{
     return true
   }
@@ -21,6 +37,8 @@ function hasPermission(roles,route) {
  */
 
 function filterAsynscRouter(asynvRouterMap,roles) {
+  console.log('asynvRouterMap',asynvRouterMap);
+  console.log('roles',roles);
   const accessedRouters = asynvRouterMap.filter( route => {
     if(hasPermission(roles,route)){
       if(route.children && route.children.length){
