@@ -33,10 +33,12 @@
           :placeholder="lang.password"
           name="passwod"
           type="password"
-          auto-complete="on"></el-input>
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        ></el-input>
       </el-form-item>
       <p class="error" v-if="error">用户名或密码错误</p>
-      <el-button class="login-button" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{lang.logIn}}</el-button>
+      <el-button class="login-button" :loading="loading" type="primary" @click.native.prevent="handleLogin" >{{lang.logIn}}</el-button>
     </el-form>
   </div>
 </template>

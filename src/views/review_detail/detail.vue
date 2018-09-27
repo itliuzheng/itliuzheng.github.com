@@ -79,7 +79,7 @@
           <el-tab-pane label="附件预览" name="6"><attachment-preview-id :uploadId="id"></attachment-preview-id></el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="审核历史记录" name="second"><history :id="id"></history></el-tab-pane>
+      <el-tab-pane label="审核历史记录" name="history"><history :id="id" page="page"></history></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -182,11 +182,15 @@
           companyCityCode:'',
           companyAreaCode:'',
           approvalAmount:''
-        }
+        },
+        page:{},
       }
     },
     methods:{
       handleClick(tab, event) {
+        if(tab.name == 'history'){
+          this.getAjax(1);
+        }
       },
       infoClick(tab, event){
       },
@@ -217,7 +221,10 @@
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
-
+              _this.$message({
+                message: data.msg
+              });
+              _this.$router.push({path:'/approval_management/approval_list'});
             }
 
           }).catch(error => {
@@ -229,8 +236,8 @@
         var _this = this;
          new Promise((resolve,reject) => {
           ajax({
-            // url:`/loan/loan-application/${id}`,
-            url:`/approval/taskInfo/${taskId}/${id}`,
+            // url:`/approval/taskInfo/${taskId}/${id}`,
+            url:`/approval/taskInfo/${id}?taskId=${taskId}`,
             method:'get',
           }).then(function (res) {
             let data = res.data;
@@ -240,6 +247,22 @@
               _this.review.amount = _this.data.approvalAmount;
             }
 
+          }).catch(error => {
+            reject(error)
+          })
+         })
+      },
+      getAjax(page){
+        var _this = this;
+         new Promise((resolve,reject) => {
+          ajax({
+            url:`/loan/loan-application-history/${this.id}?page=${page}&pageSize=10`,
+            method:'get'
+          }).then(function (res) {
+            let data = res.data;
+            if(data.code == 1){
+              _this.page = data.data;
+            }
           }).catch(error => {
             reject(error)
           })

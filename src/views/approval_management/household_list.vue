@@ -93,15 +93,15 @@
           "pages":1,
           "records":[
             {
-              "companyName":"测试",
-              "createDate":"2018-09-26T14:07:56",
-              "id":17,
-              "proposerIdno":"340406199206303613",
-              "proposerName":"测试",
-              "proposerSpouseName":"测试",
+              "companyName":"",
+              "createDate":"",
+              "id":'',
+              "proposerIdno":"",
+              "proposerName":"",
+              "proposerSpouseName":"",
             },
           ],
-          "total":2
+          "total":0
         }
       }
     },

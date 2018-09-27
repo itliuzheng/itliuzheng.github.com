@@ -114,15 +114,15 @@
           "pages": "",//"long //总页数",
           "total":"",// "long //总数据量",
           "records": [
-            {
-              "loanId":"",// "int //loan表id",
-              "taskId":"",// "string //工作流程id",
-              "companyName": "",//"string //申请人公司名称",
-              "createDate": {},
-              "proposerName":"",// "string //申请人姓名",
-              "proposerIdno":"",// "string //申请人身份证",
-              "applyStatus":"",// "int //审批状态：1-初始状态/待审核，2-通过，3-不通过，4-待下户，5-已下户"
-            }
+            // {
+            //   "loanId":"",// "int //loan表id",
+            //   "taskId":"",// "string //工作流程id",
+            //   "companyName": "",//"string //申请人公司名称",
+            //   "createDate": {},
+            //   "proposerName":"",// "string //申请人姓名",
+            //   "proposerIdno":"",// "string //申请人身份证",
+            //   "applyStatus":"",// "int //审批状态：1-初始状态/待审核，2-通过，3-不通过，4-待下户，5-已下户"
+            // }
           ]
         },
       }
@@ -159,6 +159,7 @@
       },
       ajaxPage(page,code){
         let url = `/approval/task?page=${page}&pageSize=10`;
+        // let url = `/approval/task`;
         if(code){
           url = `/approval/task?page=${page}&pageSize=10&${code}`
         }
@@ -171,7 +172,9 @@
           }).then(function(res){
             var data = res.data;
             if(data.code == 1){
-              _this.page = data.data;
+              if(data.data){
+                _this.page = data.data;
+              }
               resolve()
             }else{
               reject();

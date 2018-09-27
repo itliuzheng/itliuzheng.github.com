@@ -171,6 +171,7 @@
   // import china_json from '@/utils/city'
   import ajax from '@/utils/ajax'
   import {reconstructionCode} from "@/utils/tree";
+  import {joinJson} from "@/utils";
 
   export default {
     beforeMount:function(){
@@ -397,19 +398,9 @@
        },
        onSubmit:function () {
          var _this = this;
-         function joinJson(jsonbject1, jsonbject2) {
-            var resultJsonObject={};
-            for(var attr in jsonbject1){
-              resultJsonObject[attr]=jsonbject1[attr];
-            }
-            for(var attr in jsonbject2){
-              resultJsonObject[attr]=jsonbject2[attr];
-            }
-            return resultJsonObject;
-          };
 
 
-          let data =joinJson(this.application_form,this.business);
+         let data =joinJson(this.application_form,this.business);
 
         this.$refs.application_form.validate((valid) => {
           if (valid) {

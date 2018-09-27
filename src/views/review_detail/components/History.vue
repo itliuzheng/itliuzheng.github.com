@@ -18,21 +18,21 @@
   import ajax from '@/utils/ajax'
 
   export default {
-    props:['id'],
+    props:['id','page'],
     beforeMount:function(){
-      this.getAjax(1);
+      // this.getAjax(1);
 
     },
     data(){
       return {
-        page:[{
-          p1:'',
-          p2:'',
-          p3:'',
-          p4:'',
-          p5:'',
-          p6:'',
-        }]
+        // page:[{
+        //   p1:'',
+        //   p2:'',
+        //   p3:'',
+        //   p4:'',
+        //   p5:'',
+        //   p6:'',
+        // }]
       }
 
     },
@@ -41,7 +41,7 @@
         var _this = this;
          new Promise((resolve,reject) => {
           ajax({
-            url:`/loan/loan-application-history/page?page=${page}&pageSize=10`,
+            url:`/loan/loan-application-history/${this.$route.params.id}?page=${page}&pageSize=10`,
             method:'get'
           }).then(function (res) {
             let data = res.data;
