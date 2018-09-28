@@ -26,6 +26,7 @@
 <script>
   import Hamburger from '@/components/Hamburger'
   import Breadcrumb from '@/components/Breadcrumb'
+  import router from '@/router'
   // import store from 'store'
 
   export default {
@@ -43,8 +44,10 @@
       toggleSideBar(){
         },
       logout(){
+        let _this = this;
         this.$store.dispatch('LogOut').then(() => {
-          location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+          // location.reload()// In order to re-instantiate the vue-router object to avoid bugs
+          router.go(0)
         })
       }
     }
