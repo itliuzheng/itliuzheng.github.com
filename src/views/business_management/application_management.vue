@@ -50,7 +50,7 @@
           width="80">
         </el-table-column>
         <el-table-column
-          prop="companyRegisterDate"
+          prop="createDate"
           label="申请时间"
           width="100px">
         </el-table-column>
