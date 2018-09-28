@@ -66,7 +66,7 @@ export const constantRouterMap = [
   //     }
   //   ]
   // },
-  // { path: '/*', redirect: '/', hidden: true }
+  // { path: '*', redirect: '/', hidden: true }
 
   // {
   //   path: '/404',
@@ -81,7 +81,8 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  mode: 'history', // require service support
+  // mode: 'history', // require service support
+  // base:process.env.NODE_ENV == 'development'?'/':'/project/risk_web/',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
