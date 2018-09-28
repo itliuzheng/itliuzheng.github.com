@@ -66,7 +66,7 @@ export const constantRouterMap = [
   //     }
   //   ]
   // },
-  // { path: '*', redirect: '/', hidden: true }
+  // { path: '/*', redirect: '/', hidden: true }
 
   // {
   //   path: '/404',
@@ -97,7 +97,7 @@ export const asyncRouterMap = [
         // component: () => import('@/views/redirect/index')
         component: resolve => require(['@/views/review_detail/detail'],resolve),
         name: 'detail',
-        meta: { title: '审核详情', icon: 'detail', noCache: true ,roles:'/review/detail' }
+        meta: { title: '审核详情', icon: 'detail', noCache: true ,roles:'/review' }
       }
     ],
     hidden: true
@@ -156,6 +156,15 @@ export const asyncRouterMap = [
     },
     children: [
       {
+        path: 'approval_list_all',
+        component: () => import('@/views/approval_management/approval_list_all'),
+        name: 'approval_list_all',
+        meta: {
+          title: '审核列表',
+          roles: '/approval_management/approval_list_all' // or you can only set roles in sub nav
+        }
+      },
+      {
         path: 'approval_list',
         component: () => import('@/views/approval_management/approval_list'),
         name: 'approval_list',
@@ -171,6 +180,16 @@ export const asyncRouterMap = [
         meta: {
           title: '待下户列表',
           roles: '/approval_management/household_list'
+          // if do not set roles, means: this page does not require approval_management
+        }
+      },
+      {
+        path: 'approval_list_history',
+        component: () => import('@/views/approval_management/approval_list_history'),
+        name: 'approval_list_history',
+        meta: {
+          title: '历史审核列表',
+          roles: '/approval_management/approval_list_history'
           // if do not set roles, means: this page does not require approval_management
         }
       },
@@ -203,7 +222,7 @@ export const asyncRouterMap = [
         name: 'list',
         meta: {
           title: '客户列表',
-          roles: '/approval_management/list'
+          roles: '/customer_management/list'
         }
       }
     ]
@@ -215,7 +234,7 @@ export const asyncRouterMap = [
     alwaysShow: true, // will always show the root menu
     meta: {
       title: '权限管理',
-      roles:'/authority_management'
+      roles:'/authority_management/set'
     },
     children: [
       {

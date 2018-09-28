@@ -9,13 +9,13 @@
           <el-input v-model="management.companyName"></el-input>
         </el-form-item>
         <el-form-item label="申请人身份证号:">
-          <el-input v-model="management.proposerIdno"></el-input>
+          <el-input v-model="management.idNo"></el-input>
         </el-form-item>
         <el-form-item label="申请日期:">
           <!--<el-input v-model="management.date"></el-input>-->
 
           <el-date-picker
-            v-model="management.sectionDate"
+            v-model="management.date"
             type="date"
             value-format="yyyy-MM-dd"
             placeholder="">
@@ -66,7 +66,6 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button  @click="handleClick(scope.row)" type="text" size="small">审核</el-button>
             <el-button  @click="lookClick(scope.row)" type="text" size="small">查看</el-button>
           </template>
         </el-table-column>
@@ -93,9 +92,9 @@
         management:{
           proposerName:'',
           companyName:'',
-          proposerIdno:'',
-          sectionDate:'',
-          applyStatus:'1'
+          idNo:'',
+          status:'2,3',
+          date:'',
         },
         page:{
           "current": "", //long //当前",
@@ -120,15 +119,15 @@
       this.$destroy(true)
     },
     beforeMount:function(){
-      this.ajaxPage(1);
+        let url = jsonToUrl(this.management);
+
+      this.ajaxPage(1,url);
     },
     methods:{
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.ajaxPage(val);
       },
       inquire(){
-        console.log('查询');
         if(!this.management.date){
           this.management.date = '';
         }
@@ -136,21 +135,16 @@
 
         this.ajaxPage(1,url);
       },
-      handleClick(row){
-        var id = row.loanId;
-        let taskId = row.taskId;
-        this.$router.push({path:`/review/detail/${id}/${taskId}`})
-      },
       lookClick(row){
-        let id = row.loanId;
-        let taskId = row.taskId;
+        let id = row.id;
+        let taskId = row.taskId || 0;
         this.$router.push({path:`/review/detail/${id}/${taskId}`})
       },
       ajaxPage(page,code){
-        let url = `/approval/task?page=${page}&pageSize=10`;
+        let url = `/loan/loan-application/page?page=${page}&pageSize=10`;
         // let url = `/approval/task`;
         if(code){
-          url = `/approval/task?page=${page}&pageSize=10&${code}`
+          url = `/loan/loan-application/page?page=${page}&pageSize=10&${code}`
         }
 
         let _this = this;

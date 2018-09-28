@@ -68,7 +68,11 @@
             <div class="entry-box">
               <el-form ref="business" :rules="business_rules" :model="business" label-width="250px" :inline="true">
                 <!--<div class="form-title">资料录入</div>-->
-                <el-form-item label="公司名称" class="is-required" prop="companyName">
+                <el-form-item
+                  label="公司名称"
+                  class="is-required" prop="companyName"
+                  :rules=" [{ required: true, message: '此项不能为空', trigger: 'blur' }]"
+                >
                   <el-input v-model="business.companyName"></el-input>
                 </el-form-item>
                 <el-form-item label="注册日期" class="is-required" prop="companyRegisterDate">
@@ -172,12 +176,31 @@
   import ajax from '@/utils/ajax'
   import {reconstructionCode} from "@/utils/tree";
   import {joinJson} from "@/utils";
+  import tool from '@/components/component/tool'
 
   export default {
     beforeMount:function(){
       this.getCity();
     },
     data(){
+      const validatePhone = (rule,value,callback)=>{
+        console.log('validate',rule,value,callback);
+        let validate = tool.validatePhoneNum(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      }
+      const validateString = (rule,value,callback)=>{
+        console.log('validate',rule,value,callback);
+        let validate = tool.validateRealName(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      }
       return {
         provinces:[],
         citys:[],
@@ -238,9 +261,9 @@
           "grossSalesThisYear":'', // "string //今年销售收入总额",
         },
         business_rules:{
-          companyName:[
-            { required: true, message: '请输入申请人公司名称', trigger: 'blur' }
-          ],
+          // companyName:[
+          //   { required: true, message: '请输入申请人公司名称', trigger: 'blur' }
+          // ],
           companyRegisterDate:[
             { required: true, message: '请选择注册日期', trigger: 'change' }
           ],
@@ -263,6 +286,7 @@
             { required: true, message: '请输入申请人职务', trigger: 'blur' }
           ],
           proposerMobile:[
+            // { required: true, message: '请输入申请人手机号', validate:validatePhone, trigger: 'blur' }
             { required: true, message: '请输入申请人手机号', trigger: 'blur' }
           ],
           proposerIsMarried:[

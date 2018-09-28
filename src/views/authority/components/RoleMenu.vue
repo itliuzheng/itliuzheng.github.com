@@ -194,9 +194,25 @@
       },
       editDialog(row){
         var _this = this;
-        console.log('edit=',row);
         let id = row.id;
         _this.dialogEditFormId = id;
+
+        let check_tree = [];
+        function filter(trees){
+            for(let i = 0;i<trees.length;i++){
+              if(trees[i].selected){
+                if(trees[i] && trees[i].children){
+                  filter(trees[i].children);
+                }else{
+                  check_tree.push(trees[i].id);
+                }
+
+              }
+            }
+          return check_tree;
+        }
+
+
         new Promise((resolve,reject) => {
           ajax({
             url:`/resources/all?roleId=${id}`,
@@ -209,14 +225,11 @@
               _this.editForm = trees;
               _this.dialogEditFormVisible = true;
 
-              for(let i = 0;i<trees.length;i++){
-                if(trees[i].selected){
-                  check_tree.push(trees[i]);
-                }
-              }
 
+              const list = filter(trees);
               _this.$nextTick(()=>{
-                _this.$refs.editTree.setCheckedNodes(check_tree)
+                // _this.$refs.editTree.setCheckedNodes(check_tree)
+               _this.$refs.editTree.setCheckedKeys(list)
               })
             }
 

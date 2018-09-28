@@ -79,7 +79,7 @@
           <el-tab-pane label="附件预览" name="6"><attachment-preview-id :uploadId="id"></attachment-preview-id></el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="审核历史记录" name="history"><history :id="id" page="page"></history></el-tab-pane>
+      <el-tab-pane label="审核历史记录" name="history"><history :id="id" :page="page"></history></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -183,13 +183,26 @@
           companyAreaCode:'',
           approvalAmount:''
         },
-        page:{},
+        page:[
+            {
+              "id": "int //主键",
+              "applyCompany": "string //申请公司名称",
+              "applyUser": "string //申请人姓名",
+              "approvalUser": "string //处理人名称",
+              "approvalStatus": "int //处理结果：2-通过，3-不通过，4-待下户，5-已下户，6-下户驳回",
+              "approvalDate": "date //处理时间",
+              "nextApprovalUser": "string //下一步处理人姓名",
+              "approvalOpinion": "string //审批意见",
+              "rejectCause": "string //拒绝原因",
+              "loanId": "int //关联loan_application表的从键"
+            }
+          ],
       }
     },
     methods:{
       handleClick(tab, event) {
         if(tab.name == 'history'){
-          this.getAjax(1);
+          this.getAjax();
         }
       },
       infoClick(tab, event){
@@ -252,11 +265,11 @@
           })
          })
       },
-      getAjax(page){
+      getAjax(){
         var _this = this;
          new Promise((resolve,reject) => {
           ajax({
-            url:`/loan/loan-application-history/${this.id}?page=${page}&pageSize=10`,
+            url:`/loan/loan-application-history/${this.id}`,
             method:'get'
           }).then(function (res) {
             let data = res.data;
