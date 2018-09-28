@@ -143,7 +143,8 @@
       },
       lookClick(row){
         let id = row.loanId;
-        let taskId = row.taskId;
+        // let taskId = row.taskId;
+        let taskId = 0;
         this.$router.push({path:`/review/detail/${id}/${taskId}`})
       },
       ajaxPage(page,code){

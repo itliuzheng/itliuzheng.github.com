@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="content entry-content">
+    <div class="content entry-content household_review">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane :label="firstName" name="first">
           <div class="top-main">
@@ -1173,7 +1173,7 @@
     }
   }
 
-  .entry-content{
+  .household_review{
     .el-tabs__nav-wrap{
       padding-left: 30px;
     }

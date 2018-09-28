@@ -46,7 +46,6 @@
      methods:{
        childByValue: function (childValue) {
         // childValue就是子组件传过来的值
-         console.log('childValue',childValue);
           this.id = childValue.id;
           this.activeName = childValue.name;
         },

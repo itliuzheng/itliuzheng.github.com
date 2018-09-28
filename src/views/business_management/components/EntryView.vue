@@ -71,7 +71,6 @@
                 <el-form-item
                   label="公司名称"
                   class="is-required" prop="companyName"
-                  :rules=" [{ required: true, message: '此项不能为空', trigger: 'blur' }]"
                 >
                   <el-input v-model="business.companyName"></el-input>
                 </el-form-item>
@@ -91,10 +90,14 @@
                 <el-form-item label="申请人职务" class="is-required" prop="proposerPosition">
                   <el-input v-model="business.proposerPosition"></el-input>
                 </el-form-item>
-                <el-form-item label="申请人身份证号" class="is-required" prop="proposerIdno">
+                <el-form-item label="申请人身份证号" class="is-required" prop="proposerIdno"
+                :rules="{ required: true, message: '请输入正确的身份证号码', validator:validateIdCard , trigger: 'blur' }"
+                >
                   <el-input v-model="business.proposerIdno"></el-input>
                 </el-form-item>
-                <el-form-item label="申请人手机" class="is-required" prop="proposerMobile">
+                <el-form-item label="申请人手机号" class="is-required" prop="proposerMobile"
+                  :rules="{ required: true, message: '请输入正确的手机号码', validator:validatePhone , trigger: 'blur' }"
+                >
                   <el-input v-model="business.proposerMobile"></el-input>
                 </el-form-item>
                 <el-form-item label="申请人固定居住地址" class="is-required" prop="proposerAddress">
@@ -114,16 +117,21 @@
                   <el-input v-model="business.proposerSpouseIdno"></el-input>
                 </el-form-item>
                 <el-form-item label="申请人配偶手机">
+                              <!--prop="proposerSpouseMobile"-->
+                <!--:rules="{ message: '请输入正确的手机号码', validator:validatePhone , trigger: 'blur' }"-->
+                <!--&gt;-->
                   <el-input v-model="business.proposerSpouseMobile"></el-input>
                 </el-form-item>
                 <div class="form-title">法人信息</div>
                 <el-form-item label="法人姓名" class="is-required" prop="companyLegalPerson">
                   <el-input v-model="business.companyLegalPerson"></el-input>
                 </el-form-item>
-                <el-form-item label="法人身份证号" class="is-required" prop="companyLegalPersonIdno">
+                <el-form-item label="法人身份证号" class="is-required" prop="companyLegalPersonIdno"
+                :rules="{ required: true, message: '请输入正确的身份证号码', validator:validateIdCard , trigger: 'blur' }">
                   <el-input v-model="business.companyLegalPersonIdno"></el-input>
                 </el-form-item>
-                <el-form-item label="法人手机" class="is-required" prop="companyLegalPersonMobile">
+                <el-form-item label="法人手机" class="is-required" prop="companyLegalPersonMobile"
+                :rules="{ required: true, message: '请输入正确的手机号码', validator:validatePhone , trigger: 'blur' }">
                   <el-input v-model="business.companyLegalPersonMobile"></el-input>
                 </el-form-item>
                 <el-form-item label="法人与实际控制人关系" class="is-required" prop="legalPersonActualControllerRelation">
@@ -183,24 +191,6 @@
       this.getCity();
     },
     data(){
-      const validatePhone = (rule,value,callback)=>{
-        console.log('validate',rule,value,callback);
-        let validate = tool.validatePhoneNum(value);
-        if(!validate.boolean){
-          callback(new Error(validate.msg));
-        }else{
-          callback();
-        }
-      }
-      const validateString = (rule,value,callback)=>{
-        console.log('validate',rule,value,callback);
-        let validate = tool.validateRealName(value);
-        if(!validate.boolean){
-          callback(new Error(validate.msg));
-        }else{
-          callback();
-        }
-      }
       return {
         provinces:[],
         citys:[],
@@ -261,9 +251,9 @@
           "grossSalesThisYear":'', // "string //今年销售收入总额",
         },
         business_rules:{
-          // companyName:[
-          //   { required: true, message: '请输入申请人公司名称', trigger: 'blur' }
-          // ],
+          companyName:[
+            { required: true, message: '请输入申请人公司名称', trigger: 'blur' }
+          ],
           companyRegisterDate:[
             { required: true, message: '请选择注册日期', trigger: 'change' }
           ],
@@ -276,30 +266,17 @@
           proposerName:[
             { required: true, message: '请输入申请人姓名', trigger: 'blur' }
           ],
-          proposerIdno:[
-            { required: true, message: '请输入申请人身份证', trigger: 'blur' }
-          ],
           proposerAddress:[
-            { required: true, message: '请输入申请人身份证', trigger: 'blur' }
+            { required: true, message: '此项不能为空', trigger: 'blur' }
           ],
           proposerPosition:[
             { required: true, message: '请输入申请人职务', trigger: 'blur' }
-          ],
-          proposerMobile:[
-            // { required: true, message: '请输入申请人手机号', validate:validatePhone, trigger: 'blur' }
-            { required: true, message: '请输入申请人手机号', trigger: 'blur' }
           ],
           proposerIsMarried:[
             { required: true, message: '请选择是否已婚', trigger: 'change' }
           ],
           companyLegalPerson:[
             { required: true, message: '请输入公司法人', trigger: 'blur' }
-          ],
-          companyLegalPersonIdno:[
-            { required: true, message: '请输入公司法人身份证号', trigger: 'blur' }
-          ],
-          companyLegalPersonMobile:[
-            { required: true, message: '请输入公司法人手机号', trigger: 'blur' }
           ],
           legalPersonActualControllerRelation:[
             { required: true, message: '请输入法人与实际控制人关系', trigger: 'blur' }
@@ -338,6 +315,32 @@
       }
     },
      methods:{
+      validateString(rules,value,callback){
+        let validate = tool.validateRealName(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      },
+      validateIdCard(rules,value,callback){
+        // let validate = tool.validateRealName(value);
+        let validate = tool.validateIdCard(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      },
+      validatePhone(rules,value,callback){
+        // let validate = tool.validateRealName(value);
+        let validate = tool.validatePhoneNum(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      },
       getCity:function(){
         var _this = this;
         let storage = JSON.parse(localStorage.getItem('city'));
@@ -429,7 +432,6 @@
         this.$refs.application_form.validate((valid) => {
           if (valid) {
             _this.$refs.business.validate((valid) => {
-              console.log('business',valid);
               if (valid) {
                 _this.getAjax(data);
               }else{

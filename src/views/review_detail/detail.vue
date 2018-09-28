@@ -31,44 +31,48 @@
             {{data.reason}}
           </p>
         </div>
-        <div v-if="data.applyStatus == 1" class="review_result">
-          <el-form ref="review" :model="review" :rules="reviewRules" label-width="100px">
-            <template>
-              <el-form-item class="inline-block" prop="result" label="审核结果">
-                <!--<span class="review_label">审核结果</span>-->
-                <el-select v-model="review.result" placeholder="请选择" >
-                  <el-option
-                    v-for="list in review.list"
-                    :key="list.value"
-                    :label="list.name"
-                    :value="list.value"
-                  ></el-option>
-                </el-select>
-              </el-form-item>
+        <template v-if="taskId != 0">
 
-              <template v-if="review.result == '3'">
-                <el-form-item class="inline-block"  prop="reason" label="不通过原因">
-                  <!--<span class="review_label">不通过原因</span>-->
-                  <el-select v-model="review.reason" placeholder="请选择">
+          <div v-if="data.applyStatus == 1" class="review_result">
+            <el-form ref="review" :model="review" :rules="reviewRules" label-width="100px">
+              <template>
+                <el-form-item class="inline-block" prop="result" label="审核结果">
+                  <!--<span class="review_label">审核结果</span>-->
+                  <el-select v-model="review.result" placeholder="请选择" >
                     <el-option
-                      v-for="list in review.reason_list"
+                      v-for="list in review.list"
                       :key="list.value"
                       :label="list.name"
-                      :value="list.name"
+                      :value="list.value"
                     ></el-option>
                   </el-select>
                 </el-form-item>
+
+                <template v-if="review.result == '3'">
+                  <el-form-item class="inline-block"  prop="reason" label="不通过原因">
+                    <!--<span class="review_label">不通过原因</span>-->
+                    <el-select v-model="review.reason" placeholder="请选择">
+                      <el-option
+                        v-for="list in review.reason_list"
+                        :key="list.value"
+                        :label="list.name"
+                        :value="list.name"
+                      ></el-option>
+                    </el-select>
+                  </el-form-item>
+                </template>
+                <el-button class="el-button el-button--success" @click="reviewResult">确认审批结果</el-button>
               </template>
-              <el-button class="el-button el-button--success" @click="reviewResult">确认审批结果</el-button>
-            </template>
-            <el-form-item class="input-box" prop="amount" label="审批额度">
-              <el-input  class="review-input" v-model="review.amount" ></el-input>
-            </el-form-item>
-            <el-form-item class="input-box" prop="remark" label="审核备注">
-              <el-input class="review-input max-width" v-model="review.remark" ></el-input>
-            </el-form-item>
-          </el-form>
-        </div>
+              <el-form-item class="input-box" prop="amount" label="审批额度">
+                <el-input v-if="review.result != '3'" class="review-input" v-model="review.amount"></el-input>
+                <el-input v-else class="review-input" v-model="review.amount" disabled="true"></el-input>
+              </el-form-item>
+              <el-form-item class="input-box" prop="remark" label="审核备注">
+                <el-input class="review-input max-width" v-model="review.remark" ></el-input>
+              </el-form-item>
+            </el-form>
+          </div>
+        </template>
 
         <el-tabs class="info_tab" v-model="review_info" type="card" @tab-click="infoClick">
           <el-tab-pane label="申请信息" name="1"><application-information :id="id"  :business="data"></application-information></el-tab-pane>
@@ -159,6 +163,7 @@
           ],
           amount:'',
           remark:'',
+          disabled:false
         },
         reviewRules:{
           result:[
