@@ -19,7 +19,6 @@
 //
 //
 // const DATA = reconstruction(data);
-// console.log(DATA );
 
 //定义一些变量
 //具体方法

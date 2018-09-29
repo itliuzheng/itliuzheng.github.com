@@ -23,6 +23,7 @@ import './permission.js'
 // import VueResource from 'vue-resource'
 
 
+
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
@@ -50,3 +51,5 @@ var app = new Vue({
   render: h => h(App),
   template: '<App/>',
 })
+
+

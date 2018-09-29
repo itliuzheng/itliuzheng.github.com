@@ -110,7 +110,6 @@
         })
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         // this.ajaxPage(val);
       },
       openDialog(row){

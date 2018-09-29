@@ -124,11 +124,9 @@
     },
     methods:{
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.ajaxPage(val);
       },
       inquire(){
-        console.log('查询');
         if(!this.management.date){
           this.management.date = '';
         }

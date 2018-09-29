@@ -11,6 +11,23 @@ function resolve (dir) {
 }
 
 
+// //解决history 地址指向 404 问题 中间件转换get请求
+// var history = require('connect-history-api-fallback');
+// var express = require('express');
+// var web = express();
+// web.use(history({
+//     rewrites: [
+//       {
+//         from: /^\/sysuser|user|resources\/|approval\/|rule|loan|city|loan.*$/,
+//         to: function(context) {
+//           console.log('connect-history-api-fallback_____',context);
+//             return context.parsedUrl.path
+//         }
+//       },
+//     ],
+//     htmlAcceptHeaders: ['text/html', 'application/xhtml+xml']
+//   }));
+
 
 module.exports = {
   context: path.resolve(__dirname, '../'),

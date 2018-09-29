@@ -47,6 +47,7 @@
         <el-table-column
           prop="companyRegisterDate"
           label="单位注册时间"
+          :formatter="dateFormat"
           >
         </el-table-column>
         <!--<el-table-column-->
@@ -106,8 +107,11 @@
       this.ajaxPage(1);
     },
     methods:{
+      dateFormat(row,column){
+        var date = row[column.property];
+        return date.substring(0,10)
+      },
       inquire(){
-        console.log('查询');
         if(!this.management.date){
           this.management.date = '';
         }
@@ -143,7 +147,6 @@
         this.$router.push({path:`/approval_management/household_review/${id}`})
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.ajaxPage(val);
       }
     }

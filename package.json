@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
+    "connect-history-api-fallback": "^1.5.0",
     "cssnano": "^4.1.0",
     "element-ui": "^2.4.6",
     "es6-promise": "^4.2.5",

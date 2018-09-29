@@ -75,7 +75,7 @@
                   <el-input v-model="business.companyName"></el-input>
                 </el-form-item>
                 <el-form-item label="注册日期" class="is-required" prop="companyRegisterDate">
-                  <el-date-picker   type="date" v-model="business.companyRegisterDate" value-format="yyyy-MM-dd"></el-date-picker>
+                  <el-date-picker :picker-options="pickerOption"  type="date" v-model="business.companyRegisterDate" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="实际经营年限" class="is-required"  prop="companyOperateYear">
                   <el-input v-model="business.companyOperateYear"></el-input>
@@ -311,6 +311,11 @@
           grossSalesThisYear:[
             { required: true, message: '此项不能为空', trigger: 'blur' }
           ],
+        },
+        pickerOption:{
+          disabledDate(time){
+            return time.getTime() > Date.now() - 8.64e6
+          }
         }
       }
     },
@@ -381,8 +386,6 @@
         for (var index3 in this.citys) {
           if (e === this.citys[index3].code) {
             this.areas = this.citys[index3].children;
-            // console.log( this.citys[index3].children)
-            // console.log( this.citys[index3].children[0].name)
             this.application_form.companyAreaCode = this.citys[index3].children[0].code;
           }
         }

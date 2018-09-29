@@ -78,12 +78,8 @@ service.interceptors.response.use(
     })
 
     if (error.response) {
-      console.log("请求错误");
-      console.log(error.response.status);
-
       switch (error.response.status) {
         case 401:// store.dispatch('logout');
-          console.log("401");
           break;
         case 404:
             // router.push('/Error/Error404');

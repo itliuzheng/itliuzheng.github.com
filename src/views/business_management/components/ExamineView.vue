@@ -4,7 +4,7 @@
     <div class="top-main">
         <div class="information">
           <div class="p_inline">
-            <p><span>申请提交时间：</span>{{business.companyRegisterDate}}</p>
+            <p><span>申请提交时间：</span>{{business.createDate}}</p>
             <p><span>申请金额：</span>{{business.loanAmount}}元</p>
           </div>
           <p><span>保理业务期限：</span>{{business.factoringBusinessDeadline}}个月</p>
@@ -19,7 +19,7 @@
           <td>公司名称</td>
           <td>{{business.companyName}}</td>
           <td>注册日期</td>
-          <td>{{business.companyRegisterDate}}</td>
+          <td>{{business.companyRegisterDate | dateFormat}}</td>
         </tr>
         <tr>
           <td>实际经营年限</td>
@@ -192,6 +192,15 @@
           })
          })
       }
+    },
+    filters:{
+      dateFormat(time){
+        if(time){
+          return time.substring(0,10)
+        }else{
+          return ''
+        }
+      },
     }
   }
 </script>

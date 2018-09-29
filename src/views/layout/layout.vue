@@ -39,7 +39,6 @@
     },
     methods:{
       handleClickOutside(){
-        console.log(this);
       }
     }
   }

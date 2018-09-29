@@ -94,7 +94,7 @@
                   :rules=" [
                       { required: true, message: '此项不能为空', trigger: 'blur' }
                     ]">
-                  <el-date-picker   type="date" v-model="business.businessInfo.applyForDate" value-format="yyyy-MM-dd"></el-date-picker>
+                  <el-date-picker :picker-options="pickerOption"  type="date" v-model="business.businessInfo.applyForDate" value-format="yyyy-MM-dd"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="到期日" class="is-required" prop="businessInfo.expireDate"
                   :rules=" [
@@ -300,7 +300,7 @@
                         }"
                         :show-message="false"
                       >
-                        <el-input v-model="list.assetAmount" @change="autoChange()" :disabled="list.disabled" :placeholder="list.placeholder"></el-input>
+                        <el-input v-model.number="list.assetAmount" @change="autoChange()" :disabled="list.disabled" :placeholder="list.placeholder"></el-input>
                       </el-form-item>
                     </td>
                     <td>
@@ -884,10 +884,41 @@
             },
           ]
         },
-        business_rules:{}
+        business_rules:{},
+        pickerOption:{
+          disabledDate(time){
+            return time.getTime() > Date.now() - 8.64e6
+          }
+        }
       }
     },
      methods:{
+      validateString(rules,value,callback){
+        let validate = tool.validateRealName(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      },
+      validateIdCard(rules,value,callback){
+        // let validate = tool.validateRealName(value);
+        let validate = tool.validateIdCard(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      },
+      validatePhone(rules,value,callback){
+        // let validate = tool.validateRealName(value);
+        let validate = tool.validatePhoneNum(value);
+        if(!validate.boolean){
+          callback(new Error(validate.msg));
+        }else{
+          callback();
+        }
+      },
       getInit(id){
         var _this = this;
          new Promise((resolve,reject) => {

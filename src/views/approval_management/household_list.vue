@@ -113,7 +113,6 @@
     },
     methods:{
       inquire(){
-        console.log('查询');
         if(!this.management.date){
           this.management.date = '';
         }
@@ -149,7 +148,6 @@
         this.$router.push({path:`/approval_management/household_review/${id}`})
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
         this.ajaxPage(val);
       }
     }

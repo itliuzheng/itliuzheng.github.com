@@ -7,7 +7,7 @@
           <td>公司名称</td>
           <td>{{business.companyName}}</td>
           <td>注册日期</td>
-          <td>{{business.companyRegisterDate}}</td>
+          <td>{{business.companyRegisterDate | dateFormat}}</td>
         </tr>
         <tr>
           <td>实际经营年限</td>
@@ -157,6 +157,15 @@
     beforeMount:function(){
     },
      methods:{
+    },
+    filters:{
+      dateFormat(time){
+        if(time){
+          return time.substring(0,10)
+        }else{
+          return ''
+        }
+      },
     }
   }
 </script>

@@ -32,7 +32,6 @@
     beforeMount:function(){
       // this.getAjax(1);
 
-      console.log(this.page);
     },
     data(){
       return {

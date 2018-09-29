@@ -223,7 +223,6 @@
         }
 
         this.$refs.review.validate((valid)=>{
-          console.log(valid);
           if(valid){
             _this.reviewAjax(data)
           }

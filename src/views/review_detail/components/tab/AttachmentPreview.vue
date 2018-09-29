@@ -186,18 +186,9 @@
         imageUrl:''
       }
     },
-    // watch:{
-    //   uploadType:function (newValue,oldVal) {
-    //     console.log(newValue,oldVal);
-    //     this.type = newValue;
-    //   }
-    // },
     methods: {
 
       handleAvatarSuccess(res, file,fileList) {
-        console.log(res);
-        console.log(file);
-        console.log(fileList);
         // this.fileData[]= URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {

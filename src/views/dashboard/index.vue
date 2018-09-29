@@ -7,8 +7,6 @@
 
   export default {
     created:function(){
-
-      // console.log(this.$router);
     },
     beforeMount:function(){
       // this.activeName = 'attachment'

@@ -126,7 +126,6 @@
             data
           }).then(function (res) {
             let data = res.data;
-            console.log('addUrl==',data);
             if(data.code == 1){
               _this.getUrl();
             }
@@ -157,7 +156,6 @@
 
       },
       append(data) {
-        console.log('data==',data);
         this.dialogFormVisible = true;
 
         this.form.parentId = data.id;
@@ -192,7 +190,6 @@
           </span>);
       },
       nodeClick(data){
-        console.log(data);
       }
     },
   }

@@ -83,12 +83,6 @@
         imageUrl:''
       }
     },
-    // watch:{
-    //   uploadType:function (newValue,oldVal) {
-    //     console.log(newValue,oldVal);
-    //     this.type = newValue;
-    //   }
-    // },
     methods: {
 
     },

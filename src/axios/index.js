@@ -11,7 +11,6 @@
 // instance.defaults.headers.common["Content-Type"] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // instance.interceptors.request.use(function(config){
 //   let url = config.url;
-//   console.log(config);
 //   if(url.indexOf('login')>-1){
 //     localStorage.setItem('userToken','');
 //     config.headers.Authorization = '';
