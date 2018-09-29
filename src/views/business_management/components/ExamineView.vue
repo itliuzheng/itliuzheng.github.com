@@ -58,19 +58,19 @@
           <td></td>
           <td></td>
         </tr>
-        <tr>
+        <tr v-if="business.proposerIsMarried == 1">
           <td>申请人配偶姓名</td>
           <td>{{business.proposerSpouseName}}</td>
           <td>申请人配偶身份证号</td>
           <td>{{business.proposerSpouseIdno}}</td>
         </tr>
-        <tr>
+        <tr v-if="business.proposerIsMarried == 1">
           <td>申请人配偶手机</td>
           <td>{{business.proposerSpouseMobile}}</td>
           <td></td>
           <td></td>
         </tr>
-        <tr>
+        <tr v-if="business.proposerIsMarried == 1">
           <td></td>
           <td></td>
           <td></td>

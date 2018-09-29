@@ -120,11 +120,19 @@
       this.$destroy(true)
     },
     beforeMount:function(){
-      this.ajaxPage(1);
+        if(!this.management.date){
+          this.management.date = '';
+        }
+        let url = jsonToUrl(this.management);
+      this.ajaxPage(1,url);
     },
     methods:{
       handleCurrentChange(val) {
-        this.ajaxPage(val);
+        if(!this.management.date){
+          this.management.date = '';
+        }
+        let url = jsonToUrl(this.management);
+        this.ajaxPage(val,url);
       },
       inquire(){
         if(!this.management.date){

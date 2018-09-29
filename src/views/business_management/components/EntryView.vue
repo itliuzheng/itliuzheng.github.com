@@ -109,19 +109,22 @@
                     <el-option label="已婚" value="1"></el-option>
                   </el-select>
                 </el-form-item>
-                <div class="form-title">配偶信息</div>
-                <el-form-item label="申请人配偶姓名">
-                  <el-input v-model="business.proposerSpouseName"></el-input>
-                </el-form-item>
-                <el-form-item label="申请人配偶身份证号">
-                  <el-input v-model="business.proposerSpouseIdno"></el-input>
-                </el-form-item>
-                <el-form-item label="申请人配偶手机">
-                              <!--prop="proposerSpouseMobile"-->
-                <!--:rules="{ message: '请输入正确的手机号码', validator:validatePhone , trigger: 'blur' }"-->
-                <!--&gt;-->
-                  <el-input v-model="business.proposerSpouseMobile"></el-input>
-                </el-form-item>
+                <template v-if="business.proposerIsMarried == 1 ">
+                  <div class="form-title">配偶信息</div>
+                  <el-form-item label="申请人配偶姓名">
+                    <el-input v-model="business.proposerSpouseName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="申请人配偶身份证号">
+                    <el-input v-model="business.proposerSpouseIdno"></el-input>
+                  </el-form-item>
+                  <el-form-item label="申请人配偶手机">
+                                <!--prop="proposerSpouseMobile"-->
+                  <!--:rules="{ message: '请输入正确的手机号码', validator:validatePhone , trigger: 'blur' }"-->
+                  <!--&gt;-->
+                    <el-input v-model="business.proposerSpouseMobile"></el-input>
+                  </el-form-item>
+                </template>
+
                 <div class="form-title">法人信息</div>
                 <el-form-item label="法人姓名" class="is-required" prop="companyLegalPerson">
                   <el-input v-model="business.companyLegalPerson"></el-input>

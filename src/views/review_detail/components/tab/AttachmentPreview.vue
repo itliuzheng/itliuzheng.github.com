@@ -3,7 +3,14 @@
   <div>
     <div class="attachment-preview" v-if="uploadId">
     <!--<div class="attachment-preview" >-->
+      <el-alert
+        title="请将附件全部上传完后再跳往其他界面"
+        type="error"
+        center
+        show-icon>
+      </el-alert>
       <el-collapse class="preview" v-model="activeNames" >
+
         <el-collapse-item title="身份证" name="1">
           <div class="upload-inline">
             <el-upload
