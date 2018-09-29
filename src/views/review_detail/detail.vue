@@ -214,9 +214,16 @@
       },
       reviewResult(){
         var _this = this;
+        // let data = {
+        //   taskId:this.$route.params.taskId,
+        //   status:this.review.result,
+        //   approvalAmount:this.review.amount,
+        //   remark:this.review.remark,
+        //   reason:this.review.reason,
+        // }
         let data = {
-          taskId:this.$route.params.taskId,
-          status:this.review.result,
+          loanId:Number(this.$route.params.id),
+          status:Number(this.review.result),
           approvalAmount:this.review.amount,
           remark:this.review.remark,
           reason:this.review.reason,
@@ -232,7 +239,7 @@
         var _this = this;
         new Promise((resolve,reject) => {
           ajax({
-            url:`/approval/app`,
+            url:`/loan/loan-application/approval`,
             method:'post',
             data,
           }).then(function (res) {

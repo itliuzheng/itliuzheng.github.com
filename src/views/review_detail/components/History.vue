@@ -17,7 +17,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="approvalDate" label="处理时间"></el-table-column>
-      <el-table-column prop="nextApprovalUser" label="下一步办理人"></el-table-column>
       <el-table-column prop="approvalOpinion" label="审批意见"></el-table-column>
       <el-table-column prop="rejectCause" label="拒绝原因"></el-table-column>
 

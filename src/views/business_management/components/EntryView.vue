@@ -7,7 +7,7 @@
                   <!--<el-input class="no-border" v-model="application_form.date" :readonly="application_form.readonly"></el-input>-->
                 <!--</el-form-item>-->
                 <el-form-item label="申请金额:"  class="is-required"  prop="loanAmount">
-                  <el-input-number v-model="application_form.loanAmount" :type="'number'" :step="100"  :precision="2" :min="0"></el-input-number>
+                  <el-input-number v-model.number="application_form.loanAmount" :type="'number'" :step="100"  :precision="2" :min="0"></el-input-number>
                 </el-form-item>
                 <el-form-item label="保理业务期限:"  class="is-required"  prop="factoringBusinessDeadline">
                   <el-select v-model="application_form.factoringBusinessDeadline" placeholder="请选择期限">
@@ -209,7 +209,7 @@
         },
         application_rules:{
           loanAmount:[
-            { required: true, message: '请输入金额', trigger: 'blur' },
+            { required: true, message: '请输入金额', trigger: 'change' },
           ],
           factoringBusinessDeadline:[
             { required: true, message: '请选择保理业务期限', trigger: 'change' },

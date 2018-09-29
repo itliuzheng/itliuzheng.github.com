@@ -118,7 +118,9 @@ export default {
     openMenu(tag, e) {
       this.visible = true
       this.selectedTag = tag
+      //getBoundingClientRect用于获取某个元素相对于视窗的位置集合。集合中有top, right, bottom, left等属性。
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+
       this.left = e.clientX - offsetLeft + 15 // 15: margin right
       this.top = e.clientY
     },
