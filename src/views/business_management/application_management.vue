@@ -9,26 +9,43 @@
           <el-input v-model="management.companyName"></el-input>
         </el-form-item>
         <el-form-item label="申请人身份证号:">
-          <el-input v-model="management.idNo"></el-input>
+          <el-input v-model="management.proposerIdno"></el-input>
         </el-form-item>
         <el-form-item label="资料审核状态:">
-          <el-select v-model="management.status" >
+          <el-select v-model="management.applyStatus" >
+            <!--1-初始状态，2-通过，3-不通过，4-下户中，5-已下户-->
             <el-option label="全部" value=""></el-option>
             <el-option label="待审核" value="1"></el-option>
-            <el-option label="下户" value="4"></el-option>
-            <el-option label="审核通过" value="2"></el-option>
-            <el-option label="审核不通过" value="3"></el-option>
+            <el-option label="通过" value="2"></el-option>
+            <el-option label="不通过" value="3"></el-option>
+            <el-option label="下户中" value="4"></el-option>
+            <el-option label="已下户" value="5"></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item label="申请日期:">
+          </el-form-item>
+
           <el-date-picker
-            class="picker-dome"
-            v-model="management.date"
-            type="date"
+            class="date-pickers"
+            v-model="date"
+            type="daterange"
+            align="right"
+            unlink-panels
             value-format="yyyy-MM-dd"
-            placeholder="">
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions">
           </el-date-picker>
-        </el-form-item>
+        <!---->
+        <!--<el-form-item label="申请日期:">-->
+          <!--<el-date-picker-->
+            <!--class="picker-dome"-->
+            <!--v-model="management.date"-->
+            <!--type="date"-->
+            <!--value-format="yyyy-MM-dd"-->
+            <!--placeholder="">-->
+          <!--</el-date-picker>-->
+        <!--</el-form-item>-->
+
         <div class="inquire">
           <el-button class="el-button el-button--primary" @click="inquire">查询</el-button>
         </div>
@@ -42,12 +59,12 @@
         <el-table-column
           prop="companyName"
           label="申请公司名称"
-          width="240">
+          width="200">
         </el-table-column>
         <el-table-column
           prop="factoringBusinessDeadline"
           label="申请年限"
-          width="80">
+          width="100">
         </el-table-column>
         <el-table-column
           prop="createDate"
@@ -67,7 +84,7 @@
         <el-table-column
           prop="id_people"
           label="审核员ID"
-          width="80px">
+          width="100px">
         </el-table-column>
         <el-table-column
           label="操作">
@@ -95,12 +112,47 @@
   export default {
     data(){
       return {
+        pickerOptions: {
+          shortcuts: [
+            {
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }],
+          disabledDate(time){
+            return time.getTime() > Date.now() - 8.64e6
+          }
+        },
+        date:'',
         management:{
           proposerName:'',
           companyName:'',
-          idNo:'',
-          status:'',
-          date:'',
+          proposerIdno:'',
+          startDate:'',
+          endDate:'',
+          applyStatus:'',
+          page:1,
+          pageSize:10
         },
         page:{
           current:1,
@@ -112,19 +164,25 @@
       }
     },
     beforeMount:function(){
-      this.ajaxPage(1);
+      this.management.page = 1;
+      this.ajaxPage();
     },
     methods:{
-      ajaxPage:function (page,code) {
-        let url = `/loan/loan-application/page/?page=${page}&pageSize=10`;
-        if(code){
-          url = `/loan/loan-application/page/?page=${page}&pageSize=10&${code}`
-        }
+      ajaxPage:function () {
+        let url = `/loan/loan-application/page/`;
         var _this = this;
+
+        let date = this.date;
+        if(date){
+          this.management.startDate = date[0];
+          this.management.endDate = date[1];
+        }
+
         new Promise((resolve,reject) => {
           ajax({
             url:url,
-            method:'get'
+            method:'post',
+            data:_this.management
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
@@ -139,12 +197,12 @@
          })
       },
       inquire(){
-        if(!this.management.date){
-          this.management.date = '';
-        }
-        let url = jsonToUrl(this.management);
-
-         this.ajaxPage(1,url);
+        // if(!this.management.date){
+        //   this.management.date = '';
+        // }
+        // let url = jsonToUrl(this.management);
+        this.management.page = 1;
+        this.ajaxPage();
       },
       handleClick(row){
         let id = row.id;
@@ -152,7 +210,8 @@
 
       },
       handleCurrentChange(val) {
-        this.ajaxPage(val);
+        this.management.page = val;
+        this.ajaxPage();
       }
     }
   }
@@ -181,6 +240,10 @@
     width: 1000px;
     margin: 50px auto 0;
     padding: 20px;
+    .date-pickers{
+      width: auto;
+      margin-bottom: 20px;
+    }
   }
   .white{
     color: #fff;

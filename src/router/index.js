@@ -94,10 +94,11 @@ export const asyncRouterMap = [
     // redirect: '/review/detail',
     children: [
       {
-        path: 'detail/:id(\\d+)/:taskId(\\d+)',
+        path: 'detail/:id(\\d+)',
         // component: () => import('@/views/redirect/index')
         component: resolve => require(['@/views/review_detail/detail'],resolve),
         name: 'detail',
+        props: true ,
         meta: { title: '审核详情', icon: 'detail', noCache: true ,roles:'/review' }
       }
     ],

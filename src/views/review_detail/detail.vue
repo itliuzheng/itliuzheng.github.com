@@ -31,7 +31,8 @@
             {{data.reason}}
           </p>
         </div>
-        <template v-if="taskId != 0">
+
+        <template v-if=" type != 'look'">
 
           <div v-if="data.applyStatus == 1" class="review_result">
             <el-form ref="review" :model="review" :rules="reviewRules" label-width="100px">
@@ -65,7 +66,7 @@
               </template>
               <el-form-item class="input-box" prop="amount" label="审批额度">
                 <el-input v-if="review.result != '3'" class="review-input" v-model="review.amount"></el-input>
-                <el-input v-else class="review-input" v-model="review.amount" disabled="true"></el-input>
+                <el-input v-else class="review-input" v-model="review.amount" :disabled="true"></el-input>
               </el-form-item>
               <el-form-item class="input-box" prop="remark" label="审核备注">
                 <el-input class="review-input max-width" v-model="review.remark" ></el-input>
@@ -107,9 +108,10 @@
     },
     beforeMount:function(){
       this.id = this.$route.params.id;
-      this.taskId = this.$route.params.taskId;
+      // this.taskId = this.$route.params.taskId;
+      this.type = this.$route.query && this.$route.query.type;
 
-      this.getInit(this.id,this.taskId);
+      this.getInit(this.id);
     },
     data(){
       let validatorAmount = function (rule, value, callback) {
@@ -128,7 +130,7 @@
       }
       return {
         id:'',
-        taskId:"",
+        type:"",
         activeName: 'first',
         review:{
           result:'',
@@ -256,19 +258,19 @@
           })
         })
       },
-      getInit(id,taskId) {
+      getInit(id) {
         var _this = this;
          new Promise((resolve,reject) => {
           ajax({
             // url:`/approval/taskInfo/${taskId}/${id}`,
-            url:`/approval/taskInfo/${id}?taskId=${taskId}`,
+            url:`/loan/loan-application/getApprovalDetail/${id}`,
             method:'get',
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
 
-              _this.data = data.data.loan;
-              _this.review.amount = _this.data.approvalAmount;
+              _this.data = data.data;
+              _this.review.amount = _this.data.loanAmount;
             }
 
           }).catch(error => {

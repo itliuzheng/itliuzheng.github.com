@@ -12,15 +12,20 @@
           <el-input v-model="management.proposerIdno"></el-input>
         </el-form-item>
         <el-form-item label="申请日期:">
-          <!--<el-input v-model="management.date"></el-input>-->
-
           <el-date-picker
-            v-model="management.sectionDate"
-            type="date"
+            class="date-pickers"
+            v-model="date"
+            type="daterange"
+            align="right"
+            unlink-panels
             value-format="yyyy-MM-dd"
-            placeholder="">
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            :picker-options="pickerOptions">
           </el-date-picker>
         </el-form-item>
+
         <div class="inquire">
           <el-button class="el-button el-button--primary" @click="inquire">查询</el-button>
         </div>
@@ -90,12 +95,47 @@
   export default {
     data(){
       return {
+        pickerOptions: {
+          shortcuts: [
+            {
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }],
+          disabledDate(time){
+            return time.getTime() > Date.now() - 8.64e6
+          }
+        },
+        date:'',
         management:{
           proposerName:'',
           companyName:'',
           proposerIdno:'',
-          sectionDate:'',
-          applyStatus:'1'
+          startDate:'',
+          endDate:'',
+          applyStatus:'1',
+          page:1,
+          pageSize:10
         },
         page:{
           "current": "", //long //当前",
@@ -105,7 +145,6 @@
           "records": [
             // {
             //   "loanId":"",// "int //loan表id",
-            //   "taskId":"",// "string //工作流程id",
             //   "companyName": "",//"string //申请人公司名称",
             //   "createDate": {},
             //   "proposerName":"",// "string //申请人姓名",
@@ -120,51 +159,49 @@
       this.$destroy(true)
     },
     beforeMount:function(){
-        if(!this.management.date){
-          this.management.date = '';
-        }
-        let url = jsonToUrl(this.management);
-      this.ajaxPage(1,url);
+        // let url = jsonToUrl(this.management);
+      this.ajaxPage();
     },
     methods:{
       handleCurrentChange(val) {
-        if(!this.management.date){
-          this.management.date = '';
-        }
-        let url = jsonToUrl(this.management);
-        this.ajaxPage(val,url);
+        // let url = jsonToUrl(this.management);
+        this.management.page = val;
+        this.ajaxPage();
       },
       inquire(){
-        if(!this.management.date){
-          this.management.date = '';
-        }
-        let url = jsonToUrl(this.management);
+        // let url = jsonToUrl(this.management);
 
-        this.ajaxPage(1,url);
+        this.management.page = 1;
+        this.ajaxPage();
       },
       handleClick(row){
-        var id = row.loanId;
-        let taskId = row.taskId;
-        this.$router.push({path:`/review/detail/${id}/${taskId}`})
+        var id = row.id;
+        this.$router.push({path:`/review/detail/${id}`})
       },
       lookClick(row){
-        let id = row.loanId;
-        // let taskId = row.taskId;
-        let taskId = 0;
-        this.$router.push({path:`/review/detail/${id}/${taskId}`})
+        let id = row.id;
+        this.$router.push({path:`/review/detail/${id}?type=look`})
       },
-      ajaxPage(page,code){
-        let url = `/approval/task?page=${page}&pageSize=10`;
+      ajaxPage(){
+        let url = `/loan/loan-application/getPendingApprovalPage`;
         // let url = `/approval/task`;
-        if(code){
-          url = `/approval/task?page=${page}&pageSize=10&${code}`
+        // if(code){
+        //   url = `/approval/task?page=${page}&pageSize=10&${code}`
+        // }
+
+        let date = this.date;
+        if(date){
+          this.management.startDate = date[0];
+          this.management.endDate = date[1];
         }
 
         let _this = this;
         new Promise((resolve,reject)=>{
           ajax({
+            // url:url+'?'+code,
             url:url,
-            method:'get'
+            method:'post',
+            data:_this.management
           }).then(function(res){
             var data = res.data;
             if(data.code == 1){
@@ -207,6 +244,9 @@
     width: 1000px;
     margin: 50px auto 0;
     padding: 20px;
+    .date-pickers{
+      width: auto;
+    }
   }
   .white{
     color: #fff;

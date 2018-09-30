@@ -10,13 +10,21 @@
         </el-form-item>
 
         <el-form-item label="发起下户日期:">
-          <el-date-picker
-            v-model="management.date"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="">
-          </el-date-picker>
+            <el-date-picker
+              class="date-pickers"
+              v-model="date"
+              type="daterange"
+              align="right"
+              unlink-panels
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions">
+            </el-date-picker>
         </el-form-item>
+
+
         <div class="inquire">
           <el-button class="el-button el-button--primary" @click="inquire">查询</el-button>
         </div>
@@ -81,11 +89,47 @@
   export default {
     data(){
       return {
+        pickerOptions: {
+          shortcuts: [
+            {
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }],
+          disabledDate(time){
+            return time.getTime() > Date.now() - 8.64e6
+          }
+        },
+        date:'',
         management:{
           proposerName:'',
           companyName:'',
-          date:'',
-          status:'4'
+          proposerIdno:'',
+          startDate:'',
+          endDate:'',
+          applyStatus:'4',
+          page:1,
+          pageSize:10
         },
         page:{
           "current":1,
@@ -107,29 +151,28 @@
     },
     beforeMount:function(){
 
-      let url = jsonToUrl(this.management);
-
-      this.ajaxPage(1,url);
+        this.management.page = 1;
+        this.ajaxPage();
     },
     methods:{
       inquire(){
-        if(!this.management.date){
-          this.management.date = '';
-        }
-        let url = jsonToUrl(this.management);
-
-        this.ajaxPage(1,url);
+        this.management.page = 1;
+        this.ajaxPage();
       },
       ajaxPage:function (page,code) {
-        let url = `/loan/loan-application/page/?page=${page}&pageSize=10`;
-        if(code){
-          url = `/loan/loan-application/page/?page=${page}&pageSize=10&${code}`
-        }
+        let url = `/loan/loan-application/page/`;
         var _this = this;
+
+        let date = this.date;
+        if(date){
+          this.management.startDate = date[0];
+          this.management.endDate = date[1];
+        }
         new Promise((resolve,reject) => {
           ajax({
             url:url,
-            method:'get'
+            method:'post',
+            data:_this.management
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
@@ -148,7 +191,8 @@
         this.$router.push({path:`/approval_management/household_review/${id}`})
       },
       handleCurrentChange(val) {
-        this.ajaxPage(val);
+        this.management.page = val;
+        this.ajaxPage();
       }
     }
   }
@@ -177,6 +221,9 @@
     width: 1000px;
     margin: 50px auto 0;
     padding: 20px;
+    .date-pickers{
+      width: auto;
+    }
   }
   .white{
     color: #fff;

@@ -6,7 +6,7 @@
           <div class="top-main">
             <div class="information">
               <div class="p_inline">
-                <p><span>申请提交时间：</span>{{topContext.companyRegisterDate}}</p>
+                <p><span>申请提交时间：</span>{{topContext.createDate  | dateFormat}}</p>
                 <p><span>申请金额：</span>{{topContext.loanAmount}}元</p>
               </div>
               <p><span>保理业务期限：</span>{{topContext.factoringBusinessDeadline}}个月</p>
@@ -1189,6 +1189,15 @@
           })
          })
        },
+    },
+    filters:{
+      dateFormat(time){
+        if(time){
+          return time.substring(0,10)
+        }else{
+          return ''
+        }
+      },
     }
   }
 </script>
