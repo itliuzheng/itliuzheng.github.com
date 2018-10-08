@@ -1,1 +1,0 @@
-webpackJsonp([13],{ARoL:function(e,n,t){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement;return(this._self._c||e)("div",{staticClass:"main"},[this._v("\n  首页\n")])},staticRenderFns:[]},u=t("VU/8")({created:function(){},beforeMount:function(){},data:function(){return{}}},r,!1,null,null,null);n.default=u.exports}});

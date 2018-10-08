@@ -5,6 +5,10 @@
         <!--<div class="pane">-->
           <!--<a class="btn el-button&#45;&#45;primary" href="javascript:;">查看线上报告</a>-->
         <!--</div>-->
+
+        <div class="look_review" v-if="data.applyStatus == 5">
+          <el-button class="el-button el-button--primary" @click="lookReview" >查看线下报告</el-button>
+        </div>
         <div class="information">
           <div class="p_inline">
             <p><span>申请提交时间：</span>{{data.createDate}}</p>
@@ -22,7 +26,7 @@
           <p v-else-if="data.applyStatus == 5"><span>状态：</span>已下户</p>
         </div>
 
-        <div class="result" v-if="data.applyStatus != 1">
+        <div class="result" v-if="data.applyStatus != 1 && data.applyStatus != 5">
           <p>审批结果</p>
           <p>
             <span v-if="data.applyStatus == 2">通过</span>
@@ -34,7 +38,7 @@
 
         <template v-if=" type != 'look'">
 
-          <div v-if="data.applyStatus == 1" class="review_result">
+          <div v-if="data.applyStatus == 1 || data.applyStatus == 5" class="review_result">
             <el-form ref="review" :model="review" :rules="reviewRules" label-width="100px">
               <template>
                 <el-form-item class="inline-block" prop="result" label="审核结果">
@@ -207,6 +211,19 @@
       }
     },
     methods:{
+      lookReview(){
+        let id = this.id;
+        const {href} = this.$router.resolve({
+            name: "household_review_result",
+            params: {
+                id: id,
+            }
+        });
+
+        window.open(href, '_blank');
+
+        // this.$router.push({path:`/approval_management/household_review_result/${this.id}`})
+      },
       handleClick(tab, event) {
         if(tab.name == 'history'){
           this.getAjax();
@@ -262,7 +279,6 @@
         var _this = this;
          new Promise((resolve,reject) => {
           ajax({
-            // url:`/approval/taskInfo/${taskId}/${id}`,
             url:`/loan/loan-application/getApprovalDetail/${id}`,
             method:'get',
           }).then(function (res) {
@@ -353,6 +369,9 @@
     }
   }
 
+  .look_review{
+    text-align: right;
+  }
   .information{
     width: 1000px;
     margin: 20px auto 0;

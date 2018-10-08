@@ -3,6 +3,7 @@
     <div class="content entry-content household_review">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane :label="firstName" name="first">
+
           <div class="top-main">
             <div class="information">
               <div class="p_inline">
@@ -25,112 +26,57 @@
 
           </div>
           <div class="entry-box">
-              <el-form ref="business" :rules="business_rules" :model="business" label-width="250px" :inline="true">
+              <el-form label-width="250px" :inline="true">
                 <!--<div class="form-title">资料录入</div>-->
-                <el-form-item label="上报机构" class="is-required" prop="reportOrganisation"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.reportOrganisation"></el-input>
+                <el-form-item label="上报机构" >
+                  <el-input v-model="business.reportOrganisation" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="业务编号" class="is-required" prop="businessNum"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.businessNum"></el-input>
+                <el-form-item label="业务编号" class="is-required" >
+                  <el-input v-model="business.businessNum" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="主办客户经理" class="is-required" prop="sponsorCustomerManager"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.sponsorCustomerManager"></el-input>
+                <el-form-item label="主办客户经理" class="is-required">
+                  <el-input v-model="business.sponsorCustomerManager"  disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="联系电话（手机）" class="is-required" prop="sponsorCustomerManagerPhone"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.sponsorCustomerManagerPhone"></el-input>
+                <el-form-item label="联系电话（手机）" class="is-required" >
+                  <el-input v-model="business.sponsorCustomerManagerPhone" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="协办客户经理" class="is-required" prop="supportCustomerManager"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.supportCustomerManager"></el-input>
+                <el-form-item label="协办客户经理" class="is-required" >
+                  <el-input v-model="business.supportCustomerManager" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="联系电话（手机）" class="is-required" prop="supportCustomerManagerPhone"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.supportCustomerManagerPhone"></el-input>
+                <el-form-item label="联系电话（手机）" class="is-required" >
+                  <el-input v-model="business.supportCustomerManagerPhone" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="主办人员" class="is-required" prop="sponsorPersonnel"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.sponsorPersonnel"></el-input>
+                <el-form-item label="主办人员" class="is-required" >
+                  <el-input v-model="business.sponsorPersonnel" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="协办人员" class="is-required" prop="supportPersonnel"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.supportPersonnel"></el-input>
+                <el-form-item label="协办人员" class="is-required" >
+                  <el-input v-model="business.supportPersonnel" disabled="disabled"></el-input>
                 </el-form-item>
 
                 <div class="form-title">业务信息</div>
-                <el-form-item label="产品名称" class="is-required" prop="businessInfo.projectName"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]"
-                >
-                  <el-input v-model="business.businessInfo.projectName"></el-input>
+                <el-form-item label="产品名称" class="is-required"  >
+                  <el-input v-model="business.businessInfo.projectName" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="申请金额" class="is-required" prop="businessInfo.applyForAmount"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.businessInfo.applyForAmount"></el-input>
+                <el-form-item label="申请金额" class="is-required" >
+                  <el-input v-model="business.businessInfo.applyForAmount" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="申请日" class="is-required" prop="businessInfo.applyForDate"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-date-picker :picker-options="pickerOption"  type="date" v-model="business.businessInfo.applyForDate" value-format="yyyy-MM-dd"></el-date-picker>
+                <el-form-item label="申请日" class="is-required" >
+                  <el-input v-model="business.businessInfo.applyForDate" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="到期日" class="is-required" prop="businessInfo.expireDate"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-date-picker   type="date" v-model="business.businessInfo.expireDate" value-format="yyyy-MM-dd"></el-date-picker>
+                <el-form-item label="到期日" class="is-required">
+                  <el-input v-model="business.businessInfo.expireDate" disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="月利率" class="is-required"  prop="businessInfo.monthlyRate"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.businessInfo.monthlyRate"></el-input>
+                <el-form-item label="月利率" class="is-required"  >
+                  <el-input v-model="business.businessInfo.monthlyRate"  disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="年利率" class="is-required"  prop="businessInfo.annualRate"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-input v-model="business.businessInfo.annualRate"></el-input>
+                <el-form-item label="年利率" class="is-required">
+                  <el-input v-model="business.businessInfo.annualRate"  disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="是否首次" class="is-required" prop="businessInfo.isFirst"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-select v-model="business.businessInfo.isFirst" placeholder="请选择">
-                    <el-option label="是" value="true"></el-option>
-                    <el-option label="否" value="false"></el-option>
-                  </el-select>
+                <el-form-item label="是否首次" class="is-required" >
+                  <el-input v-model="business.businessInfo.isFirst"  disabled="disabled"></el-input>
                 </el-form-item>
-                <el-form-item label="还款方式" class="is-required" prop="businessInfo.paymentWay"
-                  :rules=" [
-                      { required: true, message: '此项不能为空', trigger: 'blur' }
-                    ]">
-                  <el-select v-model="business.businessInfo.paymentWay" placeholder="请选择">
-                    <el-option label="等额本息" value="等额本息"></el-option>
-                    <el-option label="还本付息" value="还本付息"></el-option>
-                  </el-select>
+                <el-form-item label="还款方式" class="is-required" >
+                  <el-input v-model="business.businessInfo.paymentWay"  disabled="disabled"></el-input>
                 </el-form-item>
                 <div class="form-title">公司信息</div>
                 <el-form-item
@@ -138,12 +84,8 @@
                   v-for="(list,index) in business.companyInfo"
                   :label="list.investigationItemName"
                   :key="list.investigationItemName+index"
-                  :prop="'companyInfo.'+index+'.investigationItemResult'"
-                  :rules="{
-                    required: true, message: '此项不能为空', trigger: 'blur'
-                  }"
                 >
-                  <el-input v-model="list.investigationItemResult"></el-input>
+                  <el-input v-model="list.investigationItemResult" disabled="disabled"></el-input>
                 </el-form-item>
 
                 <table class="list-table">
@@ -152,22 +94,18 @@
                     <th>询问结果</th>
                     <th>询问对象</th>
                   </tr>
-                  <tr v-for="(list,index) in business.projectExceptionAskInfo">
+                  <tr v-for="(list,index) in business.projectExceptionAskInfo"
+                  :key="list.askName+index"
+                  >
                     <td>{{list.askName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'projectExceptionAskInfo.'+index+'.askResult'"
-                        :rules="{
-                          required: true, message: '此项不能为空', trigger: 'blur'
-                        }"
-                        :show-message="false">
-                        <el-input v-model="list.askResult"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.askResult" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item
-                        :show-message="false">
-                        <el-input v-model="list.askTarget"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.askTarget" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                   </tr>
@@ -178,27 +116,17 @@
                     <th>观察结果</th>
                     <th>观察时间</th>
                   </tr>
-                  <tr v-for="(list,index) in business.projectExceptionViewInfo">
+                  <tr v-for="(list,index) in business.projectExceptionViewInfo"
+                  :key="list.viewName+index">
                     <td>{{list.viewName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'projectExceptionViewInfo.'+index+'.viewResult'"
-                        :rules="{
-                          required: true, message: '此项不能为空', trigger: 'blur'
-                        }"
-                        :show-message="false">
-                        <el-input v-model="list.viewResult"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.viewResult" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item
-                        :prop="'projectExceptionViewInfo.'+index+'.viewDate'"
-                        :rules="{
-                          required: true, message: '', trigger: 'change'
-                        }"
-                        :show-message="false">
-                        <!--<el-input v-model="list.viewDate"></el-input>-->
-                        <el-date-picker   type="date" v-model="list.viewDate" value-format="yyyy-MM-dd"></el-date-picker>
+                      <el-form-item>
+                        <el-input v-model="list.viewDate" disabled="disabled"></el-input>
 
                       </el-form-item>
                     </td>
@@ -210,25 +138,17 @@
                     <th>是否亲见原件</th>
                     <th>备注</th>
                   </tr>
-                  <tr v-for="(list,index) in business.invoicesInfo">
+                  <tr v-for="(list,index) in business.invoicesInfo"
+                  :key="list.invoicesName+index">
                     <td>{{list.invoicesName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'invoicesInfo.'+index+'.isSeeYourself'"
-                        :rules="{
-                          required: true, message: '', trigger: 'change'
-                        }"
-                        :show-message="false">
-                        <el-select v-model="list.isSeeYourself" placeholder="请选择">
-                          <el-option label="是" value="是"></el-option>
-                          <el-option label="否" value="否"></el-option>
-                        </el-select>
+                      <el-form-item>
+                        <el-input v-model="list.isSeeYourself" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item
-                        :show-message="false">
-                        <el-input v-model="list.remark"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.remark" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                   </tr>
@@ -238,20 +158,12 @@
                     <th>历史数据</th>
                     <th>（运单、回单、发票、打款记录、TMS、财务软件）</th>
                   </tr>
-                  <tr v-for="(list,index) in business.historyData">
+                  <tr v-for="(list,index) in business.historyData"
+                  :key="list.dataName+index">
                     <td>{{list.dataName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'historyData.'+index+'.have'"
-                        :rules="{
-                          required: true, message: '', trigger: 'change'
-                        }"
-                        :show-message="false">
-                        <!--<el-input v-model="list.have"></el-input>-->
-                        <el-select v-model="list.have" placeholder="请选择">
-                          <el-option label="有" value="有"></el-option>
-                          <el-option label="没有" value="没有"></el-option>
-                        </el-select>
+                      <el-form-item>
+                        <el-input v-model="list.have" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                   </tr>
@@ -263,22 +175,17 @@
                     <th>金额</th>
                     <th>备注</th>
                   </tr>
-                  <tr v-for="(list,index) in business.projectRelatedInfo">
+                  <tr v-for="(list,index) in business.projectRelatedInfo"
+                  :key="list.projectRelatedName+index">
                     <td>{{list.projectRelatedName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'projectRelatedInfo.'+index+'.projectRelatedAmount'"
-                        :rules="{
-                          required: true, message: '', trigger: 'blur'
-                        }"
-                        :show-message="false">
-                        <el-input v-model="list.projectRelatedAmount"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.projectRelatedAmount" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item
-                        :show-message="false">
-                        <el-input v-model="list.remark"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.remark" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                   </tr>
@@ -290,23 +197,17 @@
                     <th>金额</th>
                     <th>备注</th>
                   </tr>
-                  <tr v-for="(list,index) in business.assetInfo">
+                  <tr v-for="(list,index) in business.assetInfo"
+                  :key="list.assetName+index">
                     <td>{{list.assetName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'assetInfo.'+index+'.assetAmount'"
-                        :rules="{
-                          required: true, message: '', trigger: 'blur'
-                        }"
-                        :show-message="false"
-                      >
-                        <el-input v-model.number="list.assetAmount" @change="autoChange()" :disabled="list.disabled" :placeholder="list.placeholder"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.assetAmount"  disabled="disabled" ></el-input>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item
-                        :show-message="false">
-                        <el-input v-model="list.remark"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.remark" disabled="disabled"></el-input>
                       </el-form-item>
                     </td>
                   </tr>
@@ -319,22 +220,17 @@
                     <th>金额</th>
                     <th>备注</th>
                   </tr>
-                  <tr v-for="(list,index) in business.liabilitiesInfo">
+                  <tr v-for="(list,index) in business.liabilitiesInfo"
+                  :key="list.liabilitiesName+index">
                     <td>{{list.liabilitiesName}}</td>
                     <td>
-                      <el-form-item
-                        :prop="'liabilitiesInfo.'+index+'.liabilitiesAmount'"
-                        :rules="{
-                          required: true, message: '', trigger: 'blur'
-                        }"
-                        :show-message="false">
-                        <el-input v-model="list.liabilitiesAmount" @change="autoChange(list)"  :disabled="list.disabled" :placeholder="list.placeholder"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.liabilitiesAmount"  disabled="disabled" ></el-input>
                       </el-form-item>
                     </td>
                     <td>
-                      <el-form-item
-                        :show-message="false">
-                        <el-input v-model="list.remark"></el-input>
+                      <el-form-item>
+                        <el-input v-model="list.remark"  disabled="disabled" ></el-input>
                       </el-form-item>
                     </td>
                   </tr>
@@ -343,24 +239,15 @@
 
                 <div class="form-title">销售情况</div>
                 <ul class="table-ul clearfix">
-                  <li v-for="(list,index) in business.saleInfo">
+                  <li v-for="(list,index) in business.saleInfo"
+                  :key="list.name+index">
                     <el-form-item
                       class="is-required"
-                      :label="list.name"
-                      :key="list.name+index"
-                      :prop="'saleInfo.'+index+'.expenses'"
-                      :rules="{
-                        required: true, message: '此项不能为空', trigger: 'blur'
-                      }"
-                    >
-                      <el-input v-model="list.expenses" :disabled="list.disables" @change="autoCalc()"></el-input>
+                      :label="list.name">
+                      <el-input v-model="list.expenses" disabled="disabled"></el-input>
                     </el-form-item>
                   </li>
                 </ul>
-
-                <div class="buttons">
-                  <el-button class="blue el-button el-button--primary" :loading="loading" @click="onSubmit">确认提交</el-button>
-                </div>
               </el-form>
             </div>
         </el-tab-pane>
@@ -394,18 +281,19 @@
     data(){
       return {
         id:'',
+        type:'',
         loading:false,
         activeName: 'first',
         firstName:'下户信息',
         topContext:{
-          "companyRegisterDate": '',
+          "createDate": '',
           "loanAmount": '',
           "factoringBusinessDeadline": '',
           "companyProvinceCode": '',
           "companyCityCode": '',
           "companyAreaCode": '',
           "companyName": '',
-          "applyStatus": '4',
+          "applyStatus": '5',
         },
         business:{
           "loanId": "",//int //借款申请表id（loan_application）
@@ -426,8 +314,7 @@
               "annualRate": "", //string //年利率
               "isFirst": "", //boolean //是否首次
               "paymentWay": "" //string //还款方式
-          }
-          ,
+          },
           "companyInfo": [
             {
               "investigationItemName": "经营项目",//"string //调查项目名称",
@@ -741,7 +628,6 @@
               "assetName": "资产总额（自动计算项）",
               "placeholder": "",
               "assetAmount": "",
-              "disabled":true,
               "remark": ""
             },
           ],
@@ -884,55 +770,35 @@
             },
           ]
         },
-        business_rules:{},
-        pickerOption:{
-          disabledDate(time){
-            return time.getTime() > Date.now() - 8.64e6
-          }
-        }
       }
     },
      methods:{
-      reviewResult(){
-        console.log('审核');
-      },
-      validateString(rules,value,callback){
-        let validate = tool.validateRealName(value);
-        if(!validate.boolean){
-          callback(new Error(validate.msg));
-        }else{
-          callback();
-        }
-      },
-      validateIdCard(rules,value,callback){
-        // let validate = tool.validateRealName(value);
-        let validate = tool.validateIdCard(value);
-        if(!validate.boolean){
-          callback(new Error(validate.msg));
-        }else{
-          callback();
-        }
-      },
-      validatePhone(rules,value,callback){
-        // let validate = tool.validateRealName(value);
-        let validate = tool.validatePhoneNum(value);
-        if(!validate.boolean){
-          callback(new Error(validate.msg));
-        }else{
-          callback();
-        }
-      },
       getInit(id){
         var _this = this;
          new Promise((resolve,reject) => {
           ajax({
-            url:`/loan/loan-application/${id}`,
+            url:`/loan/offline-due-diligence/${id}`,
+            method:'get',
+          }).then(function (res) {
+            let data = res.data;
+            if(data.code == 1){
+              _this.business = data.data;
+
+            }
+
+          }).catch(error => {
+            reject(error)
+          })
+         })
+
+         new Promise((resolve,reject) => {
+          ajax({
+            url:`/loan/loan-application/getApprovalDetail/${id}`,
             method:'get',
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
               _this.topContext = data.data;
-
             }
 
           }).catch(error => {
@@ -943,254 +809,45 @@
        handleClick:function (tab, e) {
 
        },
-       liabilities(){
-         let amount = '';
-        let _this = this;
-         _this.business.liabilitiesInfo.forEach((value1,index1) =>{
-           let amount1 = parseFloat(value1.liabilitiesAmount);
-           if(value1.liabilitiesName == '信用卡'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value1.liabilitiesName == '个人贷款'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value1.liabilitiesName == '企业贷款'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value1.liabilitiesName == '应付账款'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value1.liabilitiesName == '民间借贷'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value1.liabilitiesName == '对外担保（按50%计算负债）'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }
-         })
-         return amount
-       },
-       assetsTotal(){
-         let amount = '';
-        let _this = this;
-         _this.business.assetInfo.forEach((value1,index1) =>{
-           let amount1 = parseFloat(value1.assetAmount);
-           let name = value1.assetName;
-
-           if(name == '房产（房产证、购房发票、实地照片）'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(name == '车辆（行驶证、机动车登记证、实地照片）'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(name == '机器设备（购买合同、发票）'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(name == '土地证'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(name == '应收账款'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(name == '货币资产'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(name == '其他'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }
-         })
-         return amount
-       },
-       profilTotle(){
-        const json = {
-          firstHalf:'',
-          firstHalf_profil:'',
-          yearHalf:'',
-          yearHalf_profil:'',
-          total_month:""
-        };
-        let amount = '0';
-         this.business.saleInfo.forEach((value,index)=>{
-           if(value.name == '企业上年销售总额'){
-             json.firstHalf = parseFloat(value.expenses);
-           }else if(value.name == '企业上年销售净利润'){
-             json.firstHalf_profil = parseFloat(value.expenses);
-           }else if(value.name == '今年当前销售总额'){
-             json.yearHalf = parseFloat(value.expenses);
-           }else if(value.name == '今年当前销售净利润'){
-             json.yearHalf_profil = parseFloat(value.expenses);
-           }
-         //  运营支出
-
-           let amount1 = parseFloat(value.expenses);
-           if(value.name == '运营支出'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '员工工资（月）'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '月加油费'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '月高速公路费'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '月车辆维修费'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '月场地租赁费'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '月车辆保险费'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }else if(value.name == '保险费'){
-             if(!isNaN(amount1)){
-               amount = amount*1 + amount1*1
-             }
-           }
-
-         })
-
-         json.total_month = amount;
-         return json;
-       },
-       autoChange(list){
-        let _this = this;
-        // 负债总额（自动计算项）
-         this.business.liabilitiesInfo.forEach((value,index)=>{
-           switch (value.liabilitiesName){
-             case '负债总额（自动计算项）':
-               value.liabilitiesAmount = _this.liabilities();
-               break;
-             case '净资产（自动计算项）':
-               let amount = _this.assetsTotal();
-               value.liabilitiesAmount = amount - _this.liabilities() ;
-               break;
-             case '资产负债率（自动计算项）':
-               //（负债总额+本次申请金额）/资产总额
-               let total = _this.liabilities();
-                value.liabilitiesAmount = parseFloat((total + _this.topContext.loanAmount*1) / _this.assetsTotal()) * 100 +'%';
-               break;
-             default:
-               break;
-           }
-         })
-
-        // 资产总额（自动计算项）
-         this.business.assetInfo.forEach((value,index)=>{
-           switch (value.assetName){
-             case '资产总额（自动计算项）':
-               value.assetAmount = _this.assetsTotal();
-               break;
-             default:
-               break;
-           }
-         })
-       },
-       autoCalc(list){
-        let _this = this;
-        // 负债总额（自动计算项）
-         this.business.saleInfo.forEach((value,index)=>{
-           const json = _this.profilTotle();
-           switch (value.name){
-             case '上年净利润率（自动计算项）':
-               // （净利润/主营业务收入）×100%
-               let firstNumber = parseFloat(json.firstHalf_profil / json.firstHalf).toFixed(4);
-               if(!isNaN(firstNumber)){
-                 value.expenses = firstNumber * 100+'%';
-               }else{
-                 value.expenses ='0%';
-               }
-               break;
-             case '今年净利润率（自动计算项）':
-               let amount = _this.assetsTotal();
-               let number = parseFloat(json.yearHalf_profil / json.yearHalf).toFixed(4);
-               if(!isNaN(number)){
-                 value.expenses = number * 100+'%';
-               }else{
-                 value.expenses ='0%';
-               }
-               break;
-             case '月均总支出（自动计算项）':
-               value.expenses = json.total_month;
-               break;
-             default:
-               break;
-           }
-         })
-       },
        onSubmit:function () {
 
          var _this = this;
 
          _this.loading = true;
-        this.$refs.business.validate((valid) => {
-          if (valid) {
-            _this.getAjax();
-          }else{
-              _this.$message({
-                type: 'error',
-                message: '数据不能为空'
-              });
-              _this.loading = false;
-          }
-
-        });
+         _this.getAjax();
        },
        getAjax(){
          var _this = this;
          // _this.business;
 
-         new Promise((resolve,reject) => {
-          ajax({
-            // url:`/loan/loan-application/${id}`,
-            url:`/loan/offline-due-diligence/add`,
-            method:'post',
-            data:_this.business
-          }).then(function (res) {
-            let data = res.data;
-            if(data.code == 1){
-
-              _this.$message({
-                type: 'success',
-                message: '提交成功'
-              });
-
-            }else{
-              _this.$message({
-                type: 'error',
-                message: '提交失败,请重新提交'
-              });
-            }
-            _this.loading = false;
-
-          }).catch(error => {
-            _this.loading = false;
-            reject(error)
-          })
-         })
+         // new Promise((resolve,reject) => {
+         //  ajax({
+         //    // url:`/loan/loan-application/${id}`,
+         //    url:`/loan/offline-due-diligence/add`,
+         //    method:'post',
+         //    data:_this.business
+         //  }).then(function (res) {
+         //    let data = res.data;
+         //    if(data.code == 1){
+         //
+         //      _this.$message({
+         //        type: 'success',
+         //        message: '提交成功'
+         //      });
+         //
+         //    }else{
+         //      _this.$message({
+         //        type: 'error',
+         //        message: '提交失败,请重新提交'
+         //      });
+         //    }
+         //    _this.loading = false;
+         //
+         //  }).catch(error => {
+         //    _this.loading = false;
+         //    reject(error)
+         //  })
+         // })
        },
     },
     filters:{

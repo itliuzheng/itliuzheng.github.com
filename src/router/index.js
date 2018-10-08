@@ -201,8 +201,19 @@ export const asyncRouterMap = [
         name: 'household_review',
         hidden:true,
         meta: {
-          title:'录入申线下调研表',
+          title:'录入线下调研表',
           roles: '/approval_management/household_review'
+          // if do not set roles, means: this page does not require approval_management
+        }
+      },
+      {
+        path: 'household_review_result/:id(\\d+)',
+        component: () => import('@/views/approval_management/household_review_result'),
+        name: 'household_review_result',
+        hidden:true,
+        meta: {
+          title:'审核线下调研表',
+          roles: '/approval_management/household_review_result'
           // if do not set roles, means: this page does not require approval_management
         }
       }

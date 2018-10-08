@@ -133,7 +133,7 @@
           proposerIdno:'',
           startDate:'',
           endDate:'',
-          applyStatus:'1',
+          applyStatus:'1,5',
           page:1,
           pageSize:10
         },
