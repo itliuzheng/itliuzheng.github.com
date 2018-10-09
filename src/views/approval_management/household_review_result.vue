@@ -787,7 +787,12 @@
 
                 _this.business.businessInfo.applyForDate = data.data.businessInfo.applyForDate?data.data.businessInfo.applyForDate.substring(0,10):""
                 _this.business.businessInfo.expireDate = data.data.businessInfo.expireDate?data.data.businessInfo.expireDate.substring(0,10):""
-                _this.business.businessInfo.isFirst = data.data.businessInfo.isFirst?"是":"否"
+                _this.business.businessInfo.isFirst = data.data.businessInfo.isFirst?"是":"否";
+                data.data.projectExceptionViewInfo.forEach((value,index)=>{
+                  if(value.viewDate){
+                     _this.business.projectExceptionViewInfo[index].viewDate = value.viewDate.substring(0,10)
+                  }
+                })
               }
             }
 
