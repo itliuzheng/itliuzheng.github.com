@@ -64,7 +64,7 @@
                   <el-input v-model="business.businessInfo.applyForDate" disabled="disabled"></el-input>
                 </el-form-item>
                 <el-form-item label="到期日" class="is-required">
-                  <el-input v-model="business.businessInfo.expireDate" disabled="disabled"></el-input>
+                  <el-input v-model="business.businessInfo.expireDate"  disabled="disabled"></el-input>
                 </el-form-item>
                 <el-form-item label="月利率" class="is-required"  >
                   <el-input v-model="business.businessInfo.monthlyRate"  disabled="disabled"></el-input>
@@ -293,7 +293,7 @@
           "companyCityCode": '',
           "companyAreaCode": '',
           "companyName": '',
-          "applyStatus": '5',
+          "applyStatus": '',
         },
         business:{
           "loanId": "",//int //借款申请表id（loan_application）
@@ -782,8 +782,13 @@
           }).then(function (res) {
             let data = res.data;
             if(data.code == 1){
-              _this.business = data.data;
+              if(data.data.businessInfo){
+                _this.business = data.data;
 
+                _this.business.businessInfo.applyForDate = data.data.businessInfo.applyForDate?data.data.businessInfo.applyForDate.substring(0,10):""
+                _this.business.businessInfo.expireDate = data.data.businessInfo.expireDate?data.data.businessInfo.expireDate.substring(0,10):""
+                _this.business.businessInfo.isFirst = data.data.businessInfo.isFirst?"是":"否"
+              }
             }
 
           }).catch(error => {

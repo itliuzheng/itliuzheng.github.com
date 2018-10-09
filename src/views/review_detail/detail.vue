@@ -6,7 +6,7 @@
           <!--<a class="btn el-button&#45;&#45;primary" href="javascript:;">查看线上报告</a>-->
         <!--</div>-->
 
-        <div class="look_review" v-if="data.applyStatus == 5">
+        <div class="look_review">
           <el-button class="el-button el-button--primary" @click="lookReview" >查看线下报告</el-button>
         </div>
         <div class="information">
@@ -287,6 +287,24 @@
 
               _this.data = data.data;
               _this.review.amount = _this.data.loanAmount;
+
+              if(data.data.applyStatus == 5){
+                _this.review.list = [
+                                    {
+                                      value:'3',
+                                      name:'不通过'
+                                    },
+                                    {
+                                      value:'6',
+                                      name:'驳回'
+                                    },
+                                    {
+                                      value:'2',
+                                      name:'通过'
+                                    }
+                                  ]
+              }
+
             }
 
           }).catch(error => {

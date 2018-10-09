@@ -9,20 +9,40 @@
           <el-input v-model="management.companyName"></el-input>
         </el-form-item>
 
-        <el-form-item label="发起下户日期:">
-            <el-date-picker
-              class="date-pickers"
-              v-model="date"
-              type="daterange"
-              align="right"
-              unlink-panels
-              value-format="yyyy-MM-dd"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-              :picker-options="pickerOptions">
-            </el-date-picker>
-        </el-form-item>
+        <!--<el-form-item label="发起下户日期:">-->
+            <!--<el-date-picker-->
+              <!--class="date-pickers"-->
+              <!--v-model="date"-->
+              <!--type="daterange"-->
+              <!--align="right"-->
+              <!--unlink-panels-->
+              <!--value-format="yyyy-MM-dd"-->
+              <!--range-separator="至"-->
+              <!--start-placeholder="开始日期"-->
+              <!--end-placeholder="结束日期"-->
+              <!--:picker-options="pickerOptions">-->
+            <!--</el-date-picker>-->
+        <!--</el-form-item>-->
+
+          <el-form-item label="发起下户日期">
+              <el-date-picker
+                      v-model="management.startDate"
+                      type="date"
+                      :picker-options="pickerBeginDateBefore"
+                      value-format="yyyy-MM-dd"
+                      placeholder="">
+              </el-date-picker>
+          </el-form-item>
+          <el-form-item class="date-picker-ver">
+            <span>至</span>
+              <el-date-picker
+                      v-model="management.endDate"
+                      type="date"
+                      value-format="yyyy-MM-dd"
+                      :picker-options="pickerBeginDateAfter"
+                      placeholder="">
+              </el-date-picker>
+          </el-form-item>
 
 
         <div class="inquire">
@@ -89,6 +109,22 @@
   export default {
     data(){
       return {
+        pickerBeginDateBefore:{
+            disabledDate: (time) => {
+                let beginDateVal = this.management.endDate;
+                if (beginDateVal) {
+                    return time.getTime() > new Date(beginDateVal);
+                }
+            }
+        },
+        pickerBeginDateAfter:{
+            disabledDate: (time) => {
+                let beginDateVal = this.management.startDate;
+                if (beginDateVal) {
+                    return time.getTime() < new Date(beginDateVal);
+                }
+            }
+        },
         pickerOptions: {
           shortcuts: [
             {
@@ -216,6 +252,9 @@
 </style>
 <style lang="scss" scoped>
   $blue : #409EFF;
+  .date-picker-ver{
+    vertical-align: bottom;
+  }
   .top-main{
     border: 1px solid #ccc;
     width: 1000px;

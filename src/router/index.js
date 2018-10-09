@@ -186,6 +186,16 @@ export const asyncRouterMap = [
         }
       },
       {
+        path: 'overrule_list',
+        component: () => import('@/views/approval_management/overrule_list'),
+        name: 'overrule_list',
+        meta: {
+          title: '驳回列表',
+          roles: '/approval_management/overrule_list'
+          // if do not set roles, means: this page does not require approval_management
+        }
+      },
+      {
         path: 'approval_list_history',
         component: () => import('@/views/approval_management/approval_list_history'),
         name: 'approval_list_history',

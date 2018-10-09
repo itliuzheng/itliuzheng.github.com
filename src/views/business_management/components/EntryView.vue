@@ -204,8 +204,7 @@
           factoringBusinessDeadline:'',
           companyProvinceCode:'',
           companyCityCode:'',
-          companyAreaCode:'',
-          city_code:null
+          companyAreaCode:''
         },
         application_rules:{
           loanAmount:[
@@ -395,9 +394,9 @@
       },
       // 选区
       choseBlock:function(e) {
-      // console.log('选省',this.application_form.companyProvinceCode);
-      // console.log('选市',this.application_form.companyCityCode);
-      // console.log('选区',this.application_form.companyAreaCode);
+        // console.log('选省',this.application_form.companyProvinceCode);
+        // console.log('选市',this.application_form.companyCityCode);
+        // console.log('选区',this.application_form.companyAreaCode);
       },
        getAjax:function(data){
 

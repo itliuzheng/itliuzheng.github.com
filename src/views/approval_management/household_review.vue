@@ -353,7 +353,7 @@
                         required: true, message: '此项不能为空', trigger: 'blur'
                       }"
                     >
-                      <el-input v-model="list.expenses" :disabled="list.disables" @change="autoCalc()"></el-input>
+                      <el-input v-model="list.expenses" :disabled="list.disabled" @change="autoCalc()"></el-input>
                     </el-form-item>
                   </li>
                 </ul>
@@ -388,8 +388,12 @@
       this.id = id;
       this.business.loanId = id;
 
-
       this.getInit(id);
+      let repeat = this.$route.query.repeat;
+
+      if(repeat == 'repeat'){
+        this.getRepeat(id);
+      }
     },
     data(){
       return {
@@ -830,12 +834,12 @@
             {
               "name": "上年净利润率（自动计算项）",
               "expenses": "",
-              disables:true
+              "disabled":true
             },
             {
               "name": "今年净利润率（自动计算项）",
               "expenses": "",
-              disables:true
+              "disabled":true
             },
             {
               "name": "运营支出",
@@ -876,7 +880,7 @@
             {
               "name": "月均总支出（自动计算项）",
               "expenses": "",
-              disables:true
+              "disabled":true
             },
             {
               "name": "企业最近半年员工工资发放凭证及明细",
@@ -921,6 +925,26 @@
         }else{
           callback();
         }
+      },
+      getRepeat(id){
+        var _this = this;
+         new Promise((resolve,reject) => {
+          ajax({
+            url:`/loan/offline-due-diligence/${id}`,
+            method:'get',
+          }).then(function (res) {
+            let data = res.data;
+            if(data.code == 1){
+
+              _this.business = data.data;
+
+              _this.business.businessInfo.isFirst = data.data.businessInfo.isFirst?"true":"false"
+            }
+
+          }).catch(error => {
+            reject(error)
+          })
+         })
       },
       getInit(id){
         var _this = this;
